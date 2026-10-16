@@ -63,20 +63,25 @@ filters.forEach(button => button.addEventListener('click', () => {
 const projectDialog = document.querySelector('#project-dialog');
 if (projectDialog) {
   const projectDialogVisual = projectDialog.querySelector('.project-dialog-visual');
-  document.querySelectorAll('.project-details-button').forEach(button => {
+  const openProjectDetails = button => {
+    const card = button.closest('.project-card');
+    const visual = card.querySelector('.project-visual').cloneNode(true);
+    visual.querySelector('.project-image-trigger')?.remove();
+    const meta = card.querySelector('.project-meta');
+    projectDialogVisual.replaceChildren(visual);
+    projectDialog.querySelector('.project-dialog-status').textContent = meta.querySelector('span').textContent;
+    projectDialog.querySelector('.project-dialog-type').textContent = meta.querySelector('.project-type').textContent;
+    projectDialog.querySelector('#project-dialog-title').textContent = card.querySelector('h3').textContent;
+    projectDialog.querySelector('.project-dialog-description').textContent = card.dataset.details;
+    projectDialog.querySelector('.project-dialog-tags').replaceChildren(
+      ...Array.from(card.querySelectorAll('.tag-row span'), tag => tag.cloneNode(true))
+    );
+    projectDialog.showModal();
+  };
+
+  document.querySelectorAll('.project-details-button, .project-image-trigger').forEach(button => {
     button.addEventListener('click', () => {
-      const card = button.closest('.project-card');
-      const visual = card.querySelector('.project-visual');
-      const meta = card.querySelector('.project-meta');
-      projectDialogVisual.replaceChildren(visual.cloneNode(true));
-      projectDialog.querySelector('.project-dialog-status').textContent = meta.querySelector('span').textContent;
-      projectDialog.querySelector('.project-dialog-type').textContent = meta.querySelector('.project-type').textContent;
-      projectDialog.querySelector('#project-dialog-title').textContent = card.querySelector('h3').textContent;
-      projectDialog.querySelector('.project-dialog-description').textContent = card.dataset.details;
-      projectDialog.querySelector('.project-dialog-tags').replaceChildren(
-        ...Array.from(card.querySelectorAll('.tag-row span'), tag => tag.cloneNode(true))
-      );
-      projectDialog.showModal();
+      openProjectDetails(button);
     });
   });
 
@@ -85,9 +90,6 @@ if (projectDialog) {
     if (event.target === projectDialog) projectDialog.close();
   });
 }
-
-const year = document.querySelector('#year');
-if (year) year.textContent = new Date().getFullYear();
 
 const chatToggle = document.querySelector('.chat-toggle');
 const chatPanel = document.querySelector('#chat-panel');

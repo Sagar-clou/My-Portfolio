@@ -9,7 +9,6 @@
   --line: #e5e8f1;
   --blue: #123b68;
   --cyan: #4bbfcd;
-  --white: #fff;
 }
 
 html {
@@ -519,20 +518,11 @@ body:before {
   transition: .2s;
 }
 
-.filter span {
-  margin-left: 7px;
-  color: #9b9fb0;
-}
-
 .filter.active,
 .filter:hover {
   background: #1a1e2e;
   border-color: #1a1e2e;
   color: white;
-}
-
-.filter.active span {
-  color: #b9d5ef;
 }
 
 .project-grid {
@@ -580,6 +570,45 @@ body:before {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.project-image-trigger {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.project-image-trigger::after {
+  content: "View details ↗";
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  padding: 8px 11px;
+  border: 1px solid #ffffffa8;
+  border-radius: 9px;
+  background: #ffffffed;
+  color: var(--blue);
+  font: 600 11px "DM Sans", sans-serif;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.project-image-trigger:hover::after,
+.project-image-trigger:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-image-trigger:focus-visible {
+  outline: 3px solid var(--cyan);
+  outline-offset: -4px;
 }
 
 .project-featured .project-visual {
@@ -926,10 +955,6 @@ body:before {
 .footer-email {
   font-size: 10px;
   color: #8c92a3;
-}
-
-.back-top,
-.footer-email {
   text-decoration: none;
 }
 
@@ -1197,8 +1222,6 @@ body.profile-page {
   --text: #172b40;
   --muted: #5f7184;
   --blue: #123b68;
-}
-body.profile-page {
   background: var(--bg);
   color: var(--text);
   line-height: normal;
@@ -1224,13 +1247,13 @@ body.profile-page a { color: inherit; text-decoration: none; }
   z-index: 19;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .social-fab {
   display: grid;
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
   place-items: center;
   border: 1px solid #dfe5ee;
   border-radius: 50%;
@@ -1253,8 +1276,8 @@ body.profile-page a { color: inherit; text-decoration: none; }
 }
 
 .social-fab svg {
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
@@ -1488,14 +1511,19 @@ body.profile-page a { color: inherit; text-decoration: none; }
 
 @media (max-width: 480px) {
   .social-fabs {
-    left: max(12px, env(safe-area-inset-left));
+    left: max(14px, env(safe-area-inset-left));
     bottom: max(16px, env(safe-area-inset-bottom));
-    gap: 8px;
+    gap: 10px;
   }
 
   .social-fab {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .social-fab svg {
+    width: 23px;
+    height: 23px;
   }
 
   .chat-widget {
