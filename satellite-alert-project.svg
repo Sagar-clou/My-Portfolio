@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img">
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#17294f"/><stop offset="1" stop-color="#30375e"/></linearGradient>
+    <linearGradient id="earth" x2="0" y2="1"><stop stop-color="#68c4d2"/><stop offset="1" stop-color="#3975a8"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="9"/></filter>
+  </defs>
+  <rect width="960" height="600" fill="url(#bg)"/>
+  <g fill="#d5e9ff">
+    <circle cx="105" cy="119" r="3"/><circle cx="224" cy="180" r="2"/><circle cx="772" cy="120" r="3"/>
+    <circle cx="862" cy="268" r="2"/><circle cx="681" cy="480" r="3"/><circle cx="304" cy="488" r="2"/>
+    <circle cx="572" cy="110" r="2"/><circle cx="128" cy="363" r="2"/>
+  </g>
+  <text x="64" y="76" fill="#a9c7ef" font-family="Arial,sans-serif" font-size="19" font-weight="700" letter-spacing="4">SATELLITE · AI · ALERTS</text>
+  <text x="64" y="128" fill="#fff" font-family="Arial,sans-serif" font-size="42" font-weight="700">From signals to timely alerts</text>
+  <circle cx="480" cy="361" r="171" fill="#41b8c9" opacity=".2" filter="url(#glow)"/>
+  <circle cx="480" cy="361" r="132" fill="url(#earth)"/>
+  <path d="M390 280c22-22 52-22 68-8l8 26-26 20-5 32-34 14-23-29-23-10 9-26ZM503 244l35 7 24 30-19 20-29-10-18-26ZM533 355l44 9 21 24-16 40-28 6-22-34ZM421 395l34 16 15 37-24 24-37-24-5-34Z" fill="#8ed6bd" opacity=".9"/>
+  <g transform="translate(480 215)" stroke="#e6f3ff" stroke-width="5" stroke-linejoin="round">
+    <rect x="-37" y="-25" width="74" height="50" rx="9" fill="#f1f6ff"/>
+    <path d="M-37-16h-86v32h86M37-16h86v32H37" fill="#6689be"/>
+    <path d="M0 25v31m-14 0h28" fill="none" stroke-linecap="round"/>
+    <circle r="9" fill="#e0a755" stroke="none"/>
+  </g>
+  <path d="M480 278v-33m-8 8 8-8 8 8" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="681" y="314" width="205" height="75" rx="18" fill="#fff" opacity=".12" stroke="#9ec8ec"/>
+  <circle cx="716" cy="351" r="12" fill="#f4b755"/>
+  <text x="742" y="347" fill="#fff" font-family="Arial,sans-serif" font-size="15" font-weight="700">SIGNAL DETECTED</text>
+  <text x="742" y="370" fill="#b9cee8" font-family="Arial,sans-serif" font-size="13">Analyse · Notify · Respond</text>
+</svg>

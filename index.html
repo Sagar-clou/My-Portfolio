@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#f7f8fc" />
-  <meta name="description" content="Saagar Gupta — Computer Science student exploring full-stack, AI, and practical technology projects." />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="Sagar Gupta — Computer Science student exploring Full-Stack, AI, and practical technology projects." />
   <title>Sagar Gupta | Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,8 +15,9 @@
   <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
   <header class="topbar">
     <a class="brand" href="profile.html" aria-label="Open Sagar Gupta profile"><span class="brand-mark">S</span><span>sagar<span class="brand-dot">.</span></span></a>
-    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-    <nav class="nav">
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-navigation">☰</button>
+    <button class="nav-backdrop" type="button" aria-label="Close navigation" tabindex="-1"></button>
+    <nav class="nav" id="site-navigation" aria-hidden="true">
       <a href="profile.html">About</a><a href="#projects">Projects</a><a href="#journey">Journey</a><a href="#skills">Skills</a>
       <a class="nav-contact" href="#contact">Let's connect <span>↗</span></a>
     </nav>
@@ -56,31 +57,27 @@
     <section class="section-wrap projects-section" id="projects">
       <div class="section-heading reveal"><span class="section-kicker">SELECTED WORK</span><h2>Projects & <span class="gradient-text">experiments.</span></h2><p>Academic work, prototypes, and ideas in progress. Project stages are labelled honestly.</p></div>
       <div class="project-filters reveal" role="group" aria-label="Filter projects">
-        <button class="filter active" data-filter="all">All work <span>8</span></button>
+        <button class="filter active" data-filter="all">All work</button>
         <button class="filter" data-filter="Full-stack">Full-stack</button>
         <button class="filter" data-filter="AI">AI & ML</button>
         <button class="filter" data-filter="systems">Systems & IoT</button>
       </div>
       <div class="project-grid">
-        <article class="project-card project-featured reveal" data-category="systems">
-          <div class="project-visual visual-green"><div class="visual-label">RESEARCH / IOT</div><div class="waste-flow"><span>FOOD WASTE</span><b>→</b><span>SMART SORTING</span><b>→</b><span>USEFUL OUTPUTS</span></div><div class="visual-bottom">BIOGAS · FERTILIZER · DONATION</div></div>
-          <div class="project-info"><div class="project-meta"><span>In progress</span><span class="project-type">Research concept</span></div><h3>IoT-Based Smart Food Waste Management</h3><p>A proposed sensor-enabled system to monitor food waste and guide it toward suitable outcomes: food donation, animal feed, biogas, or organic fertilizer. The research explores cloud monitoring and data-driven decision support.</p><div class="tag-row"><span>IoT</span><span>Cloud</span><span>ML concept</span><span>Sustainability</span></div></div>
+        <article class="project-card project-featured reveal" data-category="systems" data-details="A proposed sensor-enabled workflow for monitoring food waste and guiding it toward practical outcomes such as donation, animal feed, biogas, or fertilizer. The concept explores cloud monitoring and data-driven decision support.">
+          <div class="project-visual"><img class="project-image" src="food-waste-project.svg" alt="Illustration of food waste being collected, analysed, and reused"></div>
+          <div class="project-info"><div class="project-meta"><span>In progress</span><span class="project-type">Research concept</span></div><h3>IoT-Based Smart Food Waste Management</h3><p>A proposed sensor-enabled system to monitor food waste and guide it toward suitable outcomes: food donation, animal feed, biogas, or organic fertilizer. The research explores cloud monitoring and data-driven decision support.</p><div class="tag-row"><span>IoT</span><span>Cloud</span><span>ML concept</span><span>Sustainability</span></div><button class="project-details-button" type="button" aria-haspopup="dialog" aria-controls="project-dialog">View details <span>↗</span></button></div>
         </article>
-        <article class="project-card reveal" data-category="Full-Stack">
-          <div class="project-visual visual-blue"><div class="visual-label">HTML / CSS</div><div class="dash-mock"><div class="dash-top"><i></i><i></i><i></i></div><div class="dash-kpis"><span></span><span></span><span></span></div><div class="dash-chart"><i style="height:35%"></i><i style="height:58%"></i><i style="height:44%"></i><i style="height:82%"></i><i style="height:66%"></i><i style="height:94%"></i><i style="height:71%"></i></div></div></div>
-          <div class="project-info"><div class="project-meta"><span>Project work</span><span class="project-type">E-Learning</span></div><h3>Study Platform</h3><p>An project focused on Online study, it help to increase our knowledge and experience</p><div class="tag-row"><span>HTML</span><span>CSS</span><span>JAVA SCRIPT</span></div></div>
+        <article class="project-card reveal" data-category="Full-stack" data-details="An online learning platform concept focused on helping students find courses and study resources. The supplied screenshot shows the learning-homepage design and course-card layout.">
+          <div class="project-visual"><img class="project-image" src="E_Learning.png" alt="LearnHub e-learning homepage with course cards"></div>
+          <div class="project-info"><div class="project-meta"><span>Project work</span><span class="project-type">E-Learning</span></div><h3>Study Platform</h3><p>An online study platform concept designed to help learners discover courses and learning resources.</p><div class="tag-row"><span>HTML</span><span>CSS</span><span>JavaScript</span></div><button class="project-details-button" type="button" aria-haspopup="dialog" aria-controls="project-dialog">View details <span>↗</span></button></div>
         </article>
-        <article class="project-card reveal" data-category="DSA">
-          <div class="project-visual visual-violet"><div class="visual-label">Family Tree – Data Structures and Algorithms</div><div class="Display relationship"><div class="TREE Traversal">↗<small>Root, Parent, Child, Siblings, and Leaf Nodes.</small></div><div class="Family-tree"><i></i><i></i><i></i><i></i></div><div class="DSA"><i style="height:48%"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:86%"></i><i style="height:63%"></i></div></div></div>
-          <div class="project-info"><div class="project-meta"><span>Prototype</span><span class="project-type">Family-tree dashboard</span></div><h3></h3><p>A proposed interactive and Implemented tree concepts such as root, parent, child, siblings, and leaf nodes.</p><div class="tag-row"><span>Python</span><span>Binary Tree</span><span>Recursion</span></div></div>
+        <article class="project-card reveal" data-category="DSA" data-details="A family-tree visualization illustrating hierarchical relationships using tree concepts such as root, parent, child, siblings, and leaf nodes.">
+          <div class="project-visual"><img class="project-image" src="family%20tree.png" alt="Family tree diagram showing grandparents, parents, children, and other relatives"></div>
+          <div class="project-info"><div class="project-meta"><span>Prototype</span><span class="project-type">Family-tree dashboard</span></div><h3>Family Tree Visualization</h3><p>An interactive tree concept demonstrating relationships such as root, parent, child, siblings, and leaf nodes.</p><div class="tag-row"><span>Python</span><span>Binary Tree</span><span>Recursion</span></div><button class="project-details-button" type="button" aria-haspopup="dialog" aria-controls="project-dialog">View details <span>↗</span></button></div>
         </article>
-       <article class="project-card reveal" data-category="portfolio">
-          <div class="project-visual visual-orange"><div class="visual-label">Personal portfolio</div><div class="about"><span class="bridge"></span><span class="lens"></span><i class="sound-wave">)))</i></div><div class="visual-caption">SEE · DETECT · SPEAK</div></div>
-          <div class="project-info"><div class="project-meta"><span>2026 · Prototype concept</span><span class="project-type">Assistive technology</span></div><h3>Smart Assistive Eyeglasses</h3><p>A concept for camera-based object recognition and proximity alerts, with spoken feedback and optional vibration to help a visually impaired user understand nearby surroundings.</p><div class="tag-row"><span>Raspberry Pi</span><span>Computer vision</span><span>Voice output</span></div></div>
-        </article>
-        <article class="project-card reveal" data-category="ai systems">
-          <div class="project-visual visual-dark"><div class="visual-label">AI / EARLY-STAGE IDEA</div><div class="satellite"><span class="sat-panel"></span><span class="sat-body">✦</span><span class="sat-panel"></span><span class="signal signal-one"></span><span class="signal signal-two"></span></div><div class="visual-caption">DETECT → ANALYSE → ALERT</div></div>
-          <div class="project-info"><div class="project-meta"><span>2026 · Concept stage</span><span class="project-type">Alert system</span></div><h3>Satellite-Based Instant Alert System</h3><p>An early-stage idea exploring satellite information, AI models, and a notification workflow to help deliver timely alerts about important events. Data sources and feasibility need validation.</p><div class="tag-row"><span>AI / ML</span><span>Satellite data</span><span>Notifications</span></div></div>
+        <article class="project-card reveal" data-category="AI systems" data-details="An early-stage idea exploring how satellite information and AI models could support timely event alerts. The data sources, model approach, and feasibility still need validation.">
+          <div class="project-visual"><img class="project-image" src="satellite-alert-project.svg" alt="Illustration of a satellite analysing signals and issuing an alert"></div>
+          <div class="project-info"><div class="project-meta"><span>2026 · Concept stage</span><span class="project-type">Alert system</span></div><h3>Satellite-Based Instant Alert System</h3><p>An early-stage idea exploring satellite information, AI models, and a notification workflow to help deliver timely alerts about important events. Data sources and feasibility need validation.</p><div class="tag-row"><span>AI / ML</span><span>Satellite data</span><span>Notifications</span></div><button class="project-details-button" type="button" aria-haspopup="dialog" aria-controls="project-dialog">View details <span>↗</span></button></div>
         </article>
       </div>
       <p class="project-footnote">Project descriptions reflect the current scope and stage of each idea. Add GitHub repositories, demos, and exact completion dates as they become available.</p>
@@ -91,7 +88,7 @@
       <div class="timeline">
         <div class="timeline-item reveal"><div class="timeline-date">2025–2026</div><div class="timeline-marker"></div><div class="timeline-content"><span class="timeline-label">ACADEMIC & WEB PROJECTS</span><h3>Built foundations through practice</h3><p>Worked on Python problem-solving, BFS/DFS maze search, web interface concepts, and neural-network lab exercises.</p></div></div>
         <div class="timeline-item reveal"><div class="timeline-date">2026</div><div class="timeline-marker"></div><div class="timeline-content"><span class="timeline-label">DATA & VISUALIZATION</span><h3>Explored analytics dashboards</h3><p>Developed project ideas around Power BI reporting and healthcare data visualization, focusing on KPIs, filters, and understandable charts.</p></div></div>
-        <div class="timeline-item reveal"><div class="timeline-date">2026</div><div class="timeline-marker"></div><div class="timeline-content"><span class="timeline-label">RESEARCH & PROTOTYPING</span><h3>Connected technology with real-world needs</h3><p>Explored smart food-waste management, assistive eyeglasses, and an AI-assisted alert-system concept.</p></div></div>
+        <div class="timeline-item reveal"><div class="timeline-date">2026</div><div class="timeline-marker"></div><div class="timeline-content"><span class="timeline-label">RESEARCH & PROTOTYPING</span><h3>Connected technology with real-world needs</h3><p>Explored smart food-waste management and an AI-assisted alert-system concept.</p></div></div>
         <div class="timeline-item timeline-current reveal"><div class="timeline-date">NEXT</div><div class="timeline-marker"></div><div class="timeline-content"><span class="timeline-label">CURRENT DIRECTION</span><h3>Deepen data analytics & data science</h3><p>Keep strengthening Python, SQL, data visualization, and machine-learning fundamentals while documenting projects with working demos.</p></div></div>
       </div>
     </section>
@@ -105,9 +102,21 @@
       </div>
     </section>
 
-    <section class="contact-section" id="contact"><div class="section-wrap contact-inner reveal"><span class="section-kicker">SAY HELLO</span><h2>Have an idea?<br><span class="gradient-text">Let's make it useful.</span></h2><p>I'm open to learning opportunities, collaborations, and entry-level roles related to data analytics and data science.</p><a class="button button-primary" href="mailto:guptasagar2201@gmail.com">Email me <span>↗</span></a><div class="contact-email">guptasagar2201@gmail.com</div></div></section>
+    <section class="contact-section" id="contact"><div class="section-wrap contact-inner reveal"><span class="section-kicker">SAY HELLO</span><h2>Have an idea?<br><span class="gradient-text">Let's make it useful.</span></h2><p>I'm open to learning opportunities, collaborations, and entry-level roles related to full-Stack and data science.</p><a class="button button-primary" href="mailto:guptasagar2201@gmail.com">Email me <span>↗</span></a><a class="button button-primary" href="https://wa.me/+919354707042"> Whatsapp <span>↗</span></a><a class="button button-quiet" href="https://github.com/Sagar-clou" target="_blank" rel="noopener noreferrer">GitHub <span>↗</span></a></div></section>
   </main>
-  <footer class="footer"><div class="section-wrap footer-inner"><a class="brand" href="profile.html"><span class="brand-mark">S</span><span>saagar<span class="brand-dot">.</span></span></a><span>Designed with curiosity · © <span id="year">2026</span> Saagar Gupta</span><a href="#home" class="back-top">Back to top ↑</a></div></footer>
+  <footer class="footer"><div class="section-wrap footer-inner"><a class="brand" href="profile.html"><span class="brand-mark">SG</span><span>sagar Gupta<span class="brand-dot">.</span></span></a><a class="footer-email" href="mailto:guptasagar2201@gmail.com">guptasagar2201@gmail.com</a><a href="#home" class="back-top">Back to top ↑</a></div></footer>
+  <dialog class="project-dialog" id="project-dialog" aria-labelledby="project-dialog-title">
+    <div class="project-dialog-layout">
+      <div class="project-dialog-visual"></div>
+      <div class="project-dialog-content">
+        <button class="project-dialog-close" type="button" aria-label="Close project details">×</button>
+        <div class="project-meta"><span class="project-dialog-status"></span><span class="project-type project-dialog-type"></span></div>
+        <h2 id="project-dialog-title"></h2>
+        <p class="project-dialog-description"></p>
+        <div class="tag-row project-dialog-tags"></div>
+      </div>
+    </div>
+  </dialog>
   <script src="script.js"></script>
 </body>
 </html>
