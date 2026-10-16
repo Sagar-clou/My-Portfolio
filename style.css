@@ -1012,7 +1012,7 @@ body:before {
   .nav {
     position: fixed;
     top: 0;
-    left: 0;
+    right: 0;
     bottom: 0;
     width: min(84vw, 340px);
     height: 100vh;
@@ -1023,9 +1023,9 @@ body:before {
     padding: 78px 22px 30px;
     overflow-y: auto;
     background: #fff;
-    border-right: 1px solid #e2e5ef;
-    box-shadow: 18px 0 45px #25294520;
-    transform: translateX(-100%);
+    border-left: 1px solid #e2e5ef;
+    box-shadow: -18px 0 45px #25294520;
+    transform: translateX(100%);
     visibility: hidden;
     transition: transform .28s ease, visibility .28s;
     z-index: 1001;
