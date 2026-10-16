@@ -1,33 +1,32 @@
 const menuButton = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
 const navBackdrop = document.querySelector('.nav-backdrop');
-const closeNavigation = () => {
-  nav?.classList.remove('open');
-  nav?.setAttribute('aria-hidden', 'true');
-  navBackdrop?.classList.remove('open');
-  nav?.closest('.topbar')?.classList.remove('drawer-active');
-  document.body.classList.remove('menu-open');
-  menuButton?.setAttribute('aria-expanded', 'false');
-  menuButton?.setAttribute('aria-label', 'Open navigation');
-  if (menuButton) menuButton.textContent = '☰';
-};
-menuButton?.addEventListener('click', () => {
-  const open = !nav.classList.contains('open');
-  if (open) {
-    nav.classList.add('open');
-    nav.setAttribute('aria-hidden', 'false');
-    navBackdrop?.classList.add('open');
-    nav.closest('.topbar')?.classList.add('drawer-active');
-    document.body.classList.add('menu-open');
-    menuButton.setAttribute('aria-label', 'Close navigation');
-    menuButton.textContent = '×';
-    nav.querySelector('a')?.focus();
-  } else {
-    closeNavigation();
-  }
+const setNavigationOpen = open => {
+  if (!menuButton || !nav || !navBackdrop) return;
+
+  nav.classList.toggle('open', open);
+  nav.setAttribute('aria-hidden', String(!open && window.innerWidth <= 768));
+  navBackdrop.classList.toggle('open', open);
+  nav.closest('.topbar')?.classList.toggle('drawer-active', open);
+  document.body.classList.toggle('menu-open', open);
   menuButton.setAttribute('aria-expanded', String(open));
-});
-navBackdrop?.addEventListener('click', closeNavigation);
+  menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+  menuButton.textContent = open ? '×' : '☰';
+};
+const closeNavigation = () => {
+  setNavigationOpen(false);
+};
+if (menuButton && nav && navBackdrop) {
+  closeNavigation();
+  menuButton.addEventListener('click', () => {
+    const open = !nav.classList.contains('open');
+    setNavigationOpen(open);
+    if (open) {
+      nav.querySelector('a')?.focus();
+    }
+  });
+  navBackdrop.addEventListener('click', closeNavigation);
+}
 document.querySelectorAll('.nav a').forEach(link => link.addEventListener('click', () => {
   closeNavigation();
 }));
@@ -37,6 +36,7 @@ document.addEventListener('keydown', event => {
     menuButton?.focus();
   }
 });
+window.addEventListener('resize', closeNavigation);
 
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
