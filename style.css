@@ -3019,3 +3019,12 @@ body.profile-page .social-fab:hover {
   body.profile-page .social-fab:hover {
     background: #426b92;
   }
+
+  body button,
+  body .button,
+  body .pill,
+  body .nav-contact,
+  body .social-fab {
+    background-color: #fff !important;
+    color: #234e78 !important;
+  }
