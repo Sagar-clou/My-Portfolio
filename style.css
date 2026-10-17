@@ -2432,3 +2432,386 @@ body.profile-page .social-fab:hover {
     background: #080907c9;
   }
 }
+
+  body:not(.profile-page) {
+    --bg: #f8f6ef;
+    --ink: #20231d;
+    --muted: #686b62;
+    --line: #e8e3d7;
+    --blue: #426b4d;
+    --cyan: #6d9b70;
+    background: #f8f6ef;
+    color: var(--ink);
+  }
+
+  body:not(.profile-page):before {
+    background-image: radial-gradient(#75836b 0.55px, transparent 0.55px);
+    opacity: .09;
+  }
+
+  body:not(.profile-page) .ambient-one {
+    background: #b6c9a3;
+    opacity: .2;
+  }
+
+  body:not(.profile-page) .ambient-two {
+    background: #d5c5a0;
+    opacity: .18;
+  }
+
+  body:not(.profile-page) .topbar {
+    border-color: #24291a16;
+    background: #f8f6efeb;
+  }
+
+  body:not(.profile-page) .brand,
+  body:not(.profile-page) .footer .brand {
+    color: #20231d;
+  }
+
+  body:not(.profile-page) .brand-mark {
+    background: linear-gradient(135deg, #31533c, #719a68);
+    color: #fff;
+  }
+
+  body:not(.profile-page) .brand-dot,
+  body:not(.profile-page) .nav-contact span,
+  body:not(.profile-page) .nav a:hover,
+  body:not(.profile-page) .meta-icon {
+    color: #426b4d;
+  }
+
+  body:not(.profile-page) .nav a {
+    color: #62665c;
+  }
+
+  body:not(.profile-page) .nav .nav-contact,
+  body:not(.profile-page) .button-quiet {
+    border-color: #dedace;
+    background: #fffdf7b8;
+    color: #20231d;
+  }
+
+  body:not(.profile-page) .eyebrow {
+    border-color: #426b4d35;
+    background: #ffffffa8;
+    color: #426b4d;
+  }
+
+  body:not(.profile-page) .hero h1,
+  body:not(.profile-page) .hero-proof strong,
+  body:not(.profile-page) .section-heading h2,
+  body:not(.profile-page) .contact-inner h2 {
+    color: #20231d;
+  }
+
+  body:not(.profile-page) .gradient-text {
+    background: linear-gradient(100deg, #31533c 5%, #5c8657 55%, #57929a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  body:not(.profile-page) .hero-lead,
+  body:not(.profile-page) .hero-meta,
+  body:not(.profile-page) .section-heading > p,
+  body:not(.profile-page) .about-text,
+  body:not(.profile-page) .about-note p,
+  body:not(.profile-page) .project-info p,
+  body:not(.profile-page) .timeline-content p,
+  body:not(.profile-page) .contact-inner p {
+    color: #686b62;
+  }
+
+  body:not(.profile-page) .hero-lead strong {
+    color: #20231d;
+  }
+
+  body:not(.profile-page) .button-primary {
+    background: #31533c;
+    color: #fff;
+    box-shadow: 0 8px 24px #31533c20;
+  }
+
+  body:not(.profile-page) .button-primary:hover {
+    box-shadow: 0 12px 30px #31533c35;
+  }
+
+  body:not(.profile-page) .button-primary span {
+    color: #d4e6b8;
+  }
+
+  body:not(.profile-page) .button-quiet span {
+    color: #426b4d;
+  }
+
+  body:not(.profile-page) .hero-proof {
+    border-color: #24291a1c;
+  }
+
+  body:not(.profile-page) .hero-proof span,
+  body:not(.profile-page) .tiny-label,
+  body:not(.profile-page) .card-bottom,
+  body:not(.profile-page) .scroll-cue,
+  body:not(.profile-page) .project-footnote,
+  body:not(.profile-page) .back-top,
+  body:not(.profile-page) .footer-email {
+    color: #818277;
+  }
+
+  body:not(.profile-page) .orbit {
+    border-color: #426b4d25;
+  }
+
+  body:not(.profile-page) .orbit-b {
+    border-color: #77948d38;
+  }
+
+  body:not(.profile-page) .profile-card {
+    border-color: #ffffff;
+    background: linear-gradient(145deg, #fffefa, #f0eee4);
+    box-shadow: 0 30px 80px #594f351b, 0 5px 20px #232a4510;
+  }
+
+  body:not(.profile-page) .live-pill {
+    background: #eaf4e8;
+    color: #426b4d;
+  }
+
+  body:not(.profile-page) .avatar {
+    border-color: #fff;
+    background: #e6eadf;
+    box-shadow: 0 8px 24px #31533c30;
+  }
+
+  body:not(.profile-page) .avatar-spark {
+    color: #b18a45;
+  }
+
+  body:not(.profile-page) .profile-card h2 span,
+  body:not(.profile-page) .profile-card p {
+    color: #686b62;
+  }
+
+  body:not(.profile-page) .focus-tags span,
+  body:not(.profile-page) .note-icon,
+  body:not(.profile-page) .skill-icon {
+    background: #e9efe3;
+    color: #31533c;
+  }
+
+  body:not(.profile-page) .card-bottom {
+    border-color: #e7e3d9;
+  }
+
+  body:not(.profile-page) .section-kicker,
+  body:not(.profile-page) .timeline-label {
+    color: #426b4d;
+  }
+
+  body:not(.profile-page) .about-note,
+  body:not(.profile-page) .project-card,
+  body:not(.profile-page) .skill-group {
+    border-color: #e6e1d6;
+    background: #fffdf8e8;
+  }
+
+  body:not(.profile-page) .about-note b,
+  body:not(.profile-page) .skill-group h3,
+  body:not(.profile-page) .timeline-content h3,
+  body:not(.profile-page) .project-info h3 {
+    color: #20231d;
+  }
+
+  body:not(.profile-page) .filter {
+    border-color: #dedace;
+    background: #fffdf7b8;
+    color: #686b62;
+  }
+
+  body:not(.profile-page) .filter.active,
+  body:not(.profile-page) .filter:hover {
+    border-color: #31533c;
+    background: #31533c;
+    color: #fff;
+  }
+
+  body:not(.profile-page) .project-card:hover {
+    border-color: #91a886;
+    box-shadow: 0 18px 40px #25294512;
+  }
+
+  body:not(.profile-page) .project-visual,
+  body:not(.profile-page) .project-dialog-visual {
+    background: #f0eee5;
+  }
+
+  body:not(.profile-page) .project-meta {
+    color: #818277;
+  }
+
+  body:not(.profile-page) .project-type {
+    background: #e9efe3;
+    color: #31533c;
+  }
+
+  body:not(.profile-page) .tag-row span,
+  body:not(.profile-page) .skill-pills span {
+    border-color: #e6e1d6;
+    background: #f7f5ee;
+    color: #62665c;
+  }
+
+  body:not(.profile-page) .project-details-button {
+    border-color: #d8dfd1;
+    background: #fffefa;
+    color: #31533c;
+  }
+
+  body:not(.profile-page) .project-details-button:hover {
+    border-color: #91a886;
+    background: #f1f5ed;
+  }
+
+  body:not(.profile-page) .timeline-date {
+    color: #818277;
+  }
+
+  body:not(.profile-page) .timeline-marker:before {
+    background: #d9d7ca;
+  }
+
+  body:not(.profile-page) .timeline-marker:after {
+    border-color: #f8f6ef;
+    background: #426b4d;
+    box-shadow: 0 0 0 1px #91a886;
+  }
+
+  body:not(.profile-page) .timeline-current .timeline-marker:after {
+    background: #6d9b70;
+    box-shadow: 0 0 0 1px #a9c7a3;
+  }
+
+  body:not(.profile-page) .contact-section {
+    border-color: #e5e0d5;
+    background: #f1efe6;
+  }
+
+  body:not(.profile-page) .contact-section:after {
+    border-color: #426b4d28;
+    box-shadow: 0 0 0 35px #426b4d08, 0 0 0 70px #426b4d05;
+  }
+
+  body:not(.profile-page) .footer {
+    background: #f8f6ef;
+  }
+
+  body:not(.profile-page) .back-top:hover,
+  body:not(.profile-page) .footer-email:hover {
+    color: #426b4d;
+  }
+
+  body:not(.profile-page) .social-fab {
+    border-color: #e5e0d5;
+    background: #fffdf8;
+    color: #31533c;
+  }
+
+  body:not(.profile-page) .social-fab:hover {
+    background: #31533c;
+    color: #fff;
+  }
+
+  body:not(.profile-page) .chat-toggle {
+    background: #31533c;
+    color: #fff;
+    box-shadow: 0 8px 24px #31533c35;
+  }
+
+  body:not(.profile-page) .chat-toggle-icon {
+    color: #d4e6b8;
+  }
+
+  body:not(.profile-page) .chat-panel,
+  body:not(.profile-page) .project-dialog {
+    border-color: #e5e0d5;
+    background: #fffdf8;
+    color: #20231d;
+  }
+
+  body:not(.profile-page) .chat-header,
+  body:not(.profile-page) .chat-message-assistant {
+    border-color: #e8e3d7;
+    background: #f5f3eb;
+  }
+
+  body:not(.profile-page) .chat-header h2,
+  body:not(.profile-page) .chat-message-assistant {
+    color: #20231d;
+  }
+
+  body:not(.profile-page) .chat-header p,
+  body:not(.profile-page) .chat-close {
+    color: #686b62;
+  }
+
+  body:not(.profile-page) .chat-close:hover {
+    background: #ebe8de;
+    color: #20231d;
+  }
+
+  body:not(.profile-page) .chat-message-user,
+  body:not(.profile-page) .chat-form button {
+    background: #31533c;
+    color: #fff;
+  }
+
+  body:not(.profile-page) .chat-link {
+    color: #31533c;
+  }
+
+  body:not(.profile-page) .chat-suggestions button,
+  body:not(.profile-page) .chat-form input {
+    border-color: #dedace;
+    background: #fffefa;
+    color: #20231d;
+  }
+
+  body:not(.profile-page) .chat-suggestions button:hover {
+    border-color: #6d9b70;
+    background: #f1f5ed;
+  }
+
+  body:not(.profile-page) .chat-form {
+    border-color: #e8e3d7;
+  }
+
+  body:not(.profile-page) .project-dialog::backdrop {
+    background: #26271f99;
+  }
+
+  body:not(.profile-page) .project-dialog-close {
+    border-color: #e5e0d5;
+    background: #fffdf8;
+    color: #20231d;
+  }
+
+  body:not(.profile-page) .project-dialog-description {
+    color: #686b62;
+  }
+
+  @media (max-width: 768px) {
+    body:not(.profile-page) .nav {
+      border-color: #e5e0d5;
+      background: #fffdf8;
+    }
+
+    body:not(.profile-page) .menu-toggle {
+      border-color: #dedace;
+      background: #fffdf8;
+      color: #20231d;
+    }
+
+    body:not(.profile-page) .nav-backdrop {
+      background: #26271f80;
+    }
+  }
