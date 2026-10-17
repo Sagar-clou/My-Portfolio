@@ -1227,11 +1227,11 @@ body:before {
 }
 
 body.profile-page {
-  --bg: #10110f;
-  --line: #ffffff1c;
-  --text: #f4f1e8;
-  --muted: #aaa99e;
-  --blue: #426b92;
+  --bg: #f8f6ef;
+  --line: #e8e3d7;
+  --text: #20231d;
+  --muted: #686b62;
+  --blue: #234e78;
   background: var(--bg);
   color: var(--text);
   line-height: normal;
@@ -1555,7 +1555,7 @@ body.profile-page .topbar {
   padding: 0 max(4.5vw, 20px);
   position: sticky;
   top: 0;
-  background: #10110fe8;
+  background: #f8f6efeb;
   backdrop-filter: blur(14px);
   z-index: 5;
 }
@@ -1578,18 +1578,18 @@ body.profile-page .mark {
 }
 body.profile-page .nav {
   gap: 28px;
-  color: #c2c0b5;
+  color: #62665c;
   font-size: 14px;
 }
 body.profile-page .nav a:hover,
 body.profile-page .nav .active { color: var(--blue); }
 body.profile-page .nav a { color: inherit; font-size: inherit; font-weight: 400; }
-body.profile-page .connect {
+body.profile-page .nav .connect {
   padding: 10px 18px;
-  border: 1px solid #ffffff24;
+  border: 1px solid #e8e3d7;
   border-radius: 28px;
   background: #fff;
-  color: #234e78;
+  color: #20231d;
 }
 body.profile-page .wrap { width: min(1160px, 91%); margin: auto; }
 body.profile-page .intro {
@@ -1605,8 +1605,8 @@ body.profile-page .portrait {
   object-fit: cover;
   object-position: center 28%;
   border-radius: 26px;
-  border: 1px solid #ffffff24;
-  box-shadow: 0 20px 55px #0005, 0 0 50px #426b920c;
+  border: 1px solid #e8e3d7;
+  box-shadow: 0 20px 55px #25294520, 0 0 50px #426b920c;
 }
 body.profile-page .hello {
   display: inline-block;
@@ -1625,7 +1625,7 @@ body.profile-page .grad {
   color: transparent;
   background-clip: text;
 }
-body.profile-page .roles { font-size: 18px; color: #c2c0b5; margin: 0 0 20px; }
+body.profile-page .roles { font-size: 18px; color: #686b62; margin: 0 0 20px; }
 body.profile-page .intro p {
   line-height: 1.7;
   color: var(--muted);
@@ -1643,10 +1643,10 @@ body.profile-page .pill {
   justify-content: center;
   gap: 8px;
   padding: 11px 16px;
-  border: 1px solid #ffffff24;
+  border: 1px solid #e8e3d7;
   border-radius: 24px;
   background: #fff;
-  color: #234e78;
+  color: #20231d;
 }
 body.profile-page .grid {
   display: grid;
@@ -1655,7 +1655,7 @@ body.profile-page .grid {
   padding: 8px 0 40px;
 }
 body.profile-page .card {
-  background: #191a16e8;
+  background: #fffdf8;
   border: 1px solid var(--line);
   border-radius: 19px;
   padding: 23px;
@@ -1674,7 +1674,7 @@ body.profile-page .edu-logo {
   height: 92px;
   flex-shrink: 0;
   border-radius: 12px;
-  background: #10110f;
+  background: #f0eee5;
   color: #b92e34;
   display: grid;
   place-items: center;
@@ -1684,19 +1684,19 @@ body.profile-page .edu-logo {
   padding: 8px;
 }
 body.profile-page .institution-subtitle { font-size: 10px; font-weight: 500; }
-body.profile-page .small { font-size: 13px; color: #929389; }
+body.profile-page .small { font-size: 13px; color: #686b62; }
 body.profile-page .kv {
   display: grid;
   grid-template-columns: 110px 1fr;
   gap: 12px;
   margin: 12px 0;
-  color: #c2c0b5;
+  color: #20231d;
 }
-body.profile-page .kv span:first-child { color: #929389; }
+body.profile-page .kv span:first-child { color: #686b62; }
 body.profile-page .tags { display: flex; gap: 9px; flex-wrap: wrap; }
 body.profile-page .tag {
   background: #426b9210;
-  border: 1px solid #ffffff1c;
+  border: 1px solid #e8e3d7;
   padding: 9px 13px;
   border-radius: 24px;
   font-size: 13px;
@@ -1704,14 +1704,14 @@ body.profile-page .tag {
 }
 body.profile-page .footer {
   text-align: center;
-  color: #657b91;
+  color: #686b62;
   border-top: 1px solid var(--line);
-  background: #10110f;
+  background: #f8f6ef;
   padding: 22px;
   margin-top: 4px;
   font-size: 13px;
 }
-body.profile-page .back { color: #426b92; }
+body.profile-page .back { color: #20231d; }
 @media(max-width: 760px) {
 body.profile-page .topbar { padding: 0 16px; }
 body.profile-page .intro { grid-template-columns: 1fr; gap: 22px; padding-top: 24px; }
@@ -1821,8 +1821,8 @@ body.profile-page .nav-backdrop {
 
 @media (max-width: 768px) {
   body.profile-page .nav {
-    background: #191a16;
-    border-color: #ffffff1c;
+    background: #fffdf8;
+    border-color: #e8e3d7;
   }
 }
 
@@ -1864,14 +1864,14 @@ body .pill,
 body .nav .nav-contact,
 body .social-fab {
   background-color: #fff;
-  color: #234e78;
+  color: #20231d;
 }
 
 body .filter.active,
 body .filter:hover {
   border-color: #234e78;
   background: #fff;
-  color: #234e78;
+  color: #20231d;
 }
 
 body .button-primary:hover,
@@ -1885,5 +1885,5 @@ body .chat-form button:hover,
 body .chat-suggestions button:hover,
 body .project-details-button:hover {
   background-color: #fff;
-  color: #234e78;
+  color: #20231d;
 }
