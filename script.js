@@ -98,7 +98,9 @@ if (projectDialog) {
         item.append(actionText, technologyTag);
         return item;
       });
-      projectDialog.querySelector('.project-flow').replaceChildren(...flowSteps);
+      const projectFlow = projectDialog.querySelector('.project-flow');
+      projectFlow.style.setProperty('--project-flow-count', flowSteps.length);
+      projectFlow.replaceChildren(...flowSteps);
       projectDialog.querySelector('.project-dialog-tags').replaceChildren(
         ...Array.from(card.querySelectorAll('.tag-row span'), tag => tag.cloneNode(true))
       );
