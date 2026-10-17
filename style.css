@@ -2819,3 +2819,203 @@ body.profile-page .social-fab:hover {
       background: #26271f80;
     }
   }
+
+  .status-dot,
+  .live-pill span {
+    background: #315b86;
+    box-shadow: 0 0 0 4px #315b8620;
+  }
+
+  .live-pill span {
+    box-shadow: none;
+  }
+
+  body:not(.profile-page) {
+    --blue: #234e78;
+    --cyan: #608bb4;
+  }
+
+  body:not(.profile-page) .ambient-one {
+    background: #a9c2dc;
+  }
+
+  body:not(.profile-page) .brand-mark {
+    background: linear-gradient(135deg, #183b60, #547da6);
+  }
+
+  body:not(.profile-page) .brand-dot,
+  body:not(.profile-page) .nav-contact span,
+  body:not(.profile-page) .nav a:hover,
+  body:not(.profile-page) .meta-icon,
+  body:not(.profile-page) .button-quiet span {
+    color: #234e78;
+  }
+
+  body:not(.profile-page) .eyebrow {
+    border-color: #315b8635;
+    color: #234e78;
+  }
+
+  body:not(.profile-page) .gradient-text {
+    background: linear-gradient(100deg, #183b60 5%, #315b86 55%, #547da6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  body:not(.profile-page) .button-primary {
+    background: #234e78;
+    box-shadow: 0 8px 24px #234e7820;
+  }
+
+  body:not(.profile-page) .button-primary:hover {
+    box-shadow: 0 12px 30px #234e7835;
+  }
+
+  body:not(.profile-page) .button-primary span {
+    color: #d9e5f1;
+  }
+
+  body:not(.profile-page) .orbit {
+    border-color: #426b9225;
+  }
+
+  body:not(.profile-page) .orbit-b {
+    border-color: #587fa638;
+  }
+
+  body:not(.profile-page) .profile-card {
+    box-shadow: 0 30px 80px #594f351b, 0 5px 20px #232a4510;
+  }
+
+  body:not(.profile-page) .live-pill {
+    background: #e8eff6;
+    color: #234e78;
+  }
+
+  body:not(.profile-page) .avatar {
+    border-color: #426b92;
+    box-shadow: 0 0 32px #426b9224;
+  }
+
+  body:not(.profile-page) .focus-tags span,
+  body:not(.profile-page) .note-icon,
+  body:not(.profile-page) .skill-icon {
+    background: #e8eff6;
+    color: #234e78;
+  }
+
+  body:not(.profile-page) .section-kicker,
+  body:not(.profile-page) .timeline-label {
+    color: #234e78;
+  }
+
+  body:not(.profile-page) .filter.active,
+  body:not(.profile-page) .filter:hover {
+    border-color: #234e78;
+    background: #234e78;
+  }
+
+  body:not(.profile-page) .project-type {
+    background: #e8eff6;
+    color: #234e78;
+  }
+
+  body:not(.profile-page) .project-details-button {
+    color: #234e78;
+  }
+
+  body:not(.profile-page) .timeline-marker:after {
+    background: #426b92;
+    box-shadow: 0 0 0 1px #91a9c0;
+  }
+
+  body:not(.profile-page) .timeline-current .timeline-marker:after {
+    background: #608bb4;
+    box-shadow: 0 0 0 1px #a9c2dc;
+  }
+
+  body:not(.profile-page) .contact-section:after {
+    border-color: #426b9228;
+    box-shadow: 0 0 0 35px #426b9208, 0 0 0 70px #426b9205;
+  }
+
+  body:not(.profile-page) .back-top:hover,
+  body:not(.profile-page) .footer-email:hover {
+    color: #234e78;
+  }
+
+  body:not(.profile-page) .social-fab,
+  body:not(.profile-page) .chat-link {
+    color: #234e78;
+  }
+
+  body:not(.profile-page) .social-fab:hover {
+    background: #234e78;
+  }
+
+  body:not(.profile-page) .chat-toggle,
+  body:not(.profile-page) .chat-message-user,
+  body:not(.profile-page) .chat-form button {
+    background: #234e78;
+  }
+
+  body:not(.profile-page) .chat-toggle {
+    box-shadow: 0 8px 24px #234e7835;
+  }
+
+  body:not(.profile-page) .chat-toggle-icon {
+    color: #d9e5f1;
+  }
+
+  body:not(.profile-page) .chat-suggestions button:hover {
+    border-color: #608bb4;
+  }
+
+  body.profile-page {
+    --blue: #426b92;
+    --cyan: #608bb4;
+  }
+
+  body.profile-page .mark {
+    background: linear-gradient(135deg, #183b60, #547da6);
+    color: #fff;
+  }
+
+  body.profile-page .nav a:hover,
+  body.profile-page .nav .active,
+  body.profile-page .back {
+    color: #426b92;
+  }
+
+  body.profile-page .connect,
+  body.profile-page .hello {
+    border-color: #426b9235;
+    background: #426b920b;
+    color: #426b92;
+  }
+
+  body.profile-page .grad {
+    background: linear-gradient(100deg, #183b60 5%, #315b86 55%, #547da6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  body.profile-page .pill:hover,
+  body.profile-page .pill.primary:hover {
+    border-color: #426b92;
+    background: #426b9210;
+    color: #426b92;
+  }
+
+  body.profile-page .tag {
+    background: #426b9210;
+    color: #426b92;
+  }
+
+  body.profile-page .social-fab {
+    color: #426b92;
+  }
+
+  body.profile-page .social-fab:hover {
+    background: #426b92;
+  }
