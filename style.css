@@ -518,9 +518,6 @@ body:before {
   height: 200px;
   position: relative;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .project-image {
@@ -1026,9 +1023,6 @@ body .project-image-trigger {
   }
   .project-featured .project-visual {
     min-height: 220px;
-  }
-  .about-grid {
-    gap: 25px;
   }
   .nav {
     gap: 17px;
@@ -1883,27 +1877,6 @@ body .social-link-whatsapp:hover {
 
 body .social-link-github,
 body .social-link-github:hover {
-  border-color: transparent;
-  background-color: #292d35;
-  color: #fff;
-}
-
-body.profile-page .pill.social-link-email,
-body.profile-page .pill.social-link-email:hover {
-  border-color: transparent;
-  background-color: #315b86;
-  color: #fff;
-}
-
-body.profile-page .pill.social-link-whatsapp,
-body.profile-page .pill.social-link-whatsapp:hover {
-  border-color: transparent;
-  background-color: #218c5b;
-  color: #fff;
-}
-
-body.profile-page .pill.social-link-github,
-body.profile-page .pill.social-link-github:hover {
   border-color: transparent;
   background-color: #292d35;
   color: #fff;
