@@ -1531,10 +1531,6 @@ body.profile-page a { color: inherit; text-decoration: none; }
 }
 
 @media (max-width: 620px) {
-  .social-fabs {
-    display: none;
-  }
-
   .contact-actions {
     gap: 10px;
   }
