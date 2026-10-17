@@ -2800,6 +2800,10 @@ body.profile-page .social-fab:hover {
   }
 
   @media (max-width: 768px) {
+    body:not(.profile-page) .topbar.drawer-active {
+      z-index: 1002;
+    }
+
     body:not(.profile-page) .nav {
       border-color: #e5e0d5;
       background: #fffdf8;
