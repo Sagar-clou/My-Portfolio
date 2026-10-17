@@ -1,6 +1,8 @@
 const menuButton = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
 const navBackdrop = document.querySelector('.nav-backdrop');
+if (window.lucide) window.lucide.createIcons();
+
 const setNavigationOpen = open => {
   if (!menuButton || !nav || !navBackdrop) return;
 
@@ -11,7 +13,12 @@ const setNavigationOpen = open => {
   document.body.classList.toggle('menu-open', open);
   menuButton.setAttribute('aria-expanded', String(open));
   menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-  menuButton.textContent = open ? '×' : '☰';
+  const menuIcon = document.createElement('i');
+  menuIcon.dataset.lucide = open ? 'x' : 'menu';
+  menuIcon.className = 'icon';
+  menuIcon.setAttribute('aria-hidden', 'true');
+  menuButton.replaceChildren(menuIcon);
+  if (window.lucide) window.lucide.createIcons();
 };
 const closeNavigation = () => {
   setNavigationOpen(false);
@@ -62,26 +69,41 @@ filters.forEach(button => button.addEventListener('click', () => {
 
 const projectDialog = document.querySelector('#project-dialog');
 if (projectDialog) {
-  const projectDialogVisual = projectDialog.querySelector('.project-dialog-visual');
-  const openProjectDetails = button => {
-    const card = button.closest('.project-card');
-    const visual = card.querySelector('.project-visual').cloneNode(true);
-    visual.querySelector('.project-image-trigger')?.remove();
-    const meta = card.querySelector('.project-meta');
-    projectDialogVisual.replaceChildren(visual);
-    projectDialog.querySelector('.project-dialog-status').textContent = meta.querySelector('span').textContent;
-    projectDialog.querySelector('.project-dialog-type').textContent = meta.querySelector('.project-type').textContent;
-    projectDialog.querySelector('#project-dialog-title').textContent = card.querySelector('h3').textContent;
-    projectDialog.querySelector('.project-dialog-description').textContent = card.dataset.details;
-    projectDialog.querySelector('.project-dialog-tags').replaceChildren(
-      ...Array.from(card.querySelectorAll('.tag-row span'), tag => tag.cloneNode(true))
-    );
-    projectDialog.showModal();
-  };
+  let projectTrigger;
 
-  document.querySelectorAll('.project-details-button, .project-image-trigger').forEach(button => {
+  document.querySelectorAll('.project-image-trigger').forEach(button => {
     button.addEventListener('click', () => {
-      openProjectDetails(button);
+      const card = button.closest('.project-card');
+      if (!card) return;
+
+      projectTrigger = button;
+      const meta = card.querySelector('.project-meta');
+      projectDialog.querySelector('.project-dialog-status').textContent = meta.querySelector('span').textContent;
+      projectDialog.querySelector('.project-dialog-type').textContent = meta.querySelector('.project-type').textContent;
+      projectDialog.querySelector('#project-dialog-title').textContent = card.querySelector('h3').textContent;
+      projectDialog.querySelector('.project-dialog-description').textContent = card.dataset.details;
+      const flowSteps = card.dataset.flow.split(';').map(step => {
+        const [action, technology] = step.split('|');
+        const item = document.createElement('li');
+        item.className = 'project-flow-step';
+
+        const actionText = document.createElement('span');
+        actionText.className = 'project-flow-action';
+        actionText.textContent = action;
+
+        const technologyTag = document.createElement('span');
+        technologyTag.className = 'project-flow-tech';
+        technologyTag.textContent = technology;
+
+        item.append(actionText, technologyTag);
+        return item;
+      });
+      projectDialog.querySelector('.project-flow').replaceChildren(...flowSteps);
+      projectDialog.querySelector('.project-dialog-tags').replaceChildren(
+        ...Array.from(card.querySelectorAll('.tag-row span'), tag => tag.cloneNode(true))
+      );
+      projectDialog.showModal();
+      projectDialog.querySelector('.project-dialog-close').focus();
     });
   });
 
@@ -89,6 +111,10 @@ if (projectDialog) {
   projectDialog.addEventListener('click', event => {
     if (event.target === projectDialog) projectDialog.close();
   });
+  projectDialog.addEventListener('keydown', event => {
+    if (event.key === 'Escape') projectDialog.close();
+  });
+  projectDialog.addEventListener('close', () => projectTrigger?.focus());
 }
 
 const chatToggle = document.querySelector('.chat-toggle');
