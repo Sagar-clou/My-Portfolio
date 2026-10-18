@@ -55,6 +55,20 @@ const revealObserver = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
+const socialFabs = document.querySelector('.social-fabs');
+if (socialFabs) {
+  let previousScrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    if (currentScrollY <= 0 || currentScrollY < previousScrollY) {
+      socialFabs.classList.remove('is-horizontal');
+    } else if (currentScrollY > previousScrollY) {
+      socialFabs.classList.add('is-horizontal');
+    }
+    previousScrollY = currentScrollY;
+  }, { passive: true });
+}
+
 const filters = document.querySelectorAll('.filter');
 const cards = document.querySelectorAll('.project-card');
 filters.forEach(button => button.addEventListener('click', () => {
@@ -71,41 +85,46 @@ const projectDialog = document.querySelector('#project-dialog');
 if (projectDialog) {
   let projectTrigger;
 
-  document.querySelectorAll('.project-image-trigger').forEach(button => {
-    button.addEventListener('click', () => {
-      const card = button.closest('.project-card');
-      if (!card) return;
+  const openProjectDialog = card => {
+    projectTrigger = card;
+    const meta = card.querySelector('.project-meta');
+    projectDialog.querySelector('.project-dialog-status').textContent = meta.querySelector('span').textContent;
+    projectDialog.querySelector('.project-dialog-type').textContent = meta.querySelector('.project-type').textContent;
+    projectDialog.querySelector('#project-dialog-title').textContent = card.querySelector('h3').textContent;
+    projectDialog.querySelector('.project-dialog-description').textContent = card.dataset.details;
+    const flowSteps = card.dataset.flow.split(';').map(step => {
+      const [action, technology] = step.split('|');
+      const item = document.createElement('li');
+      item.className = 'project-flow-step';
 
-      projectTrigger = button;
-      const meta = card.querySelector('.project-meta');
-      projectDialog.querySelector('.project-dialog-status').textContent = meta.querySelector('span').textContent;
-      projectDialog.querySelector('.project-dialog-type').textContent = meta.querySelector('.project-type').textContent;
-      projectDialog.querySelector('#project-dialog-title').textContent = card.querySelector('h3').textContent;
-      projectDialog.querySelector('.project-dialog-description').textContent = card.dataset.details;
-      const flowSteps = card.dataset.flow.split(';').map(step => {
-        const [action, technology] = step.split('|');
-        const item = document.createElement('li');
-        item.className = 'project-flow-step';
+      const actionText = document.createElement('span');
+      actionText.className = 'project-flow-action';
+      actionText.textContent = action;
 
-        const actionText = document.createElement('span');
-        actionText.className = 'project-flow-action';
-        actionText.textContent = action;
+      const technologyTag = document.createElement('span');
+      technologyTag.className = 'project-flow-tech';
+      technologyTag.textContent = technology;
 
-        const technologyTag = document.createElement('span');
-        technologyTag.className = 'project-flow-tech';
-        technologyTag.textContent = technology;
+      item.append(actionText, technologyTag);
+      return item;
+    });
+    const projectFlow = projectDialog.querySelector('.project-flow');
+    projectFlow.style.setProperty('--project-flow-count', flowSteps.length);
+    projectFlow.replaceChildren(...flowSteps);
+    projectDialog.querySelector('.project-dialog-tags').replaceChildren(
+      ...Array.from(card.querySelectorAll('.tag-row span'), tag => tag.cloneNode(true))
+    );
+    projectDialog.showModal();
+    projectDialog.querySelector('.project-dialog-close').focus();
+  };
 
-        item.append(actionText, technologyTag);
-        return item;
-      });
-      const projectFlow = projectDialog.querySelector('.project-flow');
-      projectFlow.style.setProperty('--project-flow-count', flowSteps.length);
-      projectFlow.replaceChildren(...flowSteps);
-      projectDialog.querySelector('.project-dialog-tags').replaceChildren(
-        ...Array.from(card.querySelectorAll('.tag-row span'), tag => tag.cloneNode(true))
-      );
-      projectDialog.showModal();
-      projectDialog.querySelector('.project-dialog-close').focus();
+  cards.forEach(card => {
+    card.addEventListener('click', () => openProjectDialog(card));
+    card.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openProjectDialog(card);
+      }
     });
   });
 
@@ -129,6 +148,7 @@ const chatInput = document.querySelector('#chat-input');
 if (chatToggle && chatPanel && chatClose && chatMessages && chatForm && chatInput) {
   const setChatOpen = open => {
     chatPanel.classList.toggle('open', open);
+    chatToggle.closest('.chat-widget').classList.toggle('chat-open', open);
     chatPanel.setAttribute('aria-hidden', String(!open));
     chatToggle.setAttribute('aria-expanded', String(open));
     chatToggle.setAttribute('aria-label', open ? 'Close portfolio assistant' : 'Open portfolio assistant');
