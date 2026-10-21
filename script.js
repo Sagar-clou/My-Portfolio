@@ -20,11 +20,8 @@ const setNavigationOpen = open => {
   menuButton.replaceChildren(menuIcon);
   if (window.lucide) window.lucide.createIcons();
 };
-const closeNavigation = () => {
-  setNavigationOpen(false);
-};
 if (menuButton && nav && navBackdrop) {
-  closeNavigation();
+  setNavigationOpen(false);
   menuButton.addEventListener('click', () => {
     const open = !nav.classList.contains('open');
     setNavigationOpen(open);
@@ -32,110 +29,34 @@ if (menuButton && nav && navBackdrop) {
       nav.querySelector('a')?.focus();
     }
   });
-  navBackdrop.addEventListener('click', closeNavigation);
+  navBackdrop.addEventListener('click', () => setNavigationOpen(false));
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+    setNavigationOpen(false);
+  }));
+  window.addEventListener('resize', () => setNavigationOpen(false));
 }
-document.querySelectorAll('.nav a').forEach(link => link.addEventListener('click', () => {
-  closeNavigation();
-}));
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && nav?.classList.contains('open')) {
-    closeNavigation();
-    menuButton?.focus();
-  }
-});
-window.addEventListener('resize', closeNavigation);
 
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+const revealElements = document.querySelectorAll('.reveal');
+if (revealElements.length) {
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealElements.forEach(el => revealObserver.observe(el));
+}
 
 const socialFabs = document.querySelector('.social-fabs');
 if (socialFabs) {
   let previousScrollY = window.scrollY;
   window.addEventListener('scroll', () => {
     const currentScrollY = window.scrollY;
-    if (currentScrollY <= 0 || currentScrollY < previousScrollY) {
-      socialFabs.classList.remove('is-horizontal');
-    } else if (currentScrollY > previousScrollY) {
-      socialFabs.classList.add('is-horizontal');
-    }
+    socialFabs.classList.toggle('is-horizontal', currentScrollY > 0 && currentScrollY > previousScrollY);
     previousScrollY = currentScrollY;
   }, { passive: true });
-}
-
-const filters = document.querySelectorAll('.filter');
-const cards = document.querySelectorAll('.project-card');
-filters.forEach(button => button.addEventListener('click', () => {
-  filters.forEach(item => item.classList.remove('active'));
-  button.classList.add('active');
-  const filter = button.dataset.filter;
-  cards.forEach(card => {
-    const categories = (card.dataset.category || '').split(' ');
-    card.classList.toggle('hidden', filter !== 'all' && !categories.includes(filter));
-  });
-}));
-
-const projectDialog = document.querySelector('#project-dialog');
-if (projectDialog) {
-  let projectTrigger;
-
-  const openProjectDialog = card => {
-    projectTrigger = card;
-    const meta = card.querySelector('.project-meta');
-    projectDialog.querySelector('.project-dialog-status').textContent = meta.querySelector('span').textContent;
-    projectDialog.querySelector('.project-dialog-type').textContent = meta.querySelector('.project-type').textContent;
-    projectDialog.querySelector('#project-dialog-title').textContent = card.querySelector('h3').textContent;
-    projectDialog.querySelector('.project-dialog-description').textContent = card.dataset.details;
-    const flowSteps = card.dataset.flow.split(';').map(step => {
-      const [action, technology] = step.split('|');
-      const item = document.createElement('li');
-      item.className = 'project-flow-step';
-
-      const actionText = document.createElement('span');
-      actionText.className = 'project-flow-action';
-      actionText.textContent = action;
-
-      const technologyTag = document.createElement('span');
-      technologyTag.className = 'project-flow-tech';
-      technologyTag.textContent = technology;
-
-      item.append(actionText, technologyTag);
-      return item;
-    });
-    const projectFlow = projectDialog.querySelector('.project-flow');
-    projectFlow.style.setProperty('--project-flow-count', flowSteps.length);
-    projectFlow.replaceChildren(...flowSteps);
-    projectDialog.querySelector('.project-dialog-tags').replaceChildren(
-      ...Array.from(card.querySelectorAll('.tag-row span'), tag => tag.cloneNode(true))
-    );
-    projectDialog.showModal();
-    projectDialog.querySelector('.project-dialog-close').focus();
-  };
-
-  cards.forEach(card => {
-    card.addEventListener('click', () => openProjectDialog(card));
-    card.addEventListener('keydown', event => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        openProjectDialog(card);
-      }
-    });
-  });
-
-  projectDialog.querySelector('.project-dialog-close').addEventListener('click', () => projectDialog.close());
-  projectDialog.addEventListener('click', event => {
-    if (event.target === projectDialog) projectDialog.close();
-  });
-  projectDialog.addEventListener('keydown', event => {
-    if (event.key === 'Escape') projectDialog.close();
-  });
-  projectDialog.addEventListener('close', () => projectTrigger?.focus());
 }
 
 const chatToggle = document.querySelector('.chat-toggle');
@@ -144,6 +65,7 @@ const chatClose = document.querySelector('.chat-close');
 const chatMessages = document.querySelector('#chat-messages');
 const chatForm = document.querySelector('.chat-form');
 const chatInput = document.querySelector('#chat-input');
+let closeChat;
 
 if (chatToggle && chatPanel && chatClose && chatMessages && chatForm && chatInput) {
   const setChatOpen = open => {
@@ -153,6 +75,10 @@ if (chatToggle && chatPanel && chatClose && chatMessages && chatForm && chatInpu
     chatToggle.setAttribute('aria-expanded', String(open));
     chatToggle.setAttribute('aria-label', open ? 'Close portfolio assistant' : 'Open portfolio assistant');
     if (open) chatInput.focus();
+  };
+  closeChat = () => {
+    setChatOpen(false);
+    chatToggle.focus();
   };
 
   const addMessage = (text, sender, link) => {
@@ -176,7 +102,7 @@ if (chatToggle && chatPanel && chatClose && chatMessages && chatForm && chatInpu
     const text = question.toLowerCase();
     if (/\b(project|work|built|portfolio|prototype)s?\b/.test(text)) {
       return {
-        text: 'Sagar’s portfolio includes an e-learning platform, a family-tree visualization, and concepts for smart food-waste management and satellite-based alerts.',
+        text: 'Sagar has public GitHub projects for a satellite fire-alert prototype, a C family-tree generator, a responsive chat UI demo, and an e-learning dashboard.',
         link: { href: '#projects', label: 'Explore the projects' }
       };
     }
@@ -209,10 +135,7 @@ if (chatToggle && chatPanel && chatClose && chatMessages && chatForm && chatInpu
   chatToggle.addEventListener('click', () => {
     setChatOpen(chatToggle.getAttribute('aria-expanded') !== 'true');
   });
-  chatClose.addEventListener('click', () => {
-    setChatOpen(false);
-    chatToggle.focus();
-  });
+  chatClose.addEventListener('click', closeChat);
   chatForm.addEventListener('submit', event => {
     event.preventDefault();
     const question = chatInput.value.trim();
@@ -229,10 +152,17 @@ if (chatToggle && chatPanel && chatClose && chatMessages && chatForm && chatInpu
       chatForm.requestSubmit();
     });
   });
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && chatPanel.classList.contains('open')) {
-      setChatOpen(false);
-      chatToggle.focus();
-    }
-  });
 }
+
+document.addEventListener('keydown', event => {
+  if (event.key !== 'Escape') return;
+
+  if (nav?.classList.contains('open')) {
+    setNavigationOpen(false);
+    menuButton?.focus();
+  }
+
+  if (chatPanel?.classList.contains('open')) {
+    closeChat?.();
+  }
+});

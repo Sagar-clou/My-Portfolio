@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#f8f6ef" />
-  <meta name="description" content="I'm Sagar Gupta, a Computer Science student who builds practical projects and explores full-stack development, data, and AI." />
+  <meta name="description" content="I'm Sagar Gupta, a Computer Science student into full-stack development and data science. I like taking a problem from rough idea to working prototype—with Python, the web, and a lot of learning along the way." />
   <title>Sagar Gupta — Developer &amp; Builder</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,15 +26,14 @@
   <main>
     <section class="hero section-wrap" id="home">
       <div class="hero-copy reveal">
-        <div class="eyebrow"><span class="status-dot"></span> OPEN TO LEARNING & OPPORTUNITIES</div>
-        <h1>I turn curious ideas<br>into <span class="gradient-text">useful things.</span></h1>
+        <h1>Have an idea?<br><span class="gradient-text">Let's make it useful product.</span></h1>
         <p class="hero-lead">I'm <strong>Sagar Gupta</strong>, a Computer Science student into full-stack development and data science. I like taking a problem from rough idea to working prototype—with Python, the web, and a lot of learning along the way.</p>
         <div class="hero-meta"><span><i data-lucide="graduation-cap" class="icon meta-icon" aria-hidden="true"></i> B.Tech · Computer Science</span><span><i data-lucide="map-pin" class="icon meta-icon" aria-hidden="true"></i> Faridabad, India</span></div>
       </div>
       <div class="hero-art reveal">
         <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
         <div class="profile-card">
-          <div class="card-top"><span class="tiny-label">CURRENT FOCUS</span><span class="live-pill"><span></span> Learning</span></div>
+          <div class="card-top"><span class="tiny-label">CURRENT FOCUS</span><span class="live-pill"><span></span> Building</span></div>
           <div class="avatar"><img src="sagar-profile.jpg" alt="Sagar Gupta"><span class="avatar-spark">✦</span></div>
           <h2>Curious mind.<br><span>Practical builder.</span></h2>
           <p>Computer Science student turning ideas into prototypes and experiments.</p>
@@ -43,78 +42,138 @@
         </div>
       </div>
     </section>
-
     <section class="section-wrap about-section" id="about">
       <div class="section-heading reveal"><span class="section-kicker">A LITTLE ABOUT ME</span><h2>Learning by <span class="gradient-text">building.</span></h2></div>
       <div class="about-grid">
-        <p class="about-text reveal">I enjoy taking a problem, understanding the data or technology behind it, and building a practical solution. My work so far spans web projects, AI/ML experiments, assistive technology concepts, and research into generating electricity from food waste.</p>
+        <p class="about-text reveal">I'm a passionate student and aspiring Full-Stack who believes in learning through practical experience. I enjoy exploring new technologies, solving problems, and turning ideas into real-world projects. From full-stack development, I'm continuously building my skills by creating projects that combine creativity, logic, and innovation.</p>
       </div>
     </section>
-
     <section class="section-wrap projects-section" id="projects">
-      <div class="section-heading reveal"><span class="section-kicker">SELECTED WORK</span><h2>Projects & <span class="gradient-text">experiments.</span></h2><p>A few things I've built, explored, and learned from. Open a project card for a fuller overview and a workflow diagram that connects each step to its technology. Each project's current stage is labelled honestly.</p></div>
-      <div class="project-filters reveal" role="group" aria-label="Filter projects">
-        <button class="filter active" data-filter="all">All work</button>
-        <button class="filter" data-filter="Front-end">Front-end</button>
-        <button class="filter" data-filter="AI">AI & ML</button>
-        <button class="filter" data-filter="systems">Systems & IoT</button>
-      </div>
+      <div class="section-heading reveal"><span class="section-kicker">SELECTED WORK</span><h2>Projects &amp; <span class="gradient-text">experiments.</span></h2><p>A few things I've built, explored, and learned from. Open a project card for a fuller overview and a workflow diagram that connects each step to its technology. Each project's current stage is labelled honestly.</p></div>
       <div class="project-grid">
-        <article class="project-card project-featured reveal" role="button" tabindex="0" aria-label="View details and workflow for IoT-Based Smart Food Waste Management" aria-haspopup="dialog" aria-controls="project-dialog" data-category="systems" data-details="Research concept in progress for tracking food waste and making its next possible use easier to assess. The proposed workflow records waste category and quantity, keeps readings available for review, then matches the material to options such as donation, animal feed, biogas, or fertilizer. IoT sensing and cloud storage are proposed parts of the design; an ML-assisted recommendation is an idea to evaluate, not a deployed feature. The project explores how better visibility could support more useful decisions and reduce avoidable disposal." data-flow="Record waste category and quantity|IoT sensing (proposed);Keep readings available for review|Cloud storage (proposed);Match material to possible reuse routes|Rules + ML concept;Present a reuse recommendation|Decision-support concept">
-          <div class="project-visual"><img class="project-image" src="food-waste-project.svg" alt="Illustration of food waste being collected, analysed, and reused"><span class="project-card-hint" aria-hidden="true"><i data-lucide="maximize-2" class="icon"></i></span></div>
-          <div class="project-info"><div class="project-meta"><span>In progress</span><span class="project-type">Research concept</span></div><h3>IoT-Based Smart Food Waste Management</h3><p>A research concept for recording food-waste categories and quantities, reviewing the data, and assessing reuse routes such as donation, animal feed, biogas, or fertilizer. Sensor capture, cloud storage, and ML-assisted recommendations are proposed—not deployed—parts of the workflow.</p><div class="tag-row"><span>IoT</span><span>Cloud</span><span>ML concept</span><span>Sustainability</span></div></div>
+        <article class="project-card reveal">
+          <a class="project-card-link" href="project.html?project=safe-net" aria-label="Open SAFE-NET Satellite Instant Alert details"></a>
+          <div class="project-visual">
+            <img class="project-image" src="satellite-alert-project.svg" alt="Satellite sending an alert from an Earth observation">
+            <span class="project-image-hint" aria-hidden="true">View project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></span>
+          </div>
+          <div class="project-info">
+            <div class="project-meta"><span>Python · NASA FIRMS</span><span class="project-type">Prototype</span></div>
+            <h3>SAFE-NET Satellite Instant Alert</h3>
+            <p>A working prototype that uses NASA FIRMS active-fire satellite data to show map detections, risk levels, browser notifications, and alert history. Includes demo mode when no FIRMS key is configured.</p>
+            <div class="tag-row"><span>Python</span><span>Satellite data</span><span>Alerts</span></div>
+            <div class="project-links"><a href="project.html?project=safe-net">Project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/Satellite-Instant-Alert" target="_blank" rel="noopener noreferrer">GitHub repo <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/Satellite-Instant-Alert/tree/main" target="_blank" rel="noopener noreferrer">View code <i data-lucide="code-2" class="icon" aria-hidden="true"></i></a></div>
+          </div>
         </article>
-        <article class="project-card reveal" role="button" tabindex="0" aria-label="View details and workflow for Study Platform" aria-haspopup="dialog" aria-controls="project-dialog" data-category="Front-end" data-details="A learner-facing e-learning homepage concept focused on making courses and study resources easy to discover. The supplied project material shows the landing page and course-card layout; the intended journey is to scan the catalog, narrow choices, and select a course or resource. HTML provides page structure, CSS defines the layout and responsive presentation, and JavaScript is the proposed layer for client-side interactions. This is a front-end concept, not a complete learning platform: no backend, sign-in, enrollment, or course-delivery service is represented." data-flow="Structure course catalog content|HTML;Present readable course cards and layout|CSS;Filter or select catalog items|JavaScript (client-side);Open selected learning content|Front-end concept">
-          <div class="project-visual"><img class="project-image" src="E_Learning.png" alt="LearnHub e-learning homepage with course cards"><span class="project-card-hint" aria-hidden="true"><i data-lucide="maximize-2" class="icon"></i></span></div>
-          <div class="project-info"><div class="project-meta"><span>Project work</span><span class="project-type">E-Learning</span></div><h3>Study Platform</h3><p>A learner-facing course catalog concept, using a course-card layout to make study options easier to scan and select. HTML structures the page, CSS shapes its presentation, and JavaScript is the planned layer for front-end interactions; backend and course-delivery features are outside the current scope.</p><div class="tag-row"><span>HTML</span><span>CSS</span><span>JavaScript</span></div></div>
+        <article class="project-card reveal">
+          <a class="project-card-link" href="project.html?project=family-tree" aria-label="Open Family Tree Generator details"></a>
+          <div class="project-visual">
+            <img class="project-image" src="family%20tree.png" alt="Family tree diagram showing connected generations">
+            <span class="project-image-hint" aria-hidden="true">View project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></span>
+          </div>
+          <div class="project-info">
+            <div class="project-meta"><span>C · Tree data structure</span><span class="project-type">Command-line app</span></div>
+            <h3>Family Tree Generator</h3>
+            <p>A menu-driven C program for building and displaying a family tree, adding children, searching members, and counting the tree. The README includes build and run instructions.</p>
+            <div class="tag-row"><span>C</span><span>Data structures</span><span>Memory management</span></div>
+            <div class="project-links"><a href="project.html?project=family-tree">Project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/Family-_Tree-DSA" target="_blank" rel="noopener noreferrer">GitHub repo <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/Family-_Tree-DSA/blob/main/Family%20Tree.c" target="_blank" rel="noopener noreferrer">View code <i data-lucide="code-2" class="icon" aria-hidden="true"></i></a></div>
+          </div>
         </article>
-        <article class="project-card reveal" role="button" tabindex="0" aria-label="View details and workflow for Family Tree Visualization" aria-haspopup="dialog" aria-controls="project-dialog" data-category="DSA" data-details="A Python prototype for representing family relationships as connected person nodes and displaying parent-child branches. A tree structure provides the relationship model, while recursive traversal offers a way to visit and render each branch. The project focuses on understanding hierarchical data and making relationships visible; it is a visualization prototype rather than a complete genealogy product with persistent records or editing workflows." data-flow="Represent people and relationships|Python;Connect relatives through parent-child links|Tree structure;Visit each branch|Recursive traversal;Render the relationship hierarchy|Visualization prototype">
-          <div class="project-visual"><img class="project-image" src="family%20tree.png" alt="Family tree diagram showing grandparents, parents, children, and other relatives"><span class="project-card-hint" aria-hidden="true"><i data-lucide="maximize-2" class="icon"></i></span></div>
-          <div class="project-info"><div class="project-meta"><span>Prototype</span><span class="project-type">Family-tree dashboard</span></div><h3>Family Tree Visualization</h3><p>A Python prototype that maps people and parent-child relationships into a tree, then traverses its branches to show how relatives connect. It demonstrates hierarchical data and recursion; persistent records and full genealogy editing are outside the current scope.</p><div class="tag-row"><span>Python</span><span>Tree Structure</span><span>Recursion</span></div></div>
+        <article class="project-card reveal">
+          <a class="project-card-link" href="project.html?project=orbit-chat" aria-label="Open Orbit Chat details"></a>
+          <div class="project-visual">
+            <img class="project-image" src="orbit-chat-project.svg" alt="Preview of the Orbit Chat interface with contacts and messages">
+            <span class="project-image-hint" aria-hidden="true">View project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></span>
+          </div>
+          <div class="project-info">
+            <div class="project-meta"><span>HTML · CSS · JavaScript</span><span class="project-type">Front-end demo</span></div>
+            <h3>Orbit Chat</h3>
+            <p>A responsive chat-interface demo with sample conversations, contact filtering, message timestamps, and browser-local message history. Its README clearly notes that it is a front-end demo—not a live multi-user chat service.</p>
+            <div class="tag-row"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>localStorage</span></div>
+            <div class="project-links"><a href="project.html?project=orbit-chat">Project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/Chat-Application" target="_blank" rel="noopener noreferrer">GitHub repo <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/Chat-Application/tree/main/REAL-TIME%20CHAT%20APP" target="_blank" rel="noopener noreferrer">View code <i data-lucide="code-2" class="icon" aria-hidden="true"></i></a></div>
+          </div>
         </article>
-        <article class="project-card reveal" role="button" tabindex="0" aria-label="View details and workflow for Satellite-Based Instant Alert System" aria-haspopup="dialog" aria-controls="project-dialog" data-category="AI systems" data-details="An early-stage system concept for turning candidate satellite observations into useful event alerts. A future implementation would first validate and prepare an appropriate data source, analyse observations for event signals, then apply alert criteria before notifying users. The satellite source, preprocessing method, model, thresholds, and notification channel all need research and validation. This is a proposed workflow—not a trained or deployed monitoring service." data-flow="Acquire and validate a candidate feed|Satellite data (to be selected);Prepare observations for analysis|Data processing (to be defined);Assess event signals|AI / ML concept;Apply alert criteria|Rules (to be validated);Notify users of a qualifying event|Notification channel (to be selected)">
-          <div class="project-visual"><img class="project-image" src="satellite-alert-project.svg" alt="Illustration of a satellite analysing signals and issuing an alert"><span class="project-card-hint" aria-hidden="true"><i data-lucide="maximize-2" class="icon"></i></span></div>
-          <div class="project-info"><div class="project-meta"><span>2026 · Concept stage</span><span class="project-type">Alert system</span></div><h3>Satellite-Based Instant Alert System</h3><p>A proposed pipeline to validate satellite observations, analyse them for event signals, and alert users when reviewed criteria are met. Data sources, processing, model approach, and delivery channel are still to be selected and tested; this is not a deployed alert service.</p><div class="tag-row"><span>AI / ML</span><span>Satellite data</span><span>Notifications</span></div></div>
+        <article class="project-card reveal">
+          <a class="project-card-link" href="project.html?project=learnhub" aria-label="Open LearnHub E-Learning details"></a>
+          <div class="project-visual">
+            <img class="project-image" src="E_Learning.png" alt="LearnHub e-learning dashboard and course cards">
+            <span class="project-image-hint" aria-hidden="true">View project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></span>
+          </div>
+          <div class="project-info">
+            <div class="project-meta"><span>HTML · CSS</span><span class="project-type">E-learning dashboard</span></div>
+            <h3>LearnHub E-Learning</h3>
+            <p>A responsive learning dashboard for browsing courses, viewing progress, watching course content, and checking upcoming activities. The README documents setup, assets, and front-end limitations.</p>
+            <div class="tag-row"><span>HTML</span><span>CSS</span><span>Responsive design</span></div>
+            <div class="project-links"><a href="project.html?project=learnhub">Project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/E_Learning" target="_blank" rel="noopener noreferrer">GitHub repo <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/E_Learning/blob/main/index.html" target="_blank" rel="noopener noreferrer">View code <i data-lucide="code-2" class="icon" aria-hidden="true"></i></a></div>
+          </div>
         </article>
       </div>
-      <p class="project-footnote">Some entries are early-stage concepts rather than finished products; I label them clearly and update them as the work develops.</p>
     </section>
-
-    <dialog class="project-dialog" id="project-dialog" aria-labelledby="project-dialog-title">
-      <div class="project-dialog-content">
-        <button class="project-dialog-close" type="button" aria-label="Close project details"><i data-lucide="x" class="icon" aria-hidden="true"></i></button>
-        <div class="project-meta"><span class="project-dialog-status"></span><span class="project-type project-dialog-type"></span></div>
-        <h2 id="project-dialog-title"></h2>
-        <p class="project-dialog-description"></p>
-        <section class="project-flow-section" aria-labelledby="project-flow-title">
-          <h3 id="project-flow-title">Workflow &amp; technology stack</h3>
-          <p class="project-flow-note">Follow the arrows from input to outcome. Each step is paired with the technology or component assigned to it; items marked as concepts or proposed still need implementation and validation.</p>
-          <ol class="project-flow"></ol>
-        </section>
-        <div class="tag-row project-dialog-tags"></div>
-      </div>
-    </dialog>
 
     <section class="section-wrap journey-section" id="journey">
       <div class="section-heading reveal"><span class="section-kicker">THE JOURNEY</span><h2>Small steps. <span class="gradient-text">Real progress.</span></h2></div>
       <div class="timeline">
         <div class="timeline-item reveal"><div class="timeline-date">2025–2026</div><div class="timeline-marker"></div><div class="timeline-content"><span class="timeline-label">ACADEMIC & WEB PROJECTS</span><h3>Built foundations through practice</h3><p>Worked on Python problem-solving, BFS/DFS maze search, web interface concepts, and neural-network lab exercises.</p></div></div>
         <div class="timeline-item reveal"><div class="timeline-date">2026</div><div class="timeline-marker"></div><div class="timeline-content"><span class="timeline-label">DATA & VISUALIZATION</span><h3>Explored analytics dashboards</h3><p>Developed project ideas around Power BI reporting and healthcare data visualization, focusing on KPIs, filters, and understandable charts.</p></div></div>
-        <div class="timeline-item reveal"><div class="timeline-date">2026</div><div class="timeline-marker"></div><div class="timeline-content"><span class="timeline-label">RESEARCH & PROTOTYPING</span><h3>Connected technology with real-world needs</h3><p>Explored smart food-waste management and an AI-assisted alert-system concept.</p></div></div>
+        <div class="timeline-item reveal"><div class="timeline-date">2026</div><div class="timeline-marker"></div><div class="timeline-content"><span class="timeline-label">RESEARCH & PROTOTYPING</span><h3>Connected technology with real-world needs</h3><p>Built a satellite fire-alert prototype using NASA FIRMS data, with mapped detections, risk levels, and browser notifications.</p></div></div>
         <div class="timeline-item timeline-current reveal"><div class="timeline-date">NEXT</div><div class="timeline-marker"></div><div class="timeline-content"><span class="timeline-label">CURRENT DIRECTION</span><h3>Deepen data analytics & data science</h3><p>Keep strengthening Python, SQL, data visualization, and machine-learning fundamentals while documenting projects with working demos.</p></div></div>
       </div>
     </section>
 
     <section class="section-wrap skills-section" id="skills">
-      <div class="section-heading reveal"><span class="section-kicker">TOOLKIT</span><h2>Tools I use to <span class="gradient-text">make things.</span></h2></div>
-      <div class="skills-grid reveal">
-        <div class="skill-group"><span class="skill-icon"><i data-lucide="code-2" class="icon" aria-hidden="true"></i></span><h3>Programming</h3><div class="skill-pills"><span>Python</span><span>DSA fundamentals</span><span>HTML / CSS / JS</span></div></div>
-        <div class="skill-group"><span class="skill-icon"><i data-lucide="layers" class="icon" aria-hidden="true"></i></span><h3>Full-stack</h3><div class="skill-pills"><span>Html</span><span>CSS</span><span>MySQL / SQL</span></div></div>
-        <div class="skill-group"><span class="skill-icon"><i data-lucide="brain-circuit" class="icon" aria-hidden="true"></i></span><h3>Exploring</h3><div class="skill-pills"><span>Machine Learning</span><span>TensorFlow</span><span>IoT concepts</span></div></div>
+      <div class="section-heading reveal"><span class="section-kicker">Skills</span></div>
+      <div class="section-heading reveal"><h2><span class="gradient-text">Full Stack.</span></h2><p>Web and mobile interfaces connect to a backend, which works with the database to deliver the complete experience.</p></div>
+      <div class="stack-flow reveal" role="group" aria-label="Full Stack flow from web and mobile interfaces through the backend to the database">
+        <div class="stack-clients">
+          <article class="stack-node stack-client">
+            <span class="stack-layer">01 / WEB</span>
+            <h3>Web</h3>
+            <p>Build the browser experience.</p>
+            <div class="stack-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+          </article>
+          <article class="stack-node stack-client">
+            <span class="stack-layer">02 / MOBILE</span>
+            <h3>Mobile</h3>
+            <p>Build a native app experience.</p>
+            <div class="stack-tags"><span>React Native</span><span class="learning-tag">Learning</span></div>
+          </article>
+        </div>
+        <span class="stack-connector" aria-hidden="true"></span>
+        <article class="stack-node stack-backend">
+          <span class="stack-layer">03 / SERVER</span>
+          <h3>Backend</h3>
+          <p>Handle requests and app logic.</p>
+          <div class="stack-tags"><span>Python</span><span>Flask <small>Learning</small></span></div>
+        </article>
+        <span class="stack-connector" aria-hidden="true"></span>
+        <article class="stack-node stack-database">
+          <span class="stack-layer">04 / DATA</span>
+          <h3>Database</h3>
+          <p>Store and retrieve app data.</p>
+          <div class="stack-tags"><span>MySQL</span><span>SQL</span></div>
+        </article>
+      </div>
+      <div class="product-flow reveal" role="group" aria-label="Product-building workflow: plan, build the interface, connect the backend, store data, then test and launch">
+        <div class="product-flow-heading">
+          <span class="stack-layer">FROM IDEA TO PRODUCT</span>
+          <h3>How I use Full Stack to build a product</h3>
+          <p>Each layer has a job. Together, they turn an idea into something people can use.</p>
+        </div>
+        <div class="product-flow-steps">
+          <article class="product-flow-step"><span>01 / PLAN</span><h4>Define the problem</h4><p>Choose who the product helps and what it should do.</p></article>
+          <span class="product-flow-connector" aria-hidden="true"></span>
+          <article class="product-flow-step"><span>02 / INTERFACE</span><h4>Build the screens</h4><p>Create the web or mobile experience people use.</p></article>
+          <span class="product-flow-connector" aria-hidden="true"></span>
+          <article class="product-flow-step"><span>03 / BACKEND</span><h4>Handle the work</h4><p>Process requests and apply the product's rules.</p></article>
+          <span class="product-flow-connector" aria-hidden="true"></span>
+          <article class="product-flow-step"><span>04 / DATABASE</span><h4>Save the data</h4><p>Store and retrieve the information the product needs.</p></article>
+          <span class="product-flow-connector" aria-hidden="true"></span>
+          <article class="product-flow-step"><span>05 / FINISH</span><h4>Test and launch</h4><p>Check the full journey, fix issues, and share the product.</p></article>
+        </div>
       </div>
     </section>
 
-    <section class="contact-section" id="contact"><div class="section-wrap contact-inner reveal"><span class="section-kicker">SAY HELLO</span><h2>Have an idea?<br><span class="gradient-text">Let's make it useful.</span></h2><p>I'm open to learning opportunities, collaborations, and entry-level roles related to full-stack and data science.</p></div></section>
+    <section class="contact-section" id="contact"><div class="section-wrap contact-inner reveal"><span class="section-kicker">LET'S BUILD</span><h2>Have an idea?<br><span class="gradient-text">I can turn it into a product.</span></h2><p>Share the problem you want to solve. Let's shape it into a useful digital product, from the first screen to a working experience.</p><div class="contact-actions"><a class="contact-cta" href="https://wa.me/919354707042?text=Hi%20Sagar%2C%20I%20have%20an%20idea%20for%20a%20product.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer">Tell me about your idea <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a class="contact-whatsapp" href="https://wa.me/919354707042?text=Hi%20Sagar%2C%20I%20have%20an%20idea%20for%20a%20product.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer" aria-label="Message Sagar on WhatsApp" title="WhatsApp"><i data-lucide="message-circle" class="icon" aria-hidden="true"></i></a></div></div></section>
   </main>
   <footer class="footer"><div class="section-wrap footer-inner"><a class="brand" href="profile.html"><span class="brand-mark">SG</span><span>sagar Gupta<span class="brand-dot">.</span></span></a><a class="footer-email" href="mailto:guptasagar2201@gmail.com">guptasagar2201@gmail.com</a><a href="#home" class="back-top">Back to top <i data-lucide="arrow-up" class="icon" aria-hidden="true"></i></a></div></footer>
   <nav class="social-fabs" aria-label="Social links">

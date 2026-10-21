@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img">
+  <defs>
+    <linearGradient id="background" x2="1" y2="1">
+      <stop stop-color="#e7f6f3"/>
+      <stop offset="1" stop-color="#c6e5df"/>
+    </linearGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#183b42" flood-opacity=".14"/>
+    </filter>
+  </defs>
+  <rect width="960" height="600" fill="url(#background)"/>
+  <circle cx="842" cy="86" r="130" fill="#fff" opacity=".26"/>
+  <circle cx="93" cy="540" r="160" fill="#fff" opacity=".2"/>
+  <g filter="url(#shadow)">
+    <rect x="125" y="75" width="710" height="450" rx="24" fill="#fff"/>
+    <path d="M149 75h662a24 24 0 0 1 24 24v58H125V99a24 24 0 0 1 24-24Z" fill="#f4f9f8"/>
+    <rect x="125" y="157" width="220" height="368" fill="#f8fbfa"/>
+  </g>
+  <circle cx="156" cy="113" r="8" fill="#63b39c"/>
+  <text x="177" y="119" fill="#203631" font-family="Arial,sans-serif" font-size="22" font-weight="700">Orbit Chat</text>
+  <text x="699" y="117" fill="#70827d" font-family="Arial,sans-serif" font-size="13">RESPONSIVE CHAT DEMO</text>
+  <text x="153" y="194" fill="#60716c" font-family="Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="2">MESSAGES</text>
+  <g font-family="Arial,sans-serif">
+    <circle cx="168" cy="238" r="19" fill="#e4b38c"/>
+    <text x="199" y="235" fill="#263a35" font-size="15" font-weight="700">Alex Morgan</text>
+    <text x="199" y="255" fill="#87938f" font-size="12">Are we still meeting?</text>
+    <rect x="144" y="278" width="182" height="62" rx="13" fill="#e4f1ee"/>
+    <circle cx="168" cy="309" r="18" fill="#8faeca"/>
+    <text x="197" y="306" fill="#263a35" font-size="14" font-weight="700">Taylor Reed</text>
+    <text x="197" y="325" fill="#87938f" font-size="12">Sent you the notes</text>
+    <circle cx="168" cy="376" r="18" fill="#d49b99"/>
+    <text x="199" y="373" fill="#263a35" font-size="14" font-weight="700">Jordan Lee</text>
+    <text x="199" y="392" fill="#87938f" font-size="12">Thanks! See you soon</text>
+  </g>
+  <text x="379" y="204" fill="#74827d" font-family="Arial,sans-serif" font-size="13">TODAY</text>
+  <rect x="377" y="227" width="288" height="61" rx="16" fill="#f0f5f3"/>
+  <text x="397" y="253" fill="#35443f" font-family="Arial,sans-serif" font-size="15">Hi! Are we still meeting this</text>
+  <text x="397" y="274" fill="#35443f" font-family="Arial,sans-serif" font-size="15">afternoon?</text>
+  <text x="605" y="307" fill="#93a09b" font-family="Arial,sans-serif" font-size="11">10:42 AM</text>
+  <rect x="518" y="324" width="287" height="61" rx="16" fill="#238b78"/>
+  <text x="539" y="350" fill="#fff" font-family="Arial,sans-serif" font-size="15">Yes! I will bring the project</text>
+  <text x="539" y="371" fill="#fff" font-family="Arial,sans-serif" font-size="15">notes along.</text>
+  <text x="749" y="403" fill="#93a09b" font-family="Arial,sans-serif" font-size="11">10:43 AM</text>
+  <rect x="376" y="439" width="431" height="48" rx="14" fill="#fff" stroke="#dbe5e1"/>
+  <text x="398" y="469" fill="#9aa7a2" font-family="Arial,sans-serif" font-size="14">Type a message...</text>
+  <circle cx="774" cy="463" r="17" fill="#238b78"/>
+  <path d="m768 463 11-7-4 14-3-5-4-2Z" fill="#fff"/>
+</svg>
