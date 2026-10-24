@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f8f6ef">
+  <title>Admin — Sagar Gupta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="adm">
+
+  <!-- Firebase not configured yet -->
+  <main class="adm-center" id="screen-config" hidden>
+    <section class="adm-card adm-narrow">
+      <h1>Connect Firebase first</h1>
+      <p>In Firebase Console, register a web app and copy its config into <code>firebase-config.js</code>. Enable Google sign-in and configure Firestore before using the admin panel.</p>
+    </section>
+  </main>
+
+  <!-- Sign-in -->
+  <main class="adm-center" id="screen-login" hidden>
+    <section class="adm-card adm-narrow">
+      <a class="brand" href="index.html"><span class="brand-mark">S</span><span>sagar<span class="brand-dot">.</span></span></a>
+      <h1>Portfolio admin</h1>
+      <p>Sign in with the Google account that manages this site. Other accounts are turned away.</p>
+      <button class="btn btn-google" id="btn-google" type="button">
+        <svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.1 5.5c4.3-4 6.8-9.9 6.8-16.9z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.4-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.4 0 20.1 0 24s.9 7.6 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.1-5.5c-2 1.3-4.6 2.2-8.8 2.2-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
+        Continue with Google
+      </button>
+      <p class="adm-error" id="login-error" role="alert" hidden></p>
+    </section>
+  </main>
+
+  <!-- Dashboard -->
+  <div id="screen-app" hidden>
+    <header class="adm-top">
+      <a class="brand" href="index.html" title="View public site"><span class="brand-mark">S</span><span>sagar<span class="brand-dot">.</span> <span class="adm-tag">admin</span></span></a>
+      <div class="adm-user">
+        <img id="user-avatar" alt="" referrerpolicy="no-referrer">
+        <span id="user-email"></span>
+        <button class="btn btn-quiet" id="btn-signout" type="button"><i data-lucide="log-out" class="icon" aria-hidden="true"></i> Sign out</button>
+      </div>
+    </header>
+
+    <main class="adm-main">
+      <!-- LIST VIEW -->
+      <section id="view-list">
+        <div class="adm-head">
+          <div>
+            <h1>Projects</h1>
+            <p id="list-summary">Loading…</p>
+          </div>
+          <button class="btn btn-primary" id="btn-new" type="button"><i data-lucide="plus" class="icon" aria-hidden="true"></i> New project</button>
+        </div>
+        <div id="project-list" class="adm-list" aria-live="polite"></div>
+      </section>
+
+      <!-- EDITOR VIEW -->
+      <section id="view-editor" hidden>
+        <button class="btn btn-quiet" id="btn-back" type="button"><i data-lucide="arrow-left" class="icon" aria-hidden="true"></i> All projects</button>
+        <div class="adm-head">
+          <h1 id="editor-title">New project</h1>
+        </div>
+
+        <div class="editor-grid">
+          <form id="project-form" class="adm-card form" novalidate>
+            <div class="field">
+              <label for="f-title">Title</label>
+              <input id="f-title" maxlength="120" required autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="f-id">Page address</label>
+              <div class="prefix"><span>project.html?project=</span><input id="f-id" maxlength="60" autocomplete="off" pattern="[a-z0-9-]+"></div>
+              <small id="f-id-help">Lowercase letters, numbers and dashes. It can't be changed after the project is created.</small>
+            </div>
+            <div class="field">
+              <label for="f-summary">Short description <span class="count" id="summary-count"></span></label>
+              <textarea id="f-summary" rows="4" maxlength="400"></textarea>
+              <small>Shown on the project card.</small>
+            </div>
+            <div class="row2">
+              <div class="field">
+                <label for="f-meta">Tech line</label>
+                <input id="f-meta" maxlength="80" placeholder="Python · NASA FIRMS">
+              </div>
+              <div class="field">
+                <label for="f-type">Stage badge</label>
+                <input id="f-type" maxlength="40" placeholder="Prototype">
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-tags-input">Tags</label>
+              <div class="chips" id="chips"><input id="f-tags-input" placeholder="Type a tag, press Enter" autocomplete="off"></div>
+            </div>
+
+            <fieldset class="field image-field">
+              <legend>Cover image</legend>
+              <div class="image-row">
+                <div class="image-thumb" id="image-thumb"><span>No image</span></div>
+                <div class="image-controls">
+                  <input type="file" id="f-file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml" hidden>
+                  <div class="btn-row">
+                    <button class="btn" type="button" id="btn-upload"><i data-lucide="upload" class="icon" aria-hidden="true"></i> Upload image</button>
+                    <button class="btn btn-quiet" type="button" id="btn-image-clear" hidden>Remove</button>
+                  </div>
+                  <label class="visually-hidden" for="f-image-url">Image URL or path</label>
+                  <input id="f-image-url" placeholder="…or paste an image URL / file path">
+                  <small id="image-info">Uploads are resized and stored for free inside your database, so no paid storage is needed.</small>
+                </div>
+              </div>
+              <label for="f-alt">Image description (alt text)</label>
+              <input id="f-alt" maxlength="160" placeholder="What the image shows">
+            </fieldset>
+
+            <div class="row2">
+              <div class="field">
+                <label for="f-repo">GitHub repository URL</label>
+                <input id="f-repo" type="url" placeholder="https://github.com/…">
+              </div>
+              <div class="field">
+                <label for="f-source">View-code URL</label>
+                <input id="f-source" type="url" placeholder="https://github.com/…/blob/main/…">
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="tabs" role="tablist">
+                <label for="f-readme" class="tabs-label">Details page (Markdown)</label>
+                <button type="button" role="tab" id="tab-write" aria-selected="true">Write</button>
+                <button type="button" role="tab" id="tab-preview" aria-selected="false">Preview</button>
+              </div>
+              <textarea id="f-readme" rows="16" class="mono" spellcheck="false"></textarea>
+              <div id="readme-preview" class="project-readme readme-preview" hidden></div>
+              <small>Supports # headings, lists, **bold**, `code`, code blocks and [links](https://…).</small>
+            </div>
+
+            <div class="row2 row-end">
+              <div class="field">
+                <label for="f-order">Position</label>
+                <input id="f-order" type="number" step="1" value="10">
+                <small>Smaller numbers appear first.</small>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="f-published" checked>
+                <span class="switch-track" aria-hidden="true"></span>
+                <span><b id="published-label">Published</b><small>Visible on the website</small></span>
+              </label>
+            </div>
+
+            <p class="adm-error" id="form-error" role="alert" hidden></p>
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit" id="btn-save">Save project</button>
+              <button class="btn" type="button" id="btn-cancel">Cancel</button>
+              <button class="btn btn-danger push" type="button" id="btn-delete" hidden><i data-lucide="trash-2" class="icon" aria-hidden="true"></i> Delete</button>
+            </div>
+          </form>
+
+          <aside class="preview-col">
+            <h2>Card preview</h2>
+            <div id="card-preview" class="card-preview"></div>
+            <p class="hint">Exactly how this card looks on your home page.</p>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="confirm" class="adm-dialog">
+    <form method="dialog">
+      <h2 id="confirm-title">Delete project?</h2>
+      <p id="confirm-text"></p>
+      <div class="form-actions">
+        <button class="btn" value="cancel" autofocus>Keep it</button>
+        <button class="btn btn-danger" value="ok">Delete permanently</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>
