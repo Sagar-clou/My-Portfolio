@@ -1,7 +1,9 @@
 import { app, db, isConfigured } from "./firebase-init.js";
 import { ADMIN_EMAILS } from "./firebase-config.js";
 import {
-  getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, onAuthStateChanged, signOut
+  getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect,
+  signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail,
+  sendEmailVerification, onAuthStateChanged, signOut
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import {
   collection, doc, getDoc, setDoc, deleteDoc, onSnapshot, writeBatch, serverTimestamp
@@ -39,7 +41,81 @@ if (!isConfigured) {
   const auth = getAuth(app);
   const allowed = ADMIN_EMAILS.map(e => e.toLowerCase());
   const isAllowed = u => !!u && u.emailVerified && allowed.includes((u.email || "").toLowerCase());
+  const isAllowedEmail = email => allowed.includes(email.trim().toLowerCase());
   let unsubscribe = null;
+
+  const loginError = msg => { const e = $("#login-error"); e.textContent = msg; show(e, true); };
+  const clearLoginError = () => show($("#login-error"), false);
+  const authError = err => ({
+    "auth/invalid-credential": "The email or password is incorrect.",
+    "auth/invalid-email": "Enter a valid email address.",
+    "auth/email-already-in-use": "An account already exists for this email. Try signing in instead.",
+    "auth/weak-password": "Choose a stronger password with at least 6 characters.",
+    "auth/user-not-found": "No account was found for this email.",
+    "auth/too-many-requests": "Too many attempts. Please wait a moment and try again.",
+    "auth/network-request-failed": "Network error. Check your connection and try again."
+  }[err?.code] || friendlyError(err));
+
+  const setAuthTab = tab => {
+    const signup = tab === "signup";
+    $("#login-form").hidden = signup;
+    $("#signup-form").hidden = !signup;
+    $("#tab-login").classList.toggle("is-active", !signup);
+    $("#tab-signup").classList.toggle("is-active", signup);
+    $("#tab-login").setAttribute("aria-selected", String(!signup));
+    $("#tab-signup").setAttribute("aria-selected", String(signup));
+    clearLoginError();
+  };
+
+  $("#tab-login").addEventListener("click", () => setAuthTab("login"));
+  $("#tab-signup").addEventListener("click", () => setAuthTab("signup"));
+
+  $("#login-form").addEventListener("submit", async event => {
+    event.preventDefault();
+    clearLoginError();
+    const email = $("#login-email").value.trim();
+    const password = $("#login-password").value;
+    if (!email || !password) return loginError("Enter your email address and password.");
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      loginError(authError(err));
+    }
+  });
+
+  $("#signup-form").addEventListener("submit", async event => {
+    event.preventDefault();
+    clearLoginError();
+    const email = $("#signup-email").value.trim();
+    const password = $("#signup-password").value;
+    const confirmation = $("#signup-password-confirm").value;
+    if (!isAllowedEmail(email)) return loginError("This email is not authorised to create an admin account.");
+    if (password.length < 6) return loginError("Choose a password with at least 6 characters.");
+    if (password !== confirmation) return loginError("The passwords do not match.");
+    try {
+      const credential = await createUserWithEmailAndPassword(auth, email, password);
+      await sendEmailVerification(credential.user);
+      await signOut(auth);
+      setAuthTab("login");
+      $("#login-email").value = email;
+      loginError("Account created. Check your email to verify the account, then sign in.");
+    } catch (err) {
+      loginError(authError(err));
+    }
+  });
+
+  $("#btn-forgot").addEventListener("click", async () => {
+    clearLoginError();
+    const email = $("#login-email").value.trim();
+    if (!email) return loginError("Enter your email address first, then choose Forgot password.");
+    if (!isAllowedEmail(email)) return loginError("This email is not authorised to reset an admin password.");
+    try {
+      await sendPasswordResetEmail(auth, email);
+      loginError("Password reset email sent. Check your inbox and follow the link.");
+    } catch (err) {
+      loginError(authError(err));
+    }
+  });
 
   $("#btn-google").addEventListener("click", async () => {
     const provider = new GoogleAuthProvider();
@@ -55,8 +131,6 @@ if (!isConfigured) {
         : friendlyError(err));
     }
   });
-
-  const loginError = msg => { const e = $("#login-error"); e.textContent = msg; show(e, true); };
 
   onAuthStateChanged(auth, async user => {
     if (unsubscribe) { unsubscribe(); unsubscribe = null; }
@@ -108,7 +182,7 @@ function renderList() {
   listEl.innerHTML = projects.map((p, i) => {
     const img = safeUrl(p.image, { allowData: true });
     return `
-    <article class="p-row" data-id="${escapeHtml(p.id)}">
+    <article class="p-row${p.published ? " is-published" : ""}" data-id="${escapeHtml(p.id)}"${p.published ? ` tabindex="0" role="link" aria-label="Open ${escapeHtml(p.title)}"` : ""}>
       <div class="p-thumb">${img ? `<img src="${escapeHtml(img)}" alt="">` : ""}</div>
       <div class="p-main">
         <h2 class="p-title">${escapeHtml(p.title)}</h2>
@@ -132,13 +206,27 @@ function renderList() {
 
 listEl.addEventListener("click", async e => {
   const btn = e.target.closest("[data-action]");
-  if (!btn) return;
+  const row = e.target.closest("[data-id]");
+  if (!btn) {
+    const project = projects.find(p => p.id === row?.dataset.id);
+    if (project?.published) window.location.href = `project.html?project=${encodeURIComponent(project.id)}`;
+    return;
+  }
   const id = btn.closest("[data-id]")?.dataset.id;
   const action = btn.dataset.action;
   if (action === "seed") return seed(btn);
   if (action === "edit") return openEditor(projects.find(p => p.id === id));
   if (action === "delete") return removeProject(projects.find(p => p.id === id));
   if (action === "up" || action === "down") return move(id, action === "up" ? -1 : 1);
+});
+
+listEl.addEventListener("keydown", e => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const row = e.target.closest("[data-id]");
+  const project = projects.find(p => p.id === row?.dataset.id);
+  if (!project?.published || e.target.closest("[data-action]")) return;
+  e.preventDefault();
+  window.location.href = `project.html?project=${encodeURIComponent(project.id)}`;
 });
 
 async function markManaged() { await setDoc(doc(db, "settings", "site"), { managed: true }, { merge: true }); }

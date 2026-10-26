@@ -6,10 +6,12 @@
 //     Use the same address(es) in firestore.rules.
 // ─────────────────────────────────────────────────────────────
 export const firebaseConfig = {
-  apiKey: "PASTE_API_KEY",
-  authDomain: "PASTE_AUTH_DOMAIN",
-  projectId: "PASTE_PROJECT_ID",
-  appId: "PASTE_APP_ID"
+  apiKey: "AIzaSyCcT9rpqmCTZruiQM6YSu1deQ5Z7p0M5i4",
+  authDomain: "my-portfolio-a46ef.firebaseapp.com",
+  projectId: "my-portfolio-a46ef",
+  storageBucket: "my-portfolio-a46ef.firebasestorage.app",
+  messagingSenderId: "973813516514",
+  appId: "1:973813516514:web:db0a3776ab7637a8fcb6bb"
 };
 
 export const ADMIN_EMAILS = ["guptasagar2201@gmail.com"];

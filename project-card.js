@@ -16,14 +16,14 @@ const arrow = '<i data-lucide="arrow-up-right" class="icon" aria-hidden="true"><
 
 // Same markup as the hand-written cards that used to live in index.html.
 export const projectCardHTML = (p, { link = true } = {}) => {
-  const href = link ? projectHref(p.id) : "#";
+  const href = projectHref(p.id);
   const image = safeUrl(p.image, { allowData: true });
   const repo = safeUrl(p.repository);
   const source = safeUrl(p.source);
   const tags = (p.tags || []).map(t => `<span>${escapeHtml(t)}</span>`).join("");
   return `
 <article class="project-card reveal visible">
-  <a class="project-card-link" href="${escapeHtml(href)}" aria-label="Open ${escapeHtml(p.title)} details"></a>
+  ${link ? `<a class="project-card-link" href="${escapeHtml(href)}" aria-label="Open ${escapeHtml(p.title)} details"></a>` : ""}
   <div class="project-visual">
     ${image ? `<img class="project-image" src="${escapeHtml(image)}" alt="${escapeHtml(p.imageAlt || p.title)}">` : ""}
     <span class="project-image-hint" aria-hidden="true">View project details ${arrow}</span>

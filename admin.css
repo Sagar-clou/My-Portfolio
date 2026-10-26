@@ -24,6 +24,14 @@
 .btn-danger:hover { background: #fbeeec; border-color: #d89d97; }
 .btn-google { min-height: 46px; padding: 0 20px; width: 100%; font-size: 14px; }
 
+.auth-tabs { display: grid; grid-template-columns: 1fr 1fr; width: 100%; border-bottom: 1px solid #d9d4c6; }
+.auth-tab { border: 0; border-bottom: 2px solid transparent; background: none; color: var(--muted); padding: 10px 8px; font-weight: 700; cursor: pointer; }
+.auth-tab.is-active { color: var(--ink); border-bottom-color: var(--blue); }
+.auth-form { display: grid; gap: 14px; width: 100%; }
+.auth-link { border: 0; background: none; color: var(--blue); cursor: pointer; font: inherit; font-size: 13px; justify-self: center; padding: 2px 6px; }
+.auth-link:hover { text-decoration: underline; }
+.auth-note { font-size: 12px; text-align: center; width: 100%; }
+
 .adm-error { color: #a3281f; background: #fbeeec; border: 1px solid #e4c4c0; border-radius: 10px; padding: 10px 12px; font-size: 13px; margin: 0; width: 100%; }
 
 .adm-top { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; padding: 0 max(20px, calc((100% - 1200px) / 2)); background: #f8f6efeb; backdrop-filter: blur(18px); border-bottom: 1px solid #24291a16; }
@@ -39,6 +47,9 @@
 /* project list */
 .adm-list { display: grid; gap: 10px; }
 .p-row { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 12px; background: #fffdf8; border: 1px solid #e6e1d6; border-radius: 16px; }
+.p-row.is-published { cursor: pointer; }
+.p-row.is-published:hover { border-color: #91a9c0; box-shadow: 0 8px 24px #2529450c; }
+.p-row.is-published:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
 .p-thumb { width: 96px; height: 64px; border-radius: 10px; background: #e8eff6; overflow: hidden; }
 .p-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .p-main { min-width: 0; }
@@ -104,7 +115,7 @@
 .push { margin-left: auto; }
 
 .preview-col { position: sticky; top: 90px; }
-.card-preview { pointer-events: none; }
+.card-preview { pointer-events: auto; }
 .hint { color: var(--muted); font-size: 12px; margin: 10px 2px 0; }
 
 .adm-dialog { border: 1px solid #e6e1d6; border-radius: 19px; background: #fffdf8; padding: 26px; width: min(420px, calc(100% - 32px)); color: var(--ink); }

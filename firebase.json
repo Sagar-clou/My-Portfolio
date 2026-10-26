@@ -1,16 +1,18 @@
 {
   "hosting": {
-    "public": "yes",
+    "public": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/.vscode/**",
+      "**/.firebase/**",
+      "**/firebase-debug.log",
+      "**/firestore.rules"
     ]
+  },
+  "firestore": {
+    "rules": "firestore.rules"
   }
 }
