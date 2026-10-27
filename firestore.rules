@@ -13,7 +13,7 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
-    match /settings/site {
+    match /settings/{docId} {
       allow read: if true;
       allow write: if isAdmin();
     }
