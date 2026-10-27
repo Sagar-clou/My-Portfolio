@@ -78,138 +78,514 @@
         <span id="user-email"></span>
         <button class="btn btn-quiet" id="btn-signout" type="button"><i data-lucide="log-out" class="icon" aria-hidden="true"></i> Sign out</button>
       </div>
-    </header>
+    </header>    <!-- Top Navigation Tabs -->
+    <div class="adm-subnav-bar">
+      <div class="adm-subnav-inner">
+        <nav class="adm-tabs" role="tablist" aria-label="Admin Navigation Tabs">
+          <button class="adm-tab is-active" id="nav-btn-dashboard" type="button" role="tab" aria-selected="true">
+            <i data-lucide="layout-dashboard" class="icon" aria-hidden="true"></i> Dashboard
+          </button>
+          <button class="adm-tab" id="nav-btn-projects" type="button" role="tab" aria-selected="false">
+            <i data-lucide="folder-git-2" class="icon" aria-hidden="true"></i> Projects
+          </button>
+          <button class="adm-tab" id="nav-btn-content" type="button" role="tab" aria-selected="false">
+            <i data-lucide="layout-template" class="icon" aria-hidden="true"></i> Site Sections
+          </button>
+          <button class="adm-tab" id="nav-btn-json" type="button" role="tab" aria-selected="false">
+            <i data-lucide="braces" class="icon" aria-hidden="true"></i> Site Content
+          </button>
+        </nav>
+        <div class="adm-subnav-tools">
+          <button class="btn btn-quiet btn-sm" id="btn-seed-site" type="button" title="Seed default site content into Firestore">
+            <i data-lucide="sparkles" class="icon" aria-hidden="true"></i> Seed Site Content
+          </button>
+          <a class="btn btn-quiet btn-sm" href="index.html" target="_blank" rel="noopener" title="Preview deployed site">
+            <i data-lucide="external-link" class="icon" aria-hidden="true"></i> View Live Site
+          </a>
+        </div>
+      </div>
+    </div>
 
     <main class="adm-main">
-      <!-- LIST VIEW -->
-      <section id="view-list">
-        <div class="adm-head">
+
+      <!-- PANE 0: DASHBOARD (HOME) -->
+      <div id="pane-dashboard">
+        <div class="adm-head dash-head">
           <div>
-            <h1>Projects</h1>
-            <p id="list-summary">Loading…</p>
+            <div class="dash-sync-badge" id="dash-sync-badge" tabindex="0" role="button" title="Click to check Firestore sync status">
+              <span class="pulse-dot"></span> Firestore Connected · Live Site Synchronized
+            </div>
+            <h1>Portfolio Dashboard</h1>
+            <p class="dash-lead">Control your portfolio workspace, projects, site sections, and public identity.</p>
           </div>
-          <button class="btn btn-primary" id="btn-new" type="button"><i data-lucide="plus" class="icon" aria-hidden="true"></i> New project</button>
-        </div>
-        <div id="project-list" class="adm-list" aria-live="polite"></div>
-      </section>
-
-      <!-- EDITOR VIEW -->
-      <section id="view-editor" hidden>
-        <button class="btn btn-quiet" id="btn-back" type="button"><i data-lucide="arrow-left" class="icon" aria-hidden="true"></i> All projects</button>
-        <div class="adm-head">
-          <h1 id="editor-title">New project</h1>
+          <div class="btn-row">
+            <a class="btn btn-quiet" href="index.html" target="_blank" rel="noopener">
+              <i data-lucide="external-link" class="icon" aria-hidden="true"></i> Preview Site
+            </a>
+            <button class="btn btn-primary" id="dash-btn-new-project" type="button">
+              <i data-lucide="plus" class="icon" aria-hidden="true"></i> New Project
+            </button>
+          </div>
         </div>
 
-        <div class="editor-grid">
-          <form id="project-form" class="adm-card form" novalidate>
-            <div class="field">
-              <label for="f-title">Title</label>
-              <input id="f-title" maxlength="120" required autocomplete="off">
+        <!-- 4 KPI Metrics Grid -->
+        <div class="dash-kpi-grid">
+          <div class="dash-kpi-card" id="kpi-projects-card" tabindex="0" role="button" aria-label="Go to Projects">
+            <div class="dash-kpi-icon"><i data-lucide="folder-git-2" class="icon" aria-hidden="true"></i></div>
+            <div class="dash-kpi-info">
+              <span class="dash-kpi-label">TOTAL PROJECTS</span>
+              <div class="dash-kpi-num" id="dash-kpi-projects-count">4</div>
+              <div class="dash-kpi-sub" id="dash-kpi-projects-sub">4 Published · 0 Drafts</div>
             </div>
-            <div class="field">
-              <label for="f-id">Page address</label>
-              <div class="prefix"><span>project.html?project=</span><input id="f-id" maxlength="60" autocomplete="off" pattern="[a-z0-9-]+"></div>
-              <small id="f-id-help">Lowercase letters, numbers and dashes. It can't be changed after the project is created.</small>
+            <span class="dash-kpi-arrow"><i data-lucide="arrow-right" class="icon" aria-hidden="true"></i></span>
+          </div>
+
+          <div class="dash-kpi-card" id="kpi-sections-card" tabindex="0" role="button" aria-label="Go to Site Sections">
+            <div class="dash-kpi-icon sec-icon"><i data-lucide="layout-template" class="icon" aria-hidden="true"></i></div>
+            <div class="dash-kpi-info">
+              <span class="dash-kpi-label">SITE SECTIONS</span>
+              <div class="dash-kpi-num">6</div>
+              <div class="dash-kpi-sub">Hero, About, Work, Journey, Skills, Contact</div>
             </div>
-            <div class="field">
-              <label for="f-summary">Short description <span class="count" id="summary-count"></span></label>
-              <textarea id="f-summary" rows="4" maxlength="400"></textarea>
-              <small>Shown on the project card.</small>
+            <span class="dash-kpi-arrow"><i data-lucide="arrow-right" class="icon" aria-hidden="true"></i></span>
+          </div>
+
+          <div class="dash-kpi-card" id="kpi-skills-card" tabindex="0" role="button" aria-label="Go to Skills & Architecture">
+            <div class="dash-kpi-icon stack-icon"><i data-lucide="cpu" class="icon" aria-hidden="true"></i></div>
+            <div class="dash-kpi-info">
+              <span class="dash-kpi-label">STACK &amp; WORKFLOW</span>
+              <div class="dash-kpi-num" id="dash-kpi-stack-count">4 / 5</div>
+              <div class="dash-kpi-sub">Web · Mobile · Server · Database</div>
             </div>
-            <div class="row2">
-              <div class="field">
-                <label for="f-meta">Tech line</label>
-                <input id="f-meta" maxlength="80" placeholder="Python · NASA FIRMS">
+            <span class="dash-kpi-arrow"><i data-lucide="arrow-right" class="icon" aria-hidden="true"></i></span>
+          </div>
+
+          <div class="dash-kpi-card" id="kpi-journey-card" tabindex="0" role="button" aria-label="Go to Journey Timeline">
+            <div class="dash-kpi-icon time-icon"><i data-lucide="milestone" class="icon" aria-hidden="true"></i></div>
+            <div class="dash-kpi-info">
+              <span class="dash-kpi-label">JOURNEY MILESTONES</span>
+              <div class="dash-kpi-num" id="dash-kpi-journey-count">4</div>
+              <div class="dash-kpi-sub">Active Direction: NEXT</div>
+            </div>
+            <span class="dash-kpi-arrow"><i data-lucide="arrow-right" class="icon" aria-hidden="true"></i></span>
+          </div>
+        </div>
+
+        <!-- Quick Actions Bar -->
+        <div class="dash-actions-bar adm-card">
+          <span class="dash-actions-title">QUICK ACTIONS</span>
+          <div class="dash-actions-btns">
+            <button class="btn btn-sm" id="act-new-proj" type="button"><i data-lucide="plus" class="icon" aria-hidden="true"></i> Add Project</button>
+            <button class="btn btn-sm" id="act-edit-hero" type="button"><i data-lucide="sparkles" class="icon" aria-hidden="true"></i> Edit Hero &amp; Focus</button>
+            <button class="btn btn-sm" id="act-edit-about" type="button"><i data-lucide="user" class="icon" aria-hidden="true"></i> Edit About Me</button>
+            <button class="btn btn-sm" id="act-edit-journey" type="button"><i data-lucide="milestone" class="icon" aria-hidden="true"></i> Edit Timeline</button>
+            <button class="btn btn-sm" id="act-edit-skills" type="button"><i data-lucide="cpu" class="icon" aria-hidden="true"></i> Edit Stack Flow</button>
+            <button class="btn btn-sm" id="act-edit-contact" type="button"><i data-lucide="send" class="icon" aria-hidden="true"></i> Contact Channels</button>
+            <button class="btn btn-sm" id="act-open-json" type="button"><i data-lucide="braces" class="icon" aria-hidden="true"></i> Raw JSON</button>
+          </div>
+        </div>
+
+        <!-- Dashboard 2-Column Overview Grid -->
+        <div class="dash-grid">
+          <!-- Left: Recent Projects & Portfolio Summary -->
+          <div class="dash-col-main">
+            <div class="adm-card dash-card">
+              <div class="dash-card-header">
+                <div>
+                  <h2>Projects Overview</h2>
+                  <p class="text-muted">Featured projects visible to portfolio visitors.</p>
+                </div>
+                <button class="btn btn-sm btn-quiet" id="dash-btn-view-all-projects" type="button">
+                  Manage all projects <i data-lucide="arrow-right" class="icon" aria-hidden="true"></i>
+                </button>
               </div>
-              <div class="field">
-                <label for="f-type">Stage badge</label>
-                <input id="f-type" maxlength="40" placeholder="Prototype">
+              <div class="dash-projects-list" id="dash-projects-list">
+                <!-- Dynamically populated -->
               </div>
-            </div>
-            <div class="field">
-              <label for="f-tags-input">Tags</label>
-              <div class="chips" id="chips"><input id="f-tags-input" placeholder="Type a tag, press Enter" autocomplete="off"></div>
             </div>
 
-            <fieldset class="field image-field">
-              <legend>Cover image</legend>
-              <div class="image-row">
-                <div class="image-thumb" id="image-thumb"><span>No image</span></div>
-                <div class="image-controls">
-                  <input type="file" id="f-file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml" hidden>
-                  <div class="btn-row">
-                    <button class="btn" type="button" id="btn-upload"><i data-lucide="upload" class="icon" aria-hidden="true"></i> Upload image</button>
-                    <button class="btn btn-quiet" type="button" id="btn-image-clear" hidden>Remove</button>
-                  </div>
-                  <label class="visually-hidden" for="f-image-url">Image URL or path</label>
-                  <input id="f-image-url" placeholder="…or paste an image URL / file path">
-                  <small id="image-info">Uploads are resized and stored for free inside your database, so no paid storage is needed.</small>
+            <div class="adm-card dash-card" style="margin-top: 20px;">
+              <div class="dash-card-header">
+                <div>
+                  <h2>Bio &amp; Direction Summary</h2>
+                  <p class="text-muted">Current tagline and upcoming career focus.</p>
+                </div>
+                <button class="btn btn-sm btn-quiet" id="dash-btn-edit-bio" type="button">
+                  Edit bio <i data-lucide="arrow-right" class="icon" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="dash-bio-snippet" id="dash-bio-snippet">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Live Site Focus Card Preview & Health -->
+          <div class="dash-col-side">
+            <div class="adm-card dash-card">
+              <div class="dash-card-header">
+                <div>
+                  <h2>Live Focus Card</h2>
+                  <p class="text-muted">Real-time public card preview.</p>
+                </div>
+                <button class="btn btn-sm btn-quiet" id="dash-btn-edit-focus" type="button">
+                  Edit <i data-lucide="pencil" class="icon" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="dash-focus-preview-wrap" id="dash-focus-preview-wrap">
+                <!-- Dynamically rendered profile-card -->
+              </div>
+            </div>
+
+            <div class="adm-card dash-card" style="margin-top: 20px;">
+              <div class="dash-card-header">
+                <h2>Quick Contact Test</h2>
+              </div>
+              <div class="dash-contact-quick" id="dash-contact-quick">
+                <!-- Quick links -->
+              </div>
+            </div>
+
+            <div class="adm-card dash-card" style="margin-top: 20px;">
+              <div class="dash-card-header">
+                <h2>System &amp; Database Health</h2>
+              </div>
+              <ul class="dash-health-list">
+                <li id="dash-health-db" tabindex="0" role="button" title="Test Firestore database connection"><span class="health-bullet ok"></span> <strong>Database:</strong> Firestore Cloud Connected</li>
+                <li id="dash-health-auth" tabindex="0" role="button" title="View active account details"><span class="health-bullet ok"></span> <strong>Auth:</strong> Google &amp; Verified Admin Email</li>
+                <li id="dash-health-host" tabindex="0" role="button" title="Open public live portfolio site"><span class="health-bullet ok"></span> <strong>Hosting:</strong> Public Portfolio Live <i data-lucide="external-link" class="icon" style="width:12px;height:12px;margin-left:auto;"></i></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANE 1: PROJECTS (CRUD) -->
+      <div id="pane-projects" hidden>
+        <!-- LIST VIEW -->
+        <section id="view-list">
+          <div class="adm-head">
+            <div>
+              <p class="eyebrow">PROJECTS WORKSPACE</p>
+              <h1>Projects</h1>
+              <p id="list-summary">Loading…</p>
+            </div>
+            <button class="btn btn-primary" id="btn-new" type="button"><i data-lucide="plus" class="icon" aria-hidden="true"></i> New project</button>
+          </div>
+          <div id="project-list" class="adm-list" aria-live="polite"></div>
+        </section>
+
+        <!-- EDITOR VIEW -->
+        <section id="view-editor" hidden>
+          <button class="btn btn-quiet" id="btn-back" type="button"><i data-lucide="arrow-left" class="icon" aria-hidden="true"></i> All projects</button>
+          <div class="adm-head">
+            <h1 id="editor-title">New project</h1>
+          </div>
+
+          <div class="editor-grid">
+            <form id="project-form" class="adm-card form" novalidate>
+              <div class="field">
+                <label for="f-title">Title</label>
+                <input id="f-title" maxlength="120" required autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="f-id">Page address</label>
+                <div class="prefix"><span>project.html?project=</span><input id="f-id" maxlength="60" autocomplete="off" pattern="[a-z0-9-]+"></div>
+                <small id="f-id-help">Lowercase letters, numbers and dashes. It can't be changed after the project is created.</small>
+              </div>
+              <div class="field">
+                <label for="f-summary">Short description <span class="count" id="summary-count"></span></label>
+                <textarea id="f-summary" rows="4" maxlength="400"></textarea>
+                <small>Shown on the project card.</small>
+              </div>
+              <div class="row2">
+                <div class="field">
+                  <label for="f-meta">Tech line</label>
+                  <input id="f-meta" maxlength="80" placeholder="Python · NASA FIRMS">
+                </div>
+                <div class="field">
+                  <label for="f-type">Stage badge</label>
+                  <input id="f-type" maxlength="40" placeholder="Prototype">
                 </div>
               </div>
-              <label for="f-alt">Image description (alt text)</label>
-              <input id="f-alt" maxlength="160" placeholder="What the image shows">
-            </fieldset>
-
-            <div class="row2">
               <div class="field">
-                <label for="f-repo">GitHub repository URL</label>
-                <input id="f-repo" type="url" placeholder="https://github.com/…">
+                <label for="f-tags-input">Tags</label>
+                <div class="chips" id="chips"><input id="f-tags-input" placeholder="Type a tag, press Enter" autocomplete="off"></div>
               </div>
+
+              <fieldset class="field image-field">
+                <legend>Cover image</legend>
+                <div class="image-row">
+                  <div class="image-thumb" id="image-thumb"><span>No image</span></div>
+                  <div class="image-controls">
+                    <input type="file" id="f-file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml" hidden>
+                    <div class="btn-row">
+                      <button class="btn" type="button" id="btn-upload"><i data-lucide="upload" class="icon" aria-hidden="true"></i> Upload image</button>
+                      <button class="btn btn-quiet" type="button" id="btn-image-clear" hidden>Remove</button>
+                    </div>
+                    <label class="visually-hidden" for="f-image-url">Image URL or path</label>
+                    <input id="f-image-url" placeholder="…or paste an image URL / file path">
+                    <small id="image-info">Uploads are resized and stored for free inside your database, so no paid storage is needed.</small>
+                  </div>
+                </div>
+                <label for="f-alt">Image description (alt text)</label>
+                <input id="f-alt" maxlength="160" placeholder="What the image shows">
+              </fieldset>
+
+              <div class="row2">
+                <div class="field">
+                  <label for="f-repo">GitHub repository URL</label>
+                  <input id="f-repo" type="url" placeholder="https://github.com/…">
+                </div>
+                <div class="field">
+                  <label for="f-source">View-code URL</label>
+                  <input id="f-source" type="url" placeholder="https://github.com/…/blob/main/…">
+                </div>
+              </div>
+
               <div class="field">
-                <label for="f-source">View-code URL</label>
-                <input id="f-source" type="url" placeholder="https://github.com/…/blob/main/…">
+                <div class="tabs" role="tablist">
+                  <label for="f-readme" class="tabs-label">Details page (Markdown)</label>
+                  <button type="button" role="tab" id="tab-write" aria-selected="true">Write</button>
+                  <button type="button" role="tab" id="tab-preview" aria-selected="false">Preview</button>
+                </div>
+                <textarea id="f-readme" rows="16" class="mono" spellcheck="false"></textarea>
+                <div id="readme-preview" class="project-readme readme-preview" hidden></div>
+                <small>Supports # headings, lists, **bold**, `code`, code blocks and [links](https://…).</small>
               </div>
-            </div>
 
-            <div class="field">
-              <div class="tabs" role="tablist">
-                <label for="f-readme" class="tabs-label">Details page (Markdown)</label>
-                <button type="button" role="tab" id="tab-write" aria-selected="true">Write</button>
-                <button type="button" role="tab" id="tab-preview" aria-selected="false">Preview</button>
+              <div class="row2 row-end">
+                <div class="field">
+                  <label for="f-order">Position</label>
+                  <input id="f-order" type="number" step="1" value="10">
+                  <small>Smaller numbers appear first.</small>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="f-published" checked>
+                  <span class="switch-track" aria-hidden="true"></span>
+                  <span><b id="published-label">Published</b><small>Visible on the website</small></span>
+                </label>
               </div>
-              <textarea id="f-readme" rows="16" class="mono" spellcheck="false"></textarea>
-              <div id="readme-preview" class="project-readme readme-preview" hidden></div>
-              <small>Supports # headings, lists, **bold**, `code`, code blocks and [links](https://…).</small>
-            </div>
 
-            <div class="row2 row-end">
-              <div class="field">
-                <label for="f-order">Position</label>
-                <input id="f-order" type="number" step="1" value="10">
-                <small>Smaller numbers appear first.</small>
+              <p class="adm-error" id="form-error" role="alert" hidden></p>
+              <div class="form-actions">
+                <button class="btn btn-primary" type="submit" id="btn-save">Save project</button>
+                <button class="btn" type="button" id="btn-cancel">Cancel</button>
+                <button class="btn btn-danger push" type="button" id="btn-delete" hidden><i data-lucide="trash-2" class="icon" aria-hidden="true"></i> Delete</button>
               </div>
-              <label class="switch">
-                <input type="checkbox" id="f-published" checked>
-                <span class="switch-track" aria-hidden="true"></span>
-                <span><b id="published-label">Published</b><small>Visible on the website</small></span>
-              </label>
-            </div>
+            </form>
 
-            <p class="adm-error" id="form-error" role="alert" hidden></p>
-            <div class="form-actions">
-              <button class="btn btn-primary" type="submit" id="btn-save">Save project</button>
-              <button class="btn" type="button" id="btn-cancel">Cancel</button>
-              <button class="btn btn-danger push" type="button" id="btn-delete" hidden><i data-lucide="trash-2" class="icon" aria-hidden="true"></i> Delete</button>
-            </div>
-          </form>
+            <aside class="preview-col">
+              <h2>Card preview</h2>
+              <div id="card-preview" class="card-preview"></div>
+              <p class="hint">Exactly how this card looks on your home page.</p>
+            </aside>
+          </div>
+        </section>
+      </div>
 
-          <aside class="preview-col">
-            <h2>Card preview</h2>
-            <div id="card-preview" class="card-preview"></div>
-            <p class="hint">Exactly how this card looks on your home page.</p>
-          </aside>
+      <!-- PANE 2: SITE SECTIONS (VISUAL CRUD) -->
+      <div id="pane-content" hidden>
+        <div class="adm-head">
+          <div>
+            <p class="eyebrow">VISUAL SECTION EDITOR</p>
+            <h1 id="sec-page-title">Site Sections</h1>
+            <p id="sec-page-desc">Modify the content, badges, and layout of every section on your website with live preview.</p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-quiet" id="btn-preview-sec-site" href="index.html" target="_blank" rel="noopener">
+              <i data-lucide="external-link" class="icon" aria-hidden="true"></i> View Live Section
+            </a>
+            <button class="btn btn-primary" id="btn-save-section" type="button">
+              <i data-lucide="save" class="icon" aria-hidden="true"></i> Save Section Changes
+            </button>
+          </div>
         </div>
-      </section>
+
+        <!-- Section Navigation Pills with Icons -->
+        <div class="section-pills" role="tablist" aria-label="Section Selector">
+          <button class="sec-pill is-active" data-sec="hero" type="button">
+            <i data-lucide="sparkles" class="icon" aria-hidden="true"></i> Hero &amp; Focus
+          </button>
+          <button class="sec-pill" data-sec="about" type="button">
+            <i data-lucide="user" class="icon" aria-hidden="true"></i> About Me
+          </button>
+          <button class="sec-pill" data-sec="projects_header" type="button">
+            <i data-lucide="folder-git-2" class="icon" aria-hidden="true"></i> Projects Heading
+          </button>
+          <button class="sec-pill" data-sec="journey" type="button">
+            <i data-lucide="milestone" class="icon" aria-hidden="true"></i> The Journey
+          </button>
+          <button class="sec-pill" data-sec="skills" type="button">
+            <i data-lucide="cpu" class="icon" aria-hidden="true"></i> Skills &amp; Stack
+          </button>
+          <button class="sec-pill" data-sec="contact" type="button">
+            <i data-lucide="send" class="icon" aria-hidden="true"></i> Contact &amp; Socials
+          </button>
+        </div>
+
+        <!-- Dynamic Form & Live Real-Time Preview Container -->
+        <div id="section-form-container">
+          <!-- Populated dynamically by admin.js -->
+        </div>
+      </div>
+
+      <!-- PANE 3: JSON & KEY-VALUE CRUD ({ key : value }) -->
+      <div id="pane-json" hidden>
+        <div class="adm-head">
+          <div>
+            <p class="eyebrow">SITE CONTENT &amp; PROPERTY MANAGER</p>
+            <h1>Site Content Manager</h1>
+            <p>Direct property inspector and JSON data engine. Search, inspect, edit, or import/export Firestore data.</p>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-quiet" id="btn-export-json-file" type="button" title="Export site content as a JSON file backup">
+              <i data-lucide="download" class="icon" aria-hidden="true"></i> Backup JSON
+            </button>
+            <button class="btn btn-primary" id="btn-save-json" type="button">
+              <i data-lucide="cloud-upload" class="icon" aria-hidden="true"></i> Save Site Changes
+            </button>
+          </div>
+        </div>
+
+        <div class="content-manager-note">
+          <div class="content-manager-icon"><i data-lucide="database" class="icon" aria-hidden="true"></i></div>
+          <div>
+            <strong>Firestore Database Scope</strong>
+            <p>Changes made here update document <code>settings/site</code> in Firestore. Switch between the <b>Property Inspector</b> for quick safe edits and <b>Pro Code Editor</b> for complete JSON control.</p>
+          </div>
+        </div>
+
+        <!-- Controls: Section filter, Search, and Mode Switcher -->
+        <div class="json-controls-bar">
+          <div class="json-select-group">
+            <label for="json-section-select"><b>Target Section:</b></label>
+            <select id="json-section-select" class="adm-select">
+              <option value="all">Full Site Content — All Sections</option>
+              <option value="hero">Hero (hero)</option>
+              <option value="about">About (about)</option>
+              <option value="projects_header">Projects Heading (projects_header)</option>
+              <option value="journey">Journey Timeline (journey)</option>
+              <option value="skills">Skills &amp; Flow (skills)</option>
+              <option value="contact">Contact &amp; Socials (contact)</option>
+            </select>
+          </div>
+
+          <div class="json-search-group">
+            <i data-lucide="search" class="icon json-search-icon" aria-hidden="true"></i>
+            <input type="search" id="json-search-input" placeholder="Filter keys or values..." autocomplete="off">
+          </div>
+
+          <div class="json-mode-toggle" role="tablist">
+            <button class="btn is-active" id="btn-mode-kv" type="button">
+              <i data-lucide="sliders-horizontal" class="icon" aria-hidden="true"></i> Property Inspector
+            </button>
+            <button class="btn" id="btn-mode-raw" type="button">
+              <i data-lucide="code-2" class="icon" aria-hidden="true"></i> Pro Code Editor
+            </button>
+          </div>
+        </div>
+
+        <!-- MODE A: PROPERTY INSPECTOR (CARD-BASED) -->
+        <div id="json-view-kv" class="adm-card prop-sheet-card">
+          <div class="kv-header-row">
+            <div>
+              <h2 id="kv-title">Properties in Section</h2>
+              <p id="kv-count" class="text-muted">Loading properties…</p>
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-primary btn-sm" id="btn-add-kv" type="button">
+                <i data-lucide="plus-circle" class="icon" aria-hidden="true"></i> Add Property Field
+              </button>
+            </div>
+          </div>
+          <div id="kv-props-list" class="kv-props-list">
+            <!-- Populated dynamically by admin.js with sleek property cards -->
+          </div>
+        </div>
+
+        <!-- MODE B: PRO JSON CODE EDITOR -->
+        <div id="json-view-raw" class="adm-card code-editor-card" hidden>
+          <div class="raw-json-bar">
+            <div class="json-status-tag" id="json-syntax-status">
+              <i data-lucide="check-circle" class="icon" aria-hidden="true"></i> Valid JSON
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-quiet btn-sm" id="btn-format-json" type="button" title="Prettify JSON with 2 spaces indent">
+                <i data-lucide="align-left" class="icon" aria-hidden="true"></i> Prettify
+              </button>
+              <button class="btn btn-quiet btn-sm" id="btn-minify-json" type="button" title="Minify JSON">
+                <i data-lucide="minimize-2" class="icon" aria-hidden="true"></i> Minify
+              </button>
+              <button class="btn btn-quiet btn-sm" id="btn-validate-json" type="button">
+                <i data-lucide="shield-check" class="icon" aria-hidden="true"></i> Validate
+              </button>
+              <button class="btn btn-quiet btn-sm" id="btn-copy-json" type="button">
+                <i data-lucide="copy" class="icon" aria-hidden="true"></i> Copy
+              </button>
+            </div>
+          </div>
+          <div class="code-editor-wrap">
+            <textarea id="raw-json-textarea" class="mono raw-textarea" rows="24" spellcheck="false"></textarea>
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
 
+  <!-- DIALOG: CONFIRM DELETE -->
   <dialog id="confirm" class="adm-dialog">
     <form method="dialog">
-      <h2 id="confirm-title">Delete project?</h2>
+      <h2 id="confirm-title">Confirm deletion</h2>
       <p id="confirm-text"></p>
       <div class="form-actions">
-        <button class="btn" value="cancel" autofocus>Keep it</button>
+        <button class="btn" value="cancel" autofocus>Cancel</button>
         <button class="btn btn-danger" value="ok">Delete permanently</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- DIALOG: ADD / EDIT LIST ITEM (Journey, Skill Node, Flow Step) -->
+  <dialog id="modal-item" class="adm-dialog adm-dialog-wide">
+    <form id="form-modal-item" method="dialog" novalidate>
+      <h2 id="modal-item-title">Item details</h2>
+      <div id="modal-item-fields" class="modal-fields"></div>
+      <p class="adm-error" id="modal-item-error" role="alert" hidden></p>
+      <div class="form-actions">
+        <button class="btn" type="button" id="btn-modal-cancel">Cancel</button>
+        <button class="btn btn-primary" type="submit" id="btn-modal-save">Save item</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- DIALOG: ADD NEW KEY-VALUE PAIR -->
+  <dialog id="modal-kv" class="adm-dialog">
+    <form id="form-modal-kv" method="dialog" novalidate>
+      <h2>Add Key-Value Pair</h2>
+      <div class="field">
+        <label for="kv-input-key">Key Name</label>
+        <input id="kv-input-key" required placeholder="e.g. custom_title, badge_text" pattern="[a-zA-Z0-9_\-]+">
+        <small>Letters, numbers, underscores or dashes.</small>
+      </div>
+      <div class="field">
+        <label for="kv-input-type">Data Type</label>
+        <select id="kv-input-type" class="adm-select">
+          <option value="string">String (Text)</option>
+          <option value="number">Number</option>
+          <option value="boolean">Boolean (true / false)</option>
+          <option value="array">Array (JSON List)</option>
+          <option value="object">Object (JSON { key: value })</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="kv-input-value">Initial Value</label>
+        <textarea id="kv-input-value" rows="3" placeholder="Enter value..."></textarea>
+      </div>
+      <p class="adm-error" id="modal-kv-error" role="alert" hidden></p>
+      <div class="form-actions">
+        <button class="btn" type="button" id="btn-modal-kv-cancel">Cancel</button>
+        <button class="btn btn-primary" type="submit" id="btn-modal-kv-save">Add Key-Value</button>
       </div>
     </form>
   </dialog>
