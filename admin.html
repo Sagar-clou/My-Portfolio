@@ -1,20 +1,29 @@
 <!doctype html>
 <html lang="en">
+<!-- =========================================================
+     FILE: admin.html
+     ROLE: Admin dashboard markup; loads style.css, admin.css, and admin.js.
+     ========================================================= -->
 <head>
+  <!-- Document metadata -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#f8f6ef">
   <title>Admin — Sagar Gupta</title>
+
+  <!-- Font and stylesheet dependencies -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="admin.css">
-</head>
+<script src="/_aistudio-iframe.js?v=1f94f900"></script></head>
 <body class="adm">
 
-  <!-- Firebase not configured yet -->
+  <!-- =========================================================
+       FIREBASE CONFIGURATION NOTICE
+       ========================================================= -->
   <main class="adm-center" id="screen-config" hidden>
     <section class="adm-card adm-narrow">
       <h1>Connect Firebase first</h1>
@@ -22,16 +31,25 @@
     </section>
   </main>
 
-  <!-- Sign-in -->
+  <!-- =========================================================
+       AUTHENTICATION SCREEN
+       Sign-in, account creation, password reset, and Google auth.
+       ========================================================= -->
   <main class="adm-center" id="screen-login" hidden>
     <section class="adm-card adm-narrow">
-      <a class="brand" href="index.html"><span class="brand-mark">S</span><span>sagar<span class="brand-dot">.</span></span></a>
+      <a class="brand" href="index.html">
+        <span class="brand-mark">S</span><span>sagar<span class="brand-dot">.</span></span>
+      </a>
+
       <h1>Portfolio admin</h1>
       <p>Sign in with the account that manages this site. Only authorised admin email addresses can access this panel.</p>
+
       <div class="auth-tabs" role="tablist" aria-label="Authentication options">
         <button class="auth-tab is-active" id="tab-login" type="button" role="tab" aria-selected="true">Sign in</button>
         <button class="auth-tab" id="tab-signup" type="button" role="tab" aria-selected="false">Create account</button>
       </div>
+
+      <!-- Sign In Form -->
       <form id="login-form" class="auth-form" novalidate>
         <div class="field">
           <label for="login-email">Email address</label>
@@ -44,6 +62,8 @@
         <button class="btn btn-primary btn-google" type="submit">Sign in with email</button>
         <button class="auth-link" id="btn-forgot" type="button">Forgot password?</button>
       </form>
+
+      <!-- Sign Up Form -->
       <form id="signup-form" class="auth-form" hidden novalidate>
         <div class="field">
           <label for="signup-email">Admin email address</label>
@@ -60,26 +80,58 @@
         </div>
         <button class="btn btn-primary btn-google" type="submit">Create admin account</button>
       </form>
+
+      <!-- Google Sign In -->
       <button class="btn btn-google" id="btn-google" type="button">
-        <svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.1 5.5c4.3-4 6.8-9.9 6.8-16.9z"/><path fill="#FBBC05" d="M10.5 28.7c-.5-1.4-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.4 0 20.1 0 24s.9 7.6 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.1-5.5c-2 1.3-4.6 2.2-8.8 2.2-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
+        <svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true">
+          <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.1 5.5c4.3-4 6.8-9.9 6.8-16.9z"/>
+          <path fill="#FBBC05" d="M10.5 28.7c-.5-1.4-.8-3-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.4 0 20.1 0 24s.9 7.6 2.6 10.8l7.9-6.1z"/>
+          <path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.1-5.5c-2 1.3-4.6 2.2-8.8 2.2-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/>
+        </svg>
         Continue with Google
       </button>
+
       <p class="auth-note">New accounts must use an authorised admin email and verify it before signing in.</p>
       <p class="adm-error" id="login-error" role="alert" hidden></p>
     </section>
   </main>
 
-  <!-- Dashboard -->
+  <!-- =========================================================
+       ADMIN APPLICATION
+       ========================================================= -->
   <div id="screen-app" hidden>
+    <!-- Admin header and account controls -->
     <header class="adm-top">
-      <a class="brand" href="index.html" title="View public site"><span class="brand-mark">S</span><span>sagar<span class="brand-dot">.</span> <span class="adm-tag">admin</span></span></a>
+      <a class="brand" href="index.html" title="View public site">
+        <span class="brand-mark">S</span><span>sagar<span class="brand-dot">.</span> <span class="adm-tag">admin</span></span>
+      </a>
+      <!-- Mobile/tablet navigation drawer trigger -->
+      <button
+        class="adm-menu-toggle"
+        id="admin-menu-toggle"
+        type="button"
+        aria-label="Open admin navigation"
+        aria-expanded="false"
+        aria-controls="admin-navigation"
+      >
+        <i data-lucide="menu" class="icon" aria-hidden="true"></i>
+      </button>
       <div class="adm-user">
         <img id="user-avatar" alt="" referrerpolicy="no-referrer">
         <span id="user-email"></span>
-        <button class="btn btn-quiet" id="btn-signout" type="button"><i data-lucide="log-out" class="icon" aria-hidden="true"></i> Sign out</button>
+        <button class="btn btn-quiet" id="btn-signout" type="button">
+          <i data-lucide="log-out" class="icon" aria-hidden="true"></i> Sign out
+        </button>
       </div>
-    </header>    <!-- Top Navigation Tabs -->
-    <div class="adm-subnav-bar">
+    </header>
+
+    <!-- Primary admin navigation -->
+    <!-- Mobile/tablet drawer backdrop -->
+    <button class="adm-nav-backdrop" id="admin-nav-backdrop" type="button" aria-label="Close admin navigation" tabindex="-1"></button>
+
+    <!-- Admin navigation drawer on small screens; persistent sidebar on desktop -->
+    <div class="adm-subnav-bar" id="admin-navigation">
       <div class="adm-subnav-inner">
         <nav class="adm-tabs" role="tablist" aria-label="Admin Navigation Tabs">
           <button class="adm-tab is-active" id="nav-btn-dashboard" type="button" role="tab" aria-selected="true">
@@ -108,7 +160,9 @@
 
     <main class="adm-main">
 
-      <!-- PANE 0: DASHBOARD (HOME) -->
+      <!-- =======================================================
+           PANE 0: DASHBOARD HOME
+           ======================================================= -->
       <div id="pane-dashboard">
         <div class="adm-head dash-head">
           <div>
@@ -251,18 +305,28 @@
                 <h2>System &amp; Database Health</h2>
               </div>
               <ul class="dash-health-list">
-                <li id="dash-health-db" tabindex="0" role="button" title="Test Firestore database connection"><span class="health-bullet ok"></span> <strong>Database:</strong> Firestore Cloud Connected</li>
-                <li id="dash-health-auth" tabindex="0" role="button" title="View active account details"><span class="health-bullet ok"></span> <strong>Auth:</strong> Google &amp; Verified Admin Email</li>
-                <li id="dash-health-host" tabindex="0" role="button" title="Open public live portfolio site"><span class="health-bullet ok"></span> <strong>Hosting:</strong> Public Portfolio Live <i data-lucide="external-link" class="icon" style="width:12px;height:12px;margin-left:auto;"></i></li>
+                <li id="dash-health-db" tabindex="0" role="button" title="Test Firestore database connection">
+                  <span class="health-bullet ok"></span> <strong>Database:</strong> Firestore Cloud Connected
+                </li>
+                <li id="dash-health-auth" tabindex="0" role="button" title="View active account details">
+                  <span class="health-bullet ok"></span> <strong>Auth:</strong> Google &amp; Verified Admin Email
+                </li>
+                <li id="dash-health-host" tabindex="0" role="button" title="Open public live portfolio site">
+                  <span class="health-bullet ok"></span> <strong>Hosting:</strong> Public Portfolio Live
+                  <i data-lucide="external-link" class="icon" style="width:12px;height:12px;margin-left:auto;"></i>
+                </li>
               </ul>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- PANE 1: PROJECTS (CRUD) -->
+      <!-- =======================================================
+           PANE 1: PROJECT MANAGEMENT
+           List view and create/edit project form.
+           ======================================================= -->
       <div id="pane-projects" hidden>
-        <!-- LIST VIEW -->
+        <!-- Project list view -->
         <section id="view-list">
           <div class="adm-head">
             <div>
@@ -270,14 +334,18 @@
               <h1>Projects</h1>
               <p id="list-summary">Loading…</p>
             </div>
-            <button class="btn btn-primary" id="btn-new" type="button"><i data-lucide="plus" class="icon" aria-hidden="true"></i> New project</button>
+            <button class="btn btn-primary" id="btn-new" type="button">
+              <i data-lucide="plus" class="icon" aria-hidden="true"></i> New project
+            </button>
           </div>
           <div id="project-list" class="adm-list" aria-live="polite"></div>
         </section>
 
-        <!-- EDITOR VIEW -->
+        <!-- Project editor view -->
         <section id="view-editor" hidden>
-          <button class="btn btn-quiet" id="btn-back" type="button"><i data-lucide="arrow-left" class="icon" aria-hidden="true"></i> All projects</button>
+          <button class="btn btn-quiet" id="btn-back" type="button">
+            <i data-lucide="arrow-left" class="icon" aria-hidden="true"></i> All projects
+          </button>
           <div class="adm-head">
             <h1 id="editor-title">New project</h1>
           </div>
@@ -288,16 +356,22 @@
                 <label for="f-title">Title</label>
                 <input id="f-title" maxlength="120" required autocomplete="off">
               </div>
+
               <div class="field">
                 <label for="f-id">Page address</label>
-                <div class="prefix"><span>project.html?project=</span><input id="f-id" maxlength="60" autocomplete="off" pattern="[a-z0-9-]+"></div>
+                <div class="prefix">
+                  <span>project.html?project=</span>
+                  <input id="f-id" maxlength="60" autocomplete="off" pattern="[a-z0-9-]+">
+                </div>
                 <small id="f-id-help">Lowercase letters, numbers and dashes. It can't be changed after the project is created.</small>
               </div>
+
               <div class="field">
                 <label for="f-summary">Short description <span class="count" id="summary-count"></span></label>
                 <textarea id="f-summary" rows="4" maxlength="400"></textarea>
                 <small>Shown on the project card.</small>
               </div>
+
               <div class="row2">
                 <div class="field">
                   <label for="f-meta">Tech line</label>
@@ -308,9 +382,12 @@
                   <input id="f-type" maxlength="40" placeholder="Prototype">
                 </div>
               </div>
+
               <div class="field">
                 <label for="f-tags-input">Tags</label>
-                <div class="chips" id="chips"><input id="f-tags-input" placeholder="Type a tag, press Enter" autocomplete="off"></div>
+                <div class="chips" id="chips">
+                  <input id="f-tags-input" placeholder="Type a tag, press Enter" autocomplete="off">
+                </div>
               </div>
 
               <fieldset class="field image-field">
@@ -320,7 +397,9 @@
                   <div class="image-controls">
                     <input type="file" id="f-file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml" hidden>
                     <div class="btn-row">
-                      <button class="btn" type="button" id="btn-upload"><i data-lucide="upload" class="icon" aria-hidden="true"></i> Upload image</button>
+                      <button class="btn" type="button" id="btn-upload">
+                        <i data-lucide="upload" class="icon" aria-hidden="true"></i> Upload image
+                      </button>
                       <button class="btn btn-quiet" type="button" id="btn-image-clear" hidden>Remove</button>
                     </div>
                     <label class="visually-hidden" for="f-image-url">Image URL or path</label>
@@ -371,7 +450,9 @@
               <div class="form-actions">
                 <button class="btn btn-primary" type="submit" id="btn-save">Save project</button>
                 <button class="btn" type="button" id="btn-cancel">Cancel</button>
-                <button class="btn btn-danger push" type="button" id="btn-delete" hidden><i data-lucide="trash-2" class="icon" aria-hidden="true"></i> Delete</button>
+                <button class="btn btn-danger push" type="button" id="btn-delete" hidden>
+                  <i data-lucide="trash-2" class="icon" aria-hidden="true"></i> Delete
+                </button>
               </div>
             </form>
 
@@ -384,7 +465,9 @@
         </section>
       </div>
 
-      <!-- PANE 2: SITE SECTIONS (VISUAL CRUD) -->
+      <!-- =======================================================
+           PANE 2: SITE SECTION EDITOR
+           ======================================================= -->
       <div id="pane-content" hidden>
         <div class="adm-head">
           <div>
@@ -430,7 +513,9 @@
         </div>
       </div>
 
-      <!-- PANE 3: JSON & KEY-VALUE CRUD ({ key : value }) -->
+      <!-- =======================================================
+           PANE 3: JSON AND KEY-VALUE CONTENT MANAGER
+           ======================================================= -->
       <div id="pane-json" hidden>
         <div class="adm-head">
           <div>
@@ -486,7 +571,7 @@
           </div>
         </div>
 
-        <!-- MODE A: PROPERTY INSPECTOR (CARD-BASED) -->
+        <!-- Property inspector mode -->
         <div id="json-view-kv" class="adm-card prop-sheet-card">
           <div class="kv-header-row">
             <div>
@@ -504,7 +589,7 @@
           </div>
         </div>
 
-        <!-- MODE B: PRO JSON CODE EDITOR -->
+        <!-- Raw JSON code editor mode -->
         <div id="json-view-raw" class="adm-card code-editor-card" hidden>
           <div class="raw-json-bar">
             <div class="json-status-tag" id="json-syntax-status">
@@ -534,7 +619,11 @@
     </main>
   </div>
 
-  <!-- DIALOG: CONFIRM DELETE -->
+  <!-- =========================================================
+       MODALS AND DIALOGS
+       ========================================================= -->
+
+  <!-- Confirm deletion dialog -->
   <dialog id="confirm" class="adm-dialog">
     <form method="dialog">
       <h2 id="confirm-title">Confirm deletion</h2>
@@ -546,7 +635,7 @@
     </form>
   </dialog>
 
-  <!-- DIALOG: ADD / EDIT LIST ITEM (Journey, Skill Node, Flow Step) -->
+  <!-- Add or edit list item dialog (journey, skill node, or flow step) -->
   <dialog id="modal-item" class="adm-dialog adm-dialog-wide">
     <form id="form-modal-item" method="dialog" novalidate>
       <h2 id="modal-item-title">Item details</h2>
@@ -559,7 +648,7 @@
     </form>
   </dialog>
 
-  <!-- DIALOG: ADD NEW KEY-VALUE PAIR -->
+  <!-- Add a new key-value pair dialog -->
   <dialog id="modal-kv" class="adm-dialog">
     <form id="form-modal-kv" method="dialog" novalidate>
       <h2>Add Key-Value Pair</h2>
@@ -590,8 +679,12 @@
     </form>
   </dialog>
 
+  <!-- Toast notifications container -->
   <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
 
+  <!-- =========================================================
+       JAVASCRIPT DEPENDENCIES
+       ========================================================= -->
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
   <script type="module" src="admin.js"></script>
 </body>

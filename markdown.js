@@ -101,3 +101,7 @@ export const renderMarkdown = markdown => {
   if (codeLines) output.push(`<pre><code>${escapeHtml(codeLines.join('\n'))}</code></pre>`);
   return output.join('\n');
 };
+/* ============================================================
+   FILE: markdown.js
+   ROLE: Shared Markdown-to-HTML renderer; used by admin.js and project-details.js.
+   ============================================================ */

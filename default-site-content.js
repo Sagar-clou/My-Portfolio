@@ -155,3 +155,7 @@ export const defaultSiteContent = {
     footer_brand_name: "sagar Gupta."
   }
 };
+/* ============================================================
+   FILE: default-site-content.js
+   ROLE: Default Firestore site-content model; consumed by admin.js and portfolio-content.js.
+   ============================================================ */

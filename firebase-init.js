@@ -5,3 +5,7 @@ import { firebaseConfig, isConfigured } from "./firebase-config.js";
 export { isConfigured };
 export const app = isConfigured ? initializeApp(firebaseConfig) : null;
 export const db = app ? getFirestore(app) : null;
+/* ============================================================
+   FILE: firebase-init.js
+   ROLE: Initializes Firebase services; consumed by admin.js, seed-projects.js, and portfolio-content.js.
+   ============================================================ */

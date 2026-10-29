@@ -1,221 +1,531 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#f8f6ef" />
-  <meta name="description" content="I'm Sagar Gupta, a Computer Science student into full-stack development and data science. I like taking a problem from rough idea to working prototype—with Python, the web, and a lot of learning along the way." />
-  <title>Sagar Gupta — Developer &amp; Builder</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css"/>
-</head>
-<body>
-  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
-  <header class="topbar">
-    <a class="brand" href="profile.html" aria-label="Open Sagar Gupta profile"><span class="brand-mark">S</span><span>sagar<span class="brand-dot">.</span></span></a>
-    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-navigation"><i data-lucide="menu" class="icon" aria-hidden="true"></i></button>
+<!-- =========================================================
+     FILE: index.html
+     ROLE: Public portfolio home page; styled by style.css.
+     ========================================================= -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f8f6ef" />
+    <meta name="description" content="I'm Sagar Gupta, a Computer Science student into full-stack development and data science. I like taking a problem from rough idea to working prototype&mdash;with Python, the web, and a lot of learning along the way." />
+    <title>Sagar Gupta &mdash; Developer &amp; Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Ambient Background Lighting -->
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <!-- Navigation Header -->
+    <header class="topbar">
+      <a class="brand" href="profile.html" aria-label="Open Sagar Gupta profile">
+        <span class="brand-mark">S</span>
+        <span>sagar<span class="brand-dot">.</span></span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-navigation">
+        <i data-lucide="menu" class="icon" aria-hidden="true"></i>
+      </button>
+
+      <nav class="nav" id="site-navigation" aria-hidden="false">
+        <a href="profile.html">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#journey">Journey</a>
+        <a href="#skills">Skills</a>
+        <a class="nav-contact" href="#contact">
+          Let's connect <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+        </a>
+      </nav>
+    </header>
+
+    <!-- Mobile navigation backdrop; kept outside the blurred sticky header. -->
     <button class="nav-backdrop" type="button" aria-label="Close navigation" tabindex="-1"></button>
-    <nav class="nav" id="site-navigation" aria-hidden="false">
-      <a href="profile.html">About</a><a href="#projects">Projects</a><a href="#journey">Journey</a><a href="#skills">Skills</a>
-      <a class="nav-contact" href="#contact">Let's connect <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero section-wrap" id="home">
+        <div class="hero-copy reveal">
+          <h1>
+            Have an idea?<br>
+            <span class="gradient-text">Let's make it useful product.</span>
+          </h1>
+          <p class="hero-lead">
+            I'm <strong>Sagar Gupta</strong>, a Computer Science student into full-stack development and data science. I like taking a problem from rough idea to working prototype&mdash;with Python, the web, and a lot of learning along the way.
+          </p>
+          <div class="hero-meta">
+            <span>
+              <i data-lucide="graduation-cap" class="icon meta-icon" aria-hidden="true"></i> B.Tech &middot; Computer Science
+            </span>
+            <span>
+              <i data-lucide="map-pin" class="icon meta-icon" aria-hidden="true"></i> Faridabad, India
+            </span>
+          </div>
+        </div>
+
+        <div class="hero-art reveal">
+          <div class="orbit orbit-a"></div>
+          <div class="orbit orbit-b"></div>
+
+          <div class="profile-card">
+            <div class="card-top">
+              <span class="tiny-label">CURRENT FOCUS</span>
+              <span class="live-pill">
+                <span></span> Building
+              </span>
+            </div>
+
+            <div class="avatar">
+              <img src="sagar-profile.jpg" alt="Sagar Gupta">
+              <span class="avatar-spark">&#x2726;</span>
+            </div>
+
+            <h2>
+              Curious mind.<br>
+              <span>Practical builder.</span>
+            </h2>
+
+            <p>Computer Science student turning ideas into prototypes and experiments.</p>
+
+            <div class="focus-tags">
+              <span>Python</span>
+              <span>Full-Stack</span>
+              <span>AI / ML</span>
+            </div>
+
+            <div class="card-bottom">
+              <span>PORTFOLIO</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section class="section-wrap about-section" id="about">
+        <div class="section-heading reveal">
+          <span class="section-kicker">A LITTLE ABOUT ME</span>
+          <h2>
+            Learning by <span class="gradient-text">building.</span>
+          </h2>
+        </div>
+
+        <div class="about-grid">
+          <p class="about-text reveal">
+            I'm a passionate student and aspiring Full-Stack who believes in learning through practical experience. I enjoy exploring new technologies, solving problems, and turning ideas into real-world projects. From full-stack development, I'm continuously building my skills by creating projects that combine creativity, logic, and innovation.
+          </p>
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section class="section-wrap projects-section" id="projects">
+        <div class="section-heading reveal">
+          <span class="section-kicker">SELECTED WORK</span>
+          <h2>
+            Projects &amp; <span class="gradient-text">experiments.</span>
+          </h2>
+          <p>
+            A few things I've built, explored, and learned from. Open a project card for a fuller overview and a workflow diagram that connects each step to its technology. Each project's current stage is labelled honestly.
+          </p>
+        </div>
+
+        <div class="project-grid">
+          <!-- Project 1: SAFE-NET -->
+          <article class="project-card reveal">
+            <a class="project-card-link" href="project.html?project=safe-net" aria-label="Open SAFE-NET Satellite Instant Alert details"></a>
+            <div class="project-visual">
+              <img class="project-image" src="satellite-alert-project.svg" alt="Satellite sending an alert from an Earth observation">
+              <span class="project-image-hint" aria-hidden="true">
+                View project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+              </span>
+            </div>
+            <div class="project-info">
+              <div class="project-meta">
+                <span>Python &middot; NASA FIRMS</span>
+                <span class="project-type">Prototype</span>
+              </div>
+              <h3>SAFE-NET Satellite Instant Alert</h3>
+              <p>A working prototype that uses NASA FIRMS active-fire satellite data to show map detections, risk levels, browser notifications, and alert history. Includes demo mode when no FIRMS key is configured.</p>
+              <div class="tag-row">
+                <span>Python</span>
+                <span>Satellite data</span>
+                <span>Alerts</span>
+              </div>
+              <div class="project-links">
+                <a href="project.html?project=safe-net">
+                  Project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+                </a>
+                <a href="https://github.com/Sagar-clou/Satellite-Instant-Alert" target="_blank" rel="noopener noreferrer">
+                  GitHub repo <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+                </a>
+                <a href="https://github.com/Sagar-clou/Satellite-Instant-Alert/tree/main" target="_blank" rel="noopener noreferrer">
+                  View code <i data-lucide="code-2" class="icon" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2: Family Tree Generator -->
+          <article class="project-card reveal">
+            <a class="project-card-link" href="project.html?project=family-tree" aria-label="Open Family Tree Generator details"></a>
+            <div class="project-visual">
+              <img class="project-image" src="family%20tree.png" alt="Family tree diagram showing connected generations">
+              <span class="project-image-hint" aria-hidden="true">
+                View project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+              </span>
+            </div>
+            <div class="project-info">
+              <div class="project-meta">
+                <span>C &middot; Tree data structure</span>
+                <span class="project-type">Command-line app</span>
+              </div>
+              <h3>Family Tree Generator</h3>
+              <p>A menu-driven C program for building and displaying a family tree, adding children, searching members, and counting the tree. The README includes build and run instructions.</p>
+              <div class="tag-row">
+                <span>C</span>
+                <span>Data structures</span>
+                <span>Memory management</span>
+              </div>
+              <div class="project-links">
+                <a href="project.html?project=family-tree">
+                  Project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+                </a>
+                <a href="https://github.com/Sagar-clou/Family-_Tree-DSA" target="_blank" rel="noopener noreferrer">
+                  GitHub repo <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+                </a>
+                <a href="https://github.com/Sagar-clou/Family-_Tree-DSA/blob/main/Family%20Tree.c" target="_blank" rel="noopener noreferrer">
+                  View code <i data-lucide="code-2" class="icon" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3: Orbit Chat -->
+          <article class="project-card reveal">
+            <a class="project-card-link" href="project.html?project=orbit-chat" aria-label="Open Orbit Chat details"></a>
+            <div class="project-visual">
+              <img class="project-image" src="orbit-chat-project.svg" alt="Preview of the Orbit Chat interface with contacts and messages">
+              <span class="project-image-hint" aria-hidden="true">
+                View project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+              </span>
+            </div>
+            <div class="project-info">
+              <div class="project-meta">
+                <span>HTML &middot; CSS &middot; JavaScript</span>
+                <span class="project-type">Front-end demo</span>
+              </div>
+              <h3>Orbit Chat</h3>
+              <p>A responsive chat-interface demo&mdash;not a live multi-user chat service.</p>
+              <div class="tag-row">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>JavaScript</span>
+                <span>localStorage</span>
+              </div>
+              <div class="project-links">
+                <a href="project.html?project=orbit-chat">
+                  Project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+                </a>
+                <a href="https://github.com/Sagar-clou/Chat-Application" target="_blank" rel="noopener noreferrer">
+                  GitHub repo <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+                </a>
+                <a href="https://github.com/Sagar-clou/Chat-Application/tree/main/REAL-TIME%20CHAT%20APP" target="_blank" rel="noopener noreferrer">
+                  View code <i data-lucide="code-2" class="icon" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 4: LearnHub E-Learning -->
+          <article class="project-card reveal">
+            <a class="project-card-link" href="project.html?project=learnhub" aria-label="Open LearnHub E-Learning details"></a>
+            <div class="project-visual">
+              <img class="project-image" src="E_Learning.png" alt="LearnHub e-learning dashboard and course cards">
+              <span class="project-image-hint" aria-hidden="true">
+                View project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+              </span>
+            </div>
+            <div class="project-info">
+              <div class="project-meta">
+                <span>HTML &middot; CSS</span>
+                <span class="project-type">E-learning dashboard</span>
+              </div>
+              <h3>LearnHub E-Learning</h3>
+              <p>A responsive learning dashboard for browsing courses, viewing progress, watching course content, and checking upcoming activities. The README documents setup, assets, and front-end limitations.</p>
+              <div class="tag-row">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>Responsive design</span>
+              </div>
+              <div class="project-links">
+                <a href="project.html?project=learnhub">
+                  Project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+                </a>
+                <a href="https://github.com/Sagar-clou/E_Learning" target="_blank" rel="noopener noreferrer">
+                  GitHub repo <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+                </a>
+                <a href="https://github.com/Sagar-clou/E_Learning/blob/main/index.html" target="_blank" rel="noopener noreferrer">
+                  View code <i data-lucide="code-2" class="icon" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <p id="projects-status" role="status" aria-live="polite" hidden></p>
+      </section>
+
+      <!-- Journey Section -->
+      <section class="section-wrap journey-section" id="journey">
+        <div class="section-heading reveal">
+          <span class="section-kicker">THE JOURNEY</span>
+          <h2>
+            Small steps. <span class="gradient-text">Real progress.</span>
+          </h2>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <div class="timeline-date">2025&ndash;2026</div>
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <span class="timeline-label">ACADEMIC &amp; WEB PROJECTS</span>
+              <h3>Built foundations through practice</h3>
+              <p>Worked on Python problem-solving, BFS/DFS maze search, web interface concepts, and neural-network lab exercises.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-date">2026</div>
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <span class="timeline-label">DATA &amp; VISUALIZATION</span>
+              <h3>Explored analytics dashboards</h3>
+              <p>Developed project ideas around Power BI reporting and healthcare data visualization, focusing on KPIs, filters, and understandable charts.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-date">2026</div>
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <span class="timeline-label">RESEARCH &amp; PROTOTYPING</span>
+              <h3>Connected technology with real-world needs</h3>
+              <p>Built a satellite fire-alert prototype using NASA FIRMS data, with mapped detections, risk levels, and browser notifications.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item timeline-current reveal">
+            <div class="timeline-date">NEXT</div>
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <span class="timeline-label">CURRENT DIRECTION</span>
+              <h3>Deepen data analytics &amp; data science</h3>
+              <p>Keep strengthening Python, SQL, data visualization, and machine-learning fundamentals while documenting projects with working demos.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section class="section-wrap skills-section" id="skills">
+        <div class="section-heading reveal">
+          <span class="section-kicker">Skills</span>
+        </div>
+
+        <div class="section-heading reveal">
+          <h2>
+            <span class="gradient-text">Full Stack.</span>
+          </h2>
+          <p>Web and mobile interfaces connect to a backend, which works with the database to deliver the complete experience.</p>
+        </div>
+
+        <div class="stack-flow reveal" role="group" aria-label="Full Stack flow from web and mobile interfaces through the backend to the database">
+          <div class="stack-clients">
+            <article class="stack-node stack-client">
+              <span class="stack-layer">01 / WEB</span>
+              <h3>Web</h3>
+              <p>Build the browser experience.</p>
+              <div class="stack-tags">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>JavaScript</span>
+              </div>
+            </article>
+
+            <article class="stack-node stack-client">
+              <span class="stack-layer">02 / MOBILE</span>
+              <h3>Mobile</h3>
+              <p>Build a native app experience.</p>
+              <div class="stack-tags">
+                <span>React Native</span>
+                <span class="learning-tag">Learning</span>
+              </div>
+            </article>
+          </div>
+
+          <span class="stack-connector" aria-hidden="true"></span>
+
+          <article class="stack-node stack-backend">
+            <span class="stack-layer">03 / SERVER</span>
+            <h3>Backend</h3>
+            <p>Handle requests and app logic.</p>
+            <div class="stack-tags">
+              <span>Python</span>
+              <span>Flask <small>Learning</small></span>
+            </div>
+          </article>
+
+          <span class="stack-connector" aria-hidden="true"></span>
+
+          <article class="stack-node stack-database">
+            <span class="stack-layer">04 / DATA</span>
+            <h3>Database</h3>
+            <p>Store and retrieve app data.</p>
+            <div class="stack-tags">
+              <span>MySQL</span>
+              <span>SQL</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="product-flow reveal" role="group" aria-label="Product-building workflow: plan, build the interface, connect the backend, store data, then test and launch">
+          <div class="product-flow-heading">
+            <span class="stack-layer">FROM IDEA TO PRODUCT</span>
+            <h3>How I use Full Stack to build a product</h3>
+            <p>Each layer has a job. Together, they turn an idea into something people can use.</p>
+          </div>
+
+          <div class="product-flow-steps">
+            <article class="product-flow-step">
+              <span>01 / PLAN</span>
+              <h4>Define the problem</h4>
+              <p>Choose who the product helps and what it should do.</p>
+            </article>
+
+            <span class="product-flow-connector" aria-hidden="true"></span>
+
+            <article class="product-flow-step">
+              <span>02 / INTERFACE</span>
+              <h4>Build the screens</h4>
+              <p>Create the web or mobile experience people use.</p>
+            </article>
+
+            <span class="product-flow-connector" aria-hidden="true"></span>
+
+            <article class="product-flow-step">
+              <span>03 / BACKEND</span>
+              <h4>Handle the work</h4>
+              <p>Process requests and apply the product's rules.</p>
+            </article>
+
+            <span class="product-flow-connector" aria-hidden="true"></span>
+
+            <article class="product-flow-step">
+              <span>04 / DATABASE</span>
+              <h4>Save the data</h4>
+              <p>Store and retrieve the information the product needs.</p>
+            </article>
+
+            <span class="product-flow-connector" aria-hidden="true"></span>
+
+            <article class="product-flow-step">
+              <span>05 / FINISH</span>
+              <h4>Test and launch</h4>
+              <p>Check the full journey, fix issues, and share the product.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="contact-section" id="contact">
+        <div class="section-wrap contact-inner reveal">
+          <span class="section-kicker">LET'S BUILD</span>
+          <h2>
+            Have an idea?<br>
+            <span class="gradient-text">I can turn it into a product.</span>
+          </h2>
+          <p>Share the problem you want to solve. Let's shape it into a useful digital product, from the first screen to a working experience.</p>
+          <div class="contact-actions">
+            <a class="contact-cta" href="https://wa.me/919354707042?text=Hi%20Sagar%2C%20I%20have%20an%20idea%20for%20a%20product.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer">
+              Tell me about your idea <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+            </a>
+            <a class="contact-whatsapp" href="https://wa.me/919354707042?text=Hi%20Sagar%2C%20I%20have%20an%20idea%20for%20a%20product.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer" aria-label="Message Sagar on WhatsApp" title="WhatsApp">
+              <i data-lucide="message-circle" class="icon" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="section-wrap footer-inner">
+        <a>
+        </a>
+        <a class="footer-email" href="mailto:guptasagar2201@gmail.com">guptasagar2201@gmail.com</a>
+        <a href="#home" class="back-top">
+          Back to top <i data-lucide="arrow-up" class="icon" aria-hidden="true"></i>
+        </a>
+      </div>
+    </footer>
+
+    <!-- Floating Social Links -->
+    <nav class="social-fabs" aria-label="Social links">
+      <a class="social-fab social-fab-email social-link-email" href="mailto:guptasagar2201@gmail.com" aria-label="Email Sagar" title="Email Sagar">
+        <i data-lucide="mail" class="icon" aria-hidden="true"></i>
+      </a>
+      <a class="social-fab social-fab-whatsapp social-link-whatsapp" href="https://wa.me/919354707042" target="_blank" rel="noopener noreferrer" aria-label="Message Sagar on WhatsApp" title="WhatsApp">
+        <i data-lucide="message-circle" class="icon" aria-hidden="true"></i>
+      </a>
+      <a class="social-fab social-fab-github social-link-github" href="https://github.com/Sagar-clou" target="_blank" rel="noopener noreferrer" aria-label="Visit Sagar on GitHub" title="GitHub">
+        <i data-lucide="github" class="icon" aria-hidden="true"></i>
+      </a>
     </nav>
-  </header>
 
-  <main>
-    <section class="hero section-wrap" id="home">
-      <div class="hero-copy reveal">
-        <h1>Have an idea?<br><span class="gradient-text">Let's make it useful product.</span></h1>
-        <p class="hero-lead">I'm <strong>Sagar Gupta</strong>, a Computer Science student into full-stack development and data science. I like taking a problem from rough idea to working prototype—with Python, the web, and a lot of learning along the way.</p>
-        <div class="hero-meta"><span><i data-lucide="graduation-cap" class="icon meta-icon" aria-hidden="true"></i> B.Tech · Computer Science</span><span><i data-lucide="map-pin" class="icon meta-icon" aria-hidden="true"></i> Faridabad, India</span></div>
-      </div>
-      <div class="hero-art reveal">
-        <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
-        <div class="profile-card">
-          <div class="card-top"><span class="tiny-label">CURRENT FOCUS</span><span class="live-pill"><span></span> Building</span></div>
-          <div class="avatar"><img src="sagar-profile.jpg" alt="Sagar Gupta"><span class="avatar-spark">✦</span></div>
-          <h2>Curious mind.<br><span>Practical builder.</span></h2>
-          <p>Computer Science student turning ideas into prototypes and experiments.</p>
-          <div class="focus-tags"><span>Python</span><span>Full-Stack</span><span>AI / ML</span></div>
-          <div class="card-bottom"><span>PORTFOLIO</span></div>
+    <!-- Chat Widget -->
+    <section class="chat-widget" aria-label="Portfolio assistant">
+      <div class="chat-panel" id="chat-panel" aria-labelledby="chat-title" aria-hidden="true">
+        <header class="chat-header">
+          <div class="chat-avatar" aria-hidden="true">S</div>
+          <div>
+            <h2 id="chat-title">Portfolio assistant</h2>
+            <p>Here to help you explore</p>
+          </div>
+          <button class="chat-close" type="button" aria-label="Close chat">
+            <i data-lucide="x" class="icon" aria-hidden="true"></i>
+          </button>
+        </header>
+
+        <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-relevant="additions">
+          <div class="chat-message chat-message-assistant">
+            <p>Hi! I can answer questions about Sagar&rsquo;s skills, projects, and how to get in touch.</p>
+          </div>
+          <div class="chat-suggestions" aria-label="Suggested questions">
+            <button type="button">What projects has Sagar built?</button>
+            <button type="button">What skills does he have?</button>
+            <button type="button">How can I contact him?</button>
+          </div>
         </div>
+
+        <form class="chat-form">
+          <label class="visually-hidden" for="chat-input">Ask a question</label>
+          <input id="chat-input" name="message" type="text" placeholder="Ask me something..." autocomplete="off" maxlength="300" required>
+          <button type="submit" aria-label="Send message">Send</button>
+        </form>
       </div>
-    </section>
-    <section class="section-wrap about-section" id="about">
-      <div class="section-heading reveal"><span class="section-kicker">A LITTLE ABOUT ME</span><h2>Learning by <span class="gradient-text">building.</span></h2></div>
-      <div class="about-grid">
-        <p class="about-text reveal">I'm a passionate student and aspiring Full-Stack who believes in learning through practical experience. I enjoy exploring new technologies, solving problems, and turning ideas into real-world projects. From full-stack development, I'm continuously building my skills by creating projects that combine creativity, logic, and innovation.</p>
-      </div>
-    </section>
-    <section class="section-wrap projects-section" id="projects">
-      <div class="section-heading reveal"><span class="section-kicker">SELECTED WORK</span><h2>Projects &amp; <span class="gradient-text">experiments.</span></h2><p>A few things I've built, explored, and learned from. Open a project card for a fuller overview and a workflow diagram that connects each step to its technology. Each project's current stage is labelled honestly.</p></div>
-      <div class="project-grid">
-        <article class="project-card reveal">
-          <a class="project-card-link" href="project.html?project=safe-net" aria-label="Open SAFE-NET Satellite Instant Alert details"></a>
-          <div class="project-visual">
-            <img class="project-image" src="satellite-alert-project.svg" alt="Satellite sending an alert from an Earth observation">
-            <span class="project-image-hint" aria-hidden="true">View project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></span>
-          </div>
-          <div class="project-info">
-            <div class="project-meta"><span>Python · NASA FIRMS</span><span class="project-type">Prototype</span></div>
-            <h3>SAFE-NET Satellite Instant Alert</h3>
-            <p>A working prototype that uses NASA FIRMS active-fire satellite data to show map detections, risk levels, browser notifications, and alert history. Includes demo mode when no FIRMS key is configured.</p>
-            <div class="tag-row"><span>Python</span><span>Satellite data</span><span>Alerts</span></div>
-            <div class="project-links"><a href="project.html?project=safe-net">Project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/Satellite-Instant-Alert" target="_blank" rel="noopener noreferrer">GitHub repo <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/Satellite-Instant-Alert/tree/main" target="_blank" rel="noopener noreferrer">View code <i data-lucide="code-2" class="icon" aria-hidden="true"></i></a></div>
-          </div>
-        </article>
-        <article class="project-card reveal">
-          <a class="project-card-link" href="project.html?project=family-tree" aria-label="Open Family Tree Generator details"></a>
-          <div class="project-visual">
-            <img class="project-image" src="family%20tree.png" alt="Family tree diagram showing connected generations">
-            <span class="project-image-hint" aria-hidden="true">View project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></span>
-          </div>
-          <div class="project-info">
-            <div class="project-meta"><span>C · Tree data structure</span><span class="project-type">Command-line app</span></div>
-            <h3>Family Tree Generator</h3>
-            <p>A menu-driven C program for building and displaying a family tree, adding children, searching members, and counting the tree. The README includes build and run instructions.</p>
-            <div class="tag-row"><span>C</span><span>Data structures</span><span>Memory management</span></div>
-            <div class="project-links"><a href="project.html?project=family-tree">Project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/Family-_Tree-DSA" target="_blank" rel="noopener noreferrer">GitHub repo <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/Family-_Tree-DSA/blob/main/Family%20Tree.c" target="_blank" rel="noopener noreferrer">View code <i data-lucide="code-2" class="icon" aria-hidden="true"></i></a></div>
-          </div>
-        </article>
-        <article class="project-card reveal">
-          <a class="project-card-link" href="project.html?project=orbit-chat" aria-label="Open Orbit Chat details"></a>
-          <div class="project-visual">
-            <img class="project-image" src="orbit-chat-project.svg" alt="Preview of the Orbit Chat interface with contacts and messages">
-            <span class="project-image-hint" aria-hidden="true">View project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></span>
-          </div>
-          <div class="project-info">
-            <div class="project-meta"><span>HTML · CSS · JavaScript</span><span class="project-type">Front-end demo</span></div>
-            <h3>Orbit Chat</h3>
-            <p>A responsive chat-interface demo with sample conversations, contact filtering, message timestamps, and browser-local message history. Its README clearly notes that it is a front-end demo—not a live multi-user chat service.</p>
-            <div class="tag-row"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>localStorage</span></div>
-            <div class="project-links"><a href="project.html?project=orbit-chat">Project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/Chat-Application" target="_blank" rel="noopener noreferrer">GitHub repo <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/Chat-Application/tree/main/REAL-TIME%20CHAT%20APP" target="_blank" rel="noopener noreferrer">View code <i data-lucide="code-2" class="icon" aria-hidden="true"></i></a></div>
-          </div>
-        </article>
-        <article class="project-card reveal">
-          <a class="project-card-link" href="project.html?project=learnhub" aria-label="Open LearnHub E-Learning details"></a>
-          <div class="project-visual">
-            <img class="project-image" src="E_Learning.png" alt="LearnHub e-learning dashboard and course cards">
-            <span class="project-image-hint" aria-hidden="true">View project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></span>
-          </div>
-          <div class="project-info">
-            <div class="project-meta"><span>HTML · CSS</span><span class="project-type">E-learning dashboard</span></div>
-            <h3>LearnHub E-Learning</h3>
-            <p>A responsive learning dashboard for browsing courses, viewing progress, watching course content, and checking upcoming activities. The README documents setup, assets, and front-end limitations.</p>
-            <div class="tag-row"><span>HTML</span><span>CSS</span><span>Responsive design</span></div>
-            <div class="project-links"><a href="project.html?project=learnhub">Project details <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/E_Learning" target="_blank" rel="noopener noreferrer">GitHub repo <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a href="https://github.com/Sagar-clou/E_Learning/blob/main/index.html" target="_blank" rel="noopener noreferrer">View code <i data-lucide="code-2" class="icon" aria-hidden="true"></i></a></div>
-          </div>
-        </article>
-      </div>
-      <p id="projects-status" role="status" aria-live="polite" hidden></p>
+
+      <button class="chat-toggle" type="button" aria-label="Open portfolio assistant" aria-expanded="false" aria-controls="chat-panel">
+        <i data-lucide="messages-square" class="icon chat-toggle-icon" aria-hidden="true"></i>
+        <span class="chat-toggle-label">Ask me</span>
+      </button>
     </section>
 
-    <section class="section-wrap journey-section" id="journey">
-      <div class="section-heading reveal"><span class="section-kicker">THE JOURNEY</span><h2>Small steps. <span class="gradient-text">Real progress.</span></h2></div>
-      <div class="timeline">
-        <div class="timeline-item reveal"><div class="timeline-date">2025–2026</div><div class="timeline-marker"></div><div class="timeline-content"><span class="timeline-label">ACADEMIC & WEB PROJECTS</span><h3>Built foundations through practice</h3><p>Worked on Python problem-solving, BFS/DFS maze search, web interface concepts, and neural-network lab exercises.</p></div></div>
-        <div class="timeline-item reveal"><div class="timeline-date">2026</div><div class="timeline-marker"></div><div class="timeline-content"><span class="timeline-label">DATA & VISUALIZATION</span><h3>Explored analytics dashboards</h3><p>Developed project ideas around Power BI reporting and healthcare data visualization, focusing on KPIs, filters, and understandable charts.</p></div></div>
-        <div class="timeline-item reveal"><div class="timeline-date">2026</div><div class="timeline-marker"></div><div class="timeline-content"><span class="timeline-label">RESEARCH & PROTOTYPING</span><h3>Connected technology with real-world needs</h3><p>Built a satellite fire-alert prototype using NASA FIRMS data, with mapped detections, risk levels, and browser notifications.</p></div></div>
-        <div class="timeline-item timeline-current reveal"><div class="timeline-date">NEXT</div><div class="timeline-marker"></div><div class="timeline-content"><span class="timeline-label">CURRENT DIRECTION</span><h3>Deepen data analytics & data science</h3><p>Keep strengthening Python, SQL, data visualization, and machine-learning fundamentals while documenting projects with working demos.</p></div></div>
-      </div>
-    </section>
-
-    <section class="section-wrap skills-section" id="skills">
-      <div class="section-heading reveal"><span class="section-kicker">Skills</span></div>
-      <div class="section-heading reveal"><h2><span class="gradient-text">Full Stack.</span></h2><p>Web and mobile interfaces connect to a backend, which works with the database to deliver the complete experience.</p></div>
-      <div class="stack-flow reveal" role="group" aria-label="Full Stack flow from web and mobile interfaces through the backend to the database">
-        <div class="stack-clients">
-          <article class="stack-node stack-client">
-            <span class="stack-layer">01 / WEB</span>
-            <h3>Web</h3>
-            <p>Build the browser experience.</p>
-            <div class="stack-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
-          </article>
-          <article class="stack-node stack-client">
-            <span class="stack-layer">02 / MOBILE</span>
-            <h3>Mobile</h3>
-            <p>Build a native app experience.</p>
-            <div class="stack-tags"><span>React Native</span><span class="learning-tag">Learning</span></div>
-          </article>
-        </div>
-        <span class="stack-connector" aria-hidden="true"></span>
-        <article class="stack-node stack-backend">
-          <span class="stack-layer">03 / SERVER</span>
-          <h3>Backend</h3>
-          <p>Handle requests and app logic.</p>
-          <div class="stack-tags"><span>Python</span><span>Flask <small>Learning</small></span></div>
-        </article>
-        <span class="stack-connector" aria-hidden="true"></span>
-        <article class="stack-node stack-database">
-          <span class="stack-layer">04 / DATA</span>
-          <h3>Database</h3>
-          <p>Store and retrieve app data.</p>
-          <div class="stack-tags"><span>MySQL</span><span>SQL</span></div>
-        </article>
-      </div>
-      <div class="product-flow reveal" role="group" aria-label="Product-building workflow: plan, build the interface, connect the backend, store data, then test and launch">
-        <div class="product-flow-heading">
-          <span class="stack-layer">FROM IDEA TO PRODUCT</span>
-          <h3>How I use Full Stack to build a product</h3>
-          <p>Each layer has a job. Together, they turn an idea into something people can use.</p>
-        </div>
-        <div class="product-flow-steps">
-          <article class="product-flow-step"><span>01 / PLAN</span><h4>Define the problem</h4><p>Choose who the product helps and what it should do.</p></article>
-          <span class="product-flow-connector" aria-hidden="true"></span>
-          <article class="product-flow-step"><span>02 / INTERFACE</span><h4>Build the screens</h4><p>Create the web or mobile experience people use.</p></article>
-          <span class="product-flow-connector" aria-hidden="true"></span>
-          <article class="product-flow-step"><span>03 / BACKEND</span><h4>Handle the work</h4><p>Process requests and apply the product's rules.</p></article>
-          <span class="product-flow-connector" aria-hidden="true"></span>
-          <article class="product-flow-step"><span>04 / DATABASE</span><h4>Save the data</h4><p>Store and retrieve the information the product needs.</p></article>
-          <span class="product-flow-connector" aria-hidden="true"></span>
-          <article class="product-flow-step"><span>05 / FINISH</span><h4>Test and launch</h4><p>Check the full journey, fix issues, and share the product.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="contact-section" id="contact"><div class="section-wrap contact-inner reveal"><span class="section-kicker">LET'S BUILD</span><h2>Have an idea?<br><span class="gradient-text">I can turn it into a product.</span></h2><p>Share the problem you want to solve. Let's shape it into a useful digital product, from the first screen to a working experience.</p><div class="contact-actions"><a class="contact-cta" href="https://wa.me/919354707042?text=Hi%20Sagar%2C%20I%20have%20an%20idea%20for%20a%20product.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer">Tell me about your idea <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a><a class="contact-whatsapp" href="https://wa.me/919354707042?text=Hi%20Sagar%2C%20I%20have%20an%20idea%20for%20a%20product.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer" aria-label="Message Sagar on WhatsApp" title="WhatsApp"><i data-lucide="message-circle" class="icon" aria-hidden="true"></i></a></div></div></section>
-  </main>
-  <footer class="footer"><div class="section-wrap footer-inner"><a class="brand" href="profile.html"><span class="brand-mark">SG</span><span>sagar Gupta<span class="brand-dot">.</span></span></a><a class="footer-email" href="mailto:guptasagar2201@gmail.com">guptasagar2201@gmail.com</a><a href="#home" class="back-top">Back to top <i data-lucide="arrow-up" class="icon" aria-hidden="true"></i></a></div></footer>
-  <nav class="social-fabs" aria-label="Social links">
-    <a class="social-fab social-fab-email social-link-email" href="mailto:guptasagar2201@gmail.com" aria-label="Email Sagar" title="Email Sagar">
-      <i data-lucide="mail" class="icon" aria-hidden="true"></i>
-    </a>
-    <a class="social-fab social-fab-whatsapp social-link-whatsapp" href="https://wa.me/919354707042" target="_blank" rel="noopener noreferrer" aria-label="Message Sagar on WhatsApp" title="WhatsApp">
-      <i data-lucide="message-circle" class="icon" aria-hidden="true"></i>
-    </a>
-    <a class="social-fab social-fab-github social-link-github" href="https://github.com/Sagar-clou" target="_blank" rel="noopener noreferrer" aria-label="Visit Sagar on GitHub" title="GitHub">
-      <i data-lucide="github" class="icon" aria-hidden="true"></i>
-    </a>
-  </nav>
-  <section class="chat-widget" aria-label="Portfolio assistant">
-    <div class="chat-panel" id="chat-panel" aria-labelledby="chat-title" aria-hidden="true">
-      <header class="chat-header">
-        <div class="chat-avatar" aria-hidden="true">S</div>
-        <div><h2 id="chat-title">Portfolio assistant</h2><p>Here to help you explore</p></div>
-        <button class="chat-close" type="button" aria-label="Close chat"><i data-lucide="x" class="icon" aria-hidden="true"></i></button>
-      </header>
-      <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-relevant="additions">
-        <div class="chat-message chat-message-assistant"><p>Hi! I can answer questions about Sagar’s skills, projects, and how to get in touch.</p></div>
-        <div class="chat-suggestions" aria-label="Suggested questions">
-          <button type="button">What projects has Sagar built?</button>
-          <button type="button">What skills does he have?</button>
-          <button type="button">How can I contact him?</button>
-        </div>
-      </div>
-      <form class="chat-form">
-        <label class="visually-hidden" for="chat-input">Ask a question</label>
-        <input id="chat-input" name="message" type="text" placeholder="Ask me something..." autocomplete="off" maxlength="300" required>
-        <button type="submit" aria-label="Send message">Send</button>
-      </form>
-    </div>
-    <button class="chat-toggle" type="button" aria-label="Open portfolio assistant" aria-expanded="false" aria-controls="chat-panel">
-      <i data-lucide="messages-square" class="icon chat-toggle-icon" aria-hidden="true"></i><span class="chat-toggle-label">Ask me</span>
-    </button>
-  </section>
-  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-  <script src="script.js"></script>
-  <script type="module" src="portfolio-projects.js"></script>
-  <script type="module" src="portfolio-content.js"></script>
-</body>
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>

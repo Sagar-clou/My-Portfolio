@@ -79,3 +79,7 @@ export const seedProjects = [
     "published": true
   }
 ];
+/* ============================================================
+   FILE: seed-projects.js
+   ROLE: Seed and fallback project data; used by admin.js and Firebase workflows.
+   ============================================================ */

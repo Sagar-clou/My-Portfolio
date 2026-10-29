@@ -17,3 +17,7 @@ export const firebaseConfig = {
 export const ADMIN_EMAILS = ["guptasagar2201@gmail.com"];
 
 export const isConfigured = !Object.values(firebaseConfig).some(v => String(v).startsWith("PASTE_"));
+/* ============================================================
+   FILE: firebase-config.js
+   ROLE: Firebase project configuration and allowed admin emails; consumed by firebase-init.js and admin.js.
+   ============================================================ */

@@ -1,11 +1,189 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10110f"><meta name="description" content="Sagar Gupta — Computer Science student interested in Full-stack Development, data science and technology."><title>About Sagar Gupta</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body class="profile-page">
-<header class="topbar"><a class="brand" href="index.html" aria-label="Back to portfolio home"><span class="mark">SG</span><span>sagar</span></a><button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-navigation"><i data-lucide="menu" class="icon" aria-hidden="true"></i></button><button class="nav-backdrop" type="button" aria-label="Close navigation" tabindex="-1"></button><nav class="nav" id="site-navigation" aria-hidden="true"><a href="index.html">Home</a><a class="active" href="profile.html">About</a><a href="index.html#projects">Projects</a><a href="index.html#skills">Skills</a><a href="index.html#journey">Journey</a><a class="connect" href="mailto:guptasagar2201@gmail.com">Let's connect <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a></nav></header>
-<main class="wrap"><section class="intro"><img class="portrait" src="sagar-profile.jpg" alt="Portrait of Sagar Gupta"><div><span class="hello">Hello, I'm <i data-lucide="hand" class="icon" aria-hidden="true"></i></span><h1>Sagar <span class="grad">Gupta</span></h1><div class="roles">Computer Science student &nbsp;|&nbsp; Python &amp; Full-stack learner</div><p>I am a B.Tech Computer Science student at Manav Rachna International Institute of Research and Studies, Faridabad. I am interested in Full-Stack, data science, AI, and technology that solves real-world problems. I enjoy learning by building practical projects and improving my skills through experimentation.</p><div class="social"><a class="pill icon-link social-link-github" href="https://github.com/Sagar-clou" target="_blank" rel="noopener" aria-label="Visit Sagar on GitHub" title="GitHub"><i data-lucide="github" class="icon" aria-hidden="true"></i></a><a class="pill icon-link social-link-email" href="mailto:guptasagar2201@gmail.com" aria-label="Email Sagar" title="Email"><i data-lucide="mail" class="icon" aria-hidden="true"></i></a><a class="pill primary icon-link social-link-whatsapp" href="https://wa.me/919354707042" target="_blank" rel="noopener noreferrer" aria-label="Message Sagar on WhatsApp" title="WhatsApp"><i data-lucide="message-circle" class="icon" aria-hidden="true"></i></a></div></div></section>
-<section class="grid"><article class="card"><h2><i data-lucide="graduation-cap" class="icon" aria-hidden="true"></i> Education</h2><div class="edu"><div class="edu-logo">MANAV<br>RACHNA<br><span class="institution-subtitle">VIDYANTARIKSHA</span></div><div><b>B.Tech in Computer Science</b><p>Manav Rachna International Institute of Research and Studies</p><div class="small">Faridabad, Haryana, India</div><p class="small">2024–2028 · Ongoing</p></div></div></article>
-<article class="card"><h2><i data-lucide="user-round" class="icon" aria-hidden="true"></i> Quick Info</h2><div class="kv"><span>Name</span><b>Sagar Gupta</b></div><div class="kv"><span>Location</span><b>Faridabad, Haryana, India</b></div><div class="kv"><span>College</span><b>Manav Rachna International Institute of Research and Studies</b></div><div class="kv"><span>Degree</span><b>B.Tech (CSE)</b></div><div class="kv"><span>Study period</span><b>2024–2028 (ongoing)</b></div></article>
-<article class="card"><h2><i data-lucide="settings" class="icon" aria-hidden="true"></i> Skills</h2><div class="tags"><span class="tag">Python</span><span class="tag">MySQL</span><span class="tag">Excel</span><span class="tag">HTML/CSS</span><span class="tag">DSA</span><span class="tag">Machine Learning</span></div></article>
-<article class="card"><h2><i data-lucide="lightbulb" class="icon" aria-hidden="true"></i> Interests</h2><div class="tags"><span class="tag">Full-Stack</span><span class="tag">AI / ML</span><span class="tag">Technology</span><span class="tag">Problem Solving</span></div><p>I like exploring ideas, learning new tools, and turning concepts into practical prototypes.</p></article>
-<article class="card"><h2><i data-lucide="target" class="icon" aria-hidden="true"></i> What I Build</h2><p>I turn ideas into useful digital experiences, combining practical technology with a focus on real problems.</p><div class="tags"><span class="tag">Full-Stack</span><span class="tag">Data analytics</span><span class="tag">Python</span><span class="tag">Artificial Intelligence</span></div></article>
-<article class="card"><h2><i data-lucide="mail" class="icon" aria-hidden="true"></i> Have an Idea?</h2><p>Tell me what you want to solve. Let's shape it into a useful product.</p><p><a class="back" href="mailto:guptasagar2201@gmail.com">Start a conversation <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i></a></p><p>Faridabad, Haryana, India</p></article></section></main><footer class="footer"><a class="back" href="index.html">Back to portfolio home <i data-lucide="arrow-up" class="icon" aria-hidden="true"></i></a></footer>
-<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script><script src="script.js"></script></body></html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10110f">
+    <meta name="description" content="Sagar Gupta — Computer Science student interested in Full-stack Development, data science and technology.">
+    <title>About Sagar Gupta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body class="profile-page">
+    <!-- Topbar Navigation -->
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Back to portfolio home">
+        <span class="mark">SG</span>
+        <span>sagar</span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-navigation">
+        <i data-lucide="menu" class="icon" aria-hidden="true"></i>
+      </button>
+
+      <nav class="nav" id="site-navigation" aria-hidden="true">
+        <a href="index.html">Home</a>
+        <a class="active" href="profile.html">About</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#journey">Journey</a>
+        <a class="connect" href="mailto:guptasagar2201@gmail.com">
+          Let's connect <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+        </a>
+      </nav>
+    </header>
+
+    <!-- Mobile navigation backdrop; kept outside the blurred sticky header. -->
+    <button class="nav-backdrop" type="button" aria-label="Close navigation" tabindex="-1"></button>
+
+    <main class="wrap">
+      <!-- Profile Intro Section -->
+      <section class="intro">
+        <img class="portrait" src="sagar-profile.jpg" alt="Portrait of Sagar Gupta">
+
+        <div>
+          <span class="hello">
+            Hello, I'm <i data-lucide="hand" class="icon" aria-hidden="true"></i>
+          </span>
+          <h1>Sagar <span class="grad">Gupta</span></h1>
+          <div class="roles">Computer Science student &nbsp;|&nbsp; Python &amp; Full-stack learner</div>
+          <p>
+            I am a B.Tech Computer Science student at Manav Rachna International Institute of Research and Studies, Faridabad. I am interested in Full-Stack, data science, AI, and technology that solves real-world problems. I enjoy learning by building practical projects and improving my skills through experimentation.
+          </p>
+
+          <div class="social">
+            <a class="pill icon-link social-link-github" href="https://github.com/Sagar-clou" target="_blank" rel="noopener" aria-label="Visit Sagar on GitHub" title="GitHub">
+              <i data-lucide="github" class="icon" aria-hidden="true"></i>
+            </a>
+            <a class="pill icon-link social-link-email" href="mailto:guptasagar2201@gmail.com" aria-label="Email Sagar" title="Email">
+              <i data-lucide="mail" class="icon" aria-hidden="true"></i>
+            </a>
+            <a class="pill primary icon-link social-link-whatsapp" href="https://wa.me/919354707042" target="_blank" rel="noopener noreferrer" aria-label="Message Sagar on WhatsApp" title="WhatsApp">
+              <i data-lucide="message-circle" class="icon" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Details Grid -->
+      <section class="grid">
+        <!-- Education Card -->
+        <article class="card">
+          <h2>
+            <i data-lucide="graduation-cap" class="icon" aria-hidden="true"></i> Education
+          </h2>
+          <div class="edu">
+            <div class="edu-logo">
+              MANAV<br>
+              RACHNA<br>
+              <span class="institution-subtitle">VIDYANTARIKSHA</span>
+            </div>
+            <div>
+              <b>B.Tech in Computer Science</b>
+              <p>Manav Rachna International Institute of Research and Studies</p>
+              <div class="small">Faridabad, Haryana, India</div>
+              <p class="small">2024–2028 · Ongoing</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Quick Info Card -->
+        <article class="card">
+          <h2>
+            <i data-lucide="user-round" class="icon" aria-hidden="true"></i> Quick Info
+          </h2>
+          <div class="kv">
+            <span>Name</span>
+            <b>Sagar Gupta</b>
+          </div>
+          <div class="kv">
+            <span>Location</span>
+            <b>Faridabad, Haryana, India</b>
+          </div>
+          <div class="kv">
+            <span>College</span>
+            <b>Manav Rachna International Institute of Research and Studies</b>
+          </div>
+          <div class="kv">
+            <span>Degree</span>
+            <b>B.Tech (CSE)</b>
+          </div>
+          <div class="kv">
+            <span>Study period</span>
+            <b>2024–2028 (ongoing)</b>
+          </div>
+        </article>
+
+        <!-- Skills Card -->
+        <article class="card">
+          <h2>
+            <i data-lucide="settings" class="icon" aria-hidden="true"></i> Skills
+          </h2>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">Excel</span>
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">DSA</span>
+            <span class="tag">Machine Learning</span>
+          </div>
+        </article>
+
+        <!-- Interests Card -->
+        <article class="card">
+          <h2>
+            <i data-lucide="lightbulb" class="icon" aria-hidden="true"></i> Interests
+          </h2>
+          <div class="tags">
+            <span class="tag">Full-Stack</span>
+            <span class="tag">AI / ML</span>
+            <span class="tag">Technology</span>
+            <span class="tag">Problem Solving</span>
+          </div>
+          <p>I like exploring ideas, learning new tools, and turning concepts into practical prototypes.</p>
+        </article>
+
+        <!-- What I Build Card -->
+        <article class="card">
+          <h2>
+            <i data-lucide="target" class="icon" aria-hidden="true"></i> What I Build
+          </h2>
+          <p>I turn ideas into useful digital experiences, combining practical technology with a focus on real problems.</p>
+          <div class="tags">
+            <span class="tag">Full-Stack</span>
+            <span class="tag">Data analytics</span>
+            <span class="tag">Python</span>
+            <span class="tag">Artificial Intelligence</span>
+          </div>
+        </article>
+
+        <!-- Contact Card -->
+        <article class="card">
+          <h2>
+            <i data-lucide="mail" class="icon" aria-hidden="true"></i> Have an Idea?
+          </h2>
+          <p>Tell me what you want to solve. Let's shape it into a useful product.</p>
+          <p>
+            <a class="back" href="mailto:guptasagar2201@gmail.com">
+              Start a conversation <i data-lucide="arrow-up-right" class="icon" aria-hidden="true"></i>
+            </a>
+          </p>
+          <p>Faridabad, Haryana, India</p>
+        </article>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <a class="back" href="index.html">
+        Back to portfolio home <i data-lucide="arrow-up" class="icon" aria-hidden="true"></i>
+      </a>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

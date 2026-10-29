@@ -1,3 +1,12 @@
+/* ============================================================
+   FILE: style.css
+   ROLE: Shared design system & layout for Sagar Gupta's Portfolio
+         (used by index.html, profile.html, and project.html)
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. GLOBAL RESET & DESIGN TOKENS
+   ------------------------------------------------------------ */
 * {
   box-sizing: border-box;
 }
@@ -32,18 +41,21 @@ body:before {
   inset: 0;
   pointer-events: none;
   z-index: -1;
-  background-image: radial-gradient(#75839a 0.55px, transparent .55px);
+  background-image: radial-gradient(#75839a 0.55px, transparent 0.55px);
   background-size: 23px 23px;
-  opacity: .09;
+  opacity: 0.09;
 }
 
+/* ------------------------------------------------------------
+   2. AMBIENT BACKGROUND LIGHTING
+   ------------------------------------------------------------ */
 .ambient {
   position: absolute;
   filter: blur(70px);
   border-radius: 50%;
   pointer-events: none;
   z-index: -1;
-  opacity: .45;
+  opacity: 0.45;
 }
 
 .ambient-one {
@@ -52,7 +64,7 @@ body:before {
   right: -90px;
   top: 130px;
   background: #a9c2dc;
-  opacity: .2;
+  opacity: 0.2;
 }
 
 .ambient-two {
@@ -61,14 +73,90 @@ body:before {
   left: -120px;
   top: 880px;
   background: #d5c5a0;
-  opacity: .18;
+  opacity: 0.18;
 }
 
+/* ------------------------------------------------------------
+   3. COMMON TYPOGRAPHY & UTILITIES
+   ------------------------------------------------------------ */
 .section-wrap {
   width: min(1120px, calc(100% - 48px));
   margin: 0 auto;
 }
 
+.section-kicker,
+.timeline-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.55px;
+  color: var(--blue);
+}
+
+.tiny-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: #818277;
+  letter-spacing: 1.2px;
+}
+
+.section-heading h2,
+.contact-inner h2 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(34px, 4.2vw, 47px);
+  line-height: 1.08;
+  letter-spacing: -1.8px;
+  margin: 13px 0;
+  font-weight: 600;
+}
+
+.section-heading > p {
+  max-width: 600px;
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.gradient-text {
+  background: linear-gradient(100deg, #183b60 5%, #315b86 55%, #547da6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  stroke-width: 1.8;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ------------------------------------------------------------
+   4. TOPBAR & NAVIGATION
+   ------------------------------------------------------------ */
 .topbar {
   height: 76px;
   display: flex;
@@ -92,7 +180,7 @@ body:before {
   text-decoration: none;
   color: var(--ink);
   font: 700 21px "Space Grotesk", sans-serif;
-  letter-spacing: -.7px;
+  letter-spacing: -0.7px;
 }
 
 .brand-mark {
@@ -121,7 +209,7 @@ body:before {
   text-decoration: none;
   font-size: 13px;
   font-weight: 600;
-  transition: color .2s;
+  transition: color 0.2s;
 }
 
 .nav a:hover {
@@ -137,14 +225,7 @@ body:before {
   border-radius: 12px;
   color: var(--ink);
   background: #ffffffa8;
-}
-
-.icon {
-  display: block;
-  width: 16px;
-  height: 16px;
-  flex: 0 0 auto;
-  stroke-width: 1.8;
+  text-decoration: none;
 }
 
 .menu-toggle {
@@ -159,50 +240,27 @@ body:before {
   display: none;
 }
 
+/* ------------------------------------------------------------
+   5. HERO SECTION & FLOATING PROFILE CARD (Homepage)
+   ------------------------------------------------------------ */
 .hero {
-  min-height: 660px;
   display: grid;
-  grid-template-columns: 1.08fr .92fr;
+  grid-template-columns: 1.08fr 0.92fr;
   align-items: center;
   gap: 50px;
   position: relative;
-  padding-top: 36px;
-  padding-bottom: 90px;
+  padding-top: 28px;
+  padding-bottom: 40px;
 }
 
-.section-kicker,
-.tiny-label,
-.card-bottom,
-.timeline-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.55px;
-}
-
-.live-pill span {
-  height: 7px;
-  width: 7px;
-  background: #315b86;
-  border-radius: 50%;
-  box-shadow: 0 0 0 4px #315b8620;
-}
-
-.hero h1,
-.section-heading h2,
-.contact-inner h2 {
+.hero h1 {
   font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(39px, 5.2vw, 64px);
-  line-height: 1.08;
-  letter-spacing: -2.6px;
-  margin: 24px 0 20px;
+  font-size: clamp(52px, 6vw, 70px);
+  line-height: 0.99;
+  letter-spacing: -3.8px;
+  margin: 12px 0 20px;
   font-weight: 600;
-}
-
-.gradient-text {
-  background: linear-gradient(100deg, #183b60 5%, #315b86 55%, #547da6 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  max-width: 760px;
 }
 
 .hero-lead {
@@ -233,7 +291,7 @@ body:before {
 }
 
 .hero-art {
-  min-height: 430px;
+  min-height: 460px;
   display: grid;
   place-items: center;
   position: relative;
@@ -278,21 +336,13 @@ body:before {
   justify-content: space-between;
 }
 
-.tiny-label,
-.card-bottom {
-  color: #818277;
-  letter-spacing: 1.2px;
-}
-
-.tiny-label {
-  font-size: 9px;
-}
-
 .card-bottom {
   border-top: 1px solid #e7e3d9;
   padding-top: 13px;
   margin-top: 20px;
   font-size: 8px;
+  color: #818277;
+  letter-spacing: 1.2px;
 }
 
 .live-pill {
@@ -310,7 +360,8 @@ body:before {
 .live-pill span {
   width: 5px;
   height: 5px;
-  box-shadow: none;
+  background: #315b86;
+  border-radius: 50%;
 }
 
 .avatar {
@@ -327,6 +378,14 @@ body:before {
   margin: 26px 0 17px;
   position: relative;
   box-shadow: 0 8px 24px #426b9230;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+  object-position: center 28%;
 }
 
 .avatar-spark {
@@ -369,29 +428,12 @@ body:before {
   font-weight: 700;
 }
 
-.about-section,
-.projects-section,
-.journey-section,
-.skills-section {
+/* ------------------------------------------------------------
+   6. ABOUT SECTION
+   ------------------------------------------------------------ */
+.about-section {
   padding-top: 85px;
   padding-bottom: 65px;
-}
-
-.section-kicker {
-  color: #234e78;
-}
-
-.section-heading h2 {
-  font-size: clamp(34px, 4.2vw, 47px);
-  letter-spacing: -1.8px;
-  margin: 13px 0 13px;
-}
-
-.section-heading>p {
-  max-width: 600px;
-  color: var(--muted);
-  font-size: 14px;
-  margin: 0;
 }
 
 .about-grid {
@@ -405,8 +447,12 @@ body:before {
   max-width: 670px;
 }
 
+/* ------------------------------------------------------------
+   7. SELECTED WORK & PROJECT CARDS
+   ------------------------------------------------------------ */
 .projects-section {
   padding-top: 95px;
+  padding-bottom: 65px;
 }
 
 .project-grid {
@@ -423,7 +469,7 @@ body:before {
   background: #fffdf8e8;
   border-radius: 19px;
   overflow: hidden;
-  transition: transform .25s, box-shadow .25s, border-color .25s;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
 }
 
 .project-card:hover,
@@ -463,7 +509,7 @@ body:before {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .3s ease;
+  transition: transform 0.3s ease;
 }
 
 .project-visual:hover .project-image,
@@ -525,7 +571,7 @@ body:before {
 
 .project-info h3 {
   font: 600 19px/1.3 "Space Grotesk";
-  letter-spacing: -.45px;
+  letter-spacing: -0.45px;
   margin: 15px 0 9px;
 }
 
@@ -538,6 +584,22 @@ body:before {
 
 .project-info .tag-row {
   margin-top: auto;
+}
+
+.tag-row span {
+  font-size: 9px;
+  font-weight: 600;
+  color: #62665c;
+  border: 1px solid #e7e9f2;
+  border-radius: 6px;
+  padding: 5px 7px;
+  background: #fff9;
+}
+
+.project-footnote {
+  font-size: 11px;
+  color: #818277;
+  margin-top: 17px;
 }
 
 .project-links {
@@ -578,6 +640,9 @@ body:before {
   height: 13px;
 }
 
+/* ------------------------------------------------------------
+   8. PROJECT DETAIL PAGE & README VIEW
+   ------------------------------------------------------------ */
 .project-page {
   min-height: 100vh;
 }
@@ -649,7 +714,7 @@ body:before {
 .project-readme h4 {
   font-family: "Space Grotesk", sans-serif;
   line-height: 1.25;
-  letter-spacing: -.5px;
+  letter-spacing: -0.5px;
 }
 
 .project-readme h1 {
@@ -745,24 +810,12 @@ body:before {
   border-top: 1px solid var(--line);
 }
 
-.tag-row span {
-  font-size: 9px;
-  font-weight: 600;
-  color: #62665c;
-  border: 1px solid #e7e9f2;
-  border-radius: 6px;
-  padding: 5px 7px;
-  background: #fff9;
-}
-
-.project-footnote {
-  font-size: 11px;
-  color: #818277;
-  margin-top: 17px;
-}
-
+/* ------------------------------------------------------------
+   9. JOURNEY & TIMELINE
+   ------------------------------------------------------------ */
 .journey-section {
   padding-top: 95px;
+  padding-bottom: 65px;
 }
 
 .timeline {
@@ -819,11 +872,6 @@ body:before {
   padding: 0 0 31px 0;
 }
 
-.timeline-label {
-  color: #234e78;
-  font-size: 9px;
-}
-
 .timeline-content h3 {
   font: 600 18px "Space Grotesk";
   margin: 6px 0;
@@ -837,6 +885,9 @@ body:before {
   line-height: 1.8;
 }
 
+/* ------------------------------------------------------------
+   10. SKILLS FLOW & PRODUCT WORKFLOW
+   ------------------------------------------------------------ */
 .skills-section {
   padding-top: 65px;
   padding-bottom: 110px;
@@ -844,7 +895,7 @@ body:before {
 
 .stack-flow {
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) 34px minmax(160px, .8fr) 34px minmax(145px, .7fr);
+  grid-template-columns: minmax(0, 1.3fr) 34px minmax(160px, 0.8fr) 34px minmax(145px, 0.7fr);
   align-items: stretch;
   gap: 12px;
   margin-top: 30px;
@@ -1006,6 +1057,9 @@ body:before {
   content: "\2192";
 }
 
+/* ------------------------------------------------------------
+   11. CONTACT SECTION & CTAS
+   ------------------------------------------------------------ */
 .contact-section {
   background: #f1efe6;
   border-top: 1px solid #e5e0d5;
@@ -1024,7 +1078,7 @@ body:before {
   border-radius: 50%;
   border: 1px solid #426b9228;
   box-shadow: 0 0 0 35px #426b9208, 0 0 0 70px #426b9205;
-  opacity: .8;
+  opacity: 0.8;
 }
 
 .contact-inner {
@@ -1047,6 +1101,12 @@ body:before {
   margin: 0 0 25px;
 }
 
+.contact-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .contact-cta {
   display: inline-flex;
   align-items: center;
@@ -1059,7 +1119,7 @@ body:before {
   font-size: 12px;
   font-weight: 700;
   text-decoration: none;
-  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .contact-cta:hover {
@@ -1078,6 +1138,39 @@ body:before {
   height: 15px;
 }
 
+.contact-whatsapp {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid #168a52;
+  border-radius: 50%;
+  background: #168a52;
+  color: #fff;
+  box-shadow: 0 5px 16px #12633d30;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-whatsapp:hover {
+  transform: translateY(-2px);
+  background: #117544;
+  box-shadow: 0 8px 20px #12633d40;
+}
+
+.contact-whatsapp:focus-visible {
+  outline: 3px solid #69c99b;
+  outline-offset: 3px;
+}
+
+.contact-whatsapp .icon {
+  width: 22px;
+  height: 22px;
+}
+
+/* ------------------------------------------------------------
+   12. FOOTER
+   ------------------------------------------------------------ */
 .footer {
   padding: 20px 0;
 }
@@ -1089,12 +1182,6 @@ body:before {
   gap: 20px;
 }
 
-.back-top {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-}
-
 .footer .brand {
   font-size: 17px;
 }
@@ -1104,6 +1191,12 @@ body:before {
   height: 27px;
   font-size: 14px;
   border-radius: 8px;
+}
+
+.back-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
 }
 
 .back-top,
@@ -1118,274 +1211,9 @@ body:before {
   color: var(--blue);
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity .65s ease, transform .65s ease;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media(prefers-reduced-motion:reduce) {
-  *,
-  *:before,
-  *:after {
-    scroll-behavior: auto !important;
-    animation: none !important;
-    transition: none !important;
-  }
-  .reveal {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media(max-width:850px) {
-  .stack-flow {
-    grid-template-columns: 1fr;
-    gap: 8px;
-    max-width: 620px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .stack-connector {
-    min-height: 24px;
-  }
-  .stack-connector:after {
-    content: "\2193";
-  }
-  .product-flow {
-    max-width: 620px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .product-flow-steps {
-    grid-template-columns: 1fr;
-    gap: 6px;
-  }
-  .product-flow-step {
-    min-height: 0;
-  }
-  .product-flow-connector:after {
-    content: "\2193";
-  }
-  .hero {
-    grid-template-columns: 1fr;
-    gap: 5px;
-    padding-top: 65px;
-    min-height: auto;
-  }
-  .hero-copy {
-    max-width: 650px;
-  }
-  .hero-art {
-    min-height: 420px;
-  }
-  .project-grid {
-    gap: 13px;
-  }
-  .project-info {
-    padding: 18px;
-  }
-  .project-info h3 {
-    font-size: 17px;
-  }
-  .nav {
-    gap: 17px;
-  }
-}
-
-@media(max-width:768px) {
-  .section-wrap {
-    width: calc(100% - 34px);
-  }
-  .topbar {
-    height: 68px;
-    width: 100%;
-    padding: 0 17px;
-  }
-  .nav {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: min(84vw, 340px);
-    height: 100vh;
-    height: 100dvh;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 6px;
-    padding: 78px 22px 30px;
-    overflow-y: auto;
-    background: #fff;
-    border-left: 1px solid #e2e5ef;
-    box-shadow: -18px 0 45px #25294520;
-    transform: translateX(100%);
-    visibility: hidden;
-    transition: transform .28s ease, visibility .28s;
-    z-index: 1001;
-  }
-  .nav.open {
-    transform: translateX(0);
-    visibility: visible;
-  }
-  .nav a {
-    display: block;
-    padding: 14px 12px;
-    font-size: 15px;
-  }
-  .nav-backdrop {
-    display: block;
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    border: 0;
-    background: #10182c80;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity .28s ease, visibility .28s;
-    z-index: 1000;
-  }
-  .nav-backdrop.open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-  }
-  body.menu-open {
-    overflow: hidden;
-  }
-  .topbar.drawer-active {
-    z-index: 1002;
-  }
-  .menu-toggle {
-    position: fixed;
-    top: 13px;
-    right: 17px;
-    display: grid;
-    place-items: center;
-    width: 42px;
-    height: 42px;
-    border: 1px solid #dfe2ef;
-    border-radius: 12px;
-    background: #fff;
-    color: var(--ink);
-    font-size: 22px;
-    cursor: pointer;
-    z-index: 1003;
-  }
-  .nav .nav-contact {
-    margin-top: 8px;
-    text-align: center;
-  }
-}
-
-@media(max-width:620px) {
-  .hero-lead {
-    font-size: 14px;
-  }
-  .orbit-a {
-    width: 300px;
-    height: 230px;
-  }
-  .orbit-b {
-    width: 275px;
-    height: 300px;
-  }
-  .profile-card {
-    width: 265px;
-    padding: 18px;
-  }
-  .hero-meta {
-    gap: 12px;
-  }
-  .about-section,
-  .projects-section,
-  .journey-section,
-  .skills-section {
-    padding-top: 65px;
-    padding-bottom: 42px;
-  }
-  .about-section {
-    padding-top: 42px;
-    padding-bottom: 16px;
-  }
-  .projects-section {
-    padding-top: 22px;
-  }
-  .about-text {
-    font-size: 14px;
-  }
-  .project-grid {
-    grid-template-columns: 1fr;
-  }
-  .project-info h3 {
-    font-size: 19px;
-  }
-  .project-visual {
-    height: 180px;
-  }
-  .timeline-item {
-    grid-template-columns: 68px 16px 1fr;
-    gap: 11px;
-    min-height: 150px;
-  }
-  .timeline-date {
-    font-size: 10px;
-  }
-  .timeline-content h3 {
-    font-size: 16px;
-  }
-  .timeline-content p {
-    font-size: 11px;
-  }
-  .stack-node {
-    padding: 18px;
-  }
-  .contact-inner {
-    padding-top: 62px;
-    padding-bottom: 60px;
-  }
-  .footer-inner {
-    flex-wrap: wrap;
-  }
-  .footer .brand {
-    font-size: 16px;
-  }
-  .section-heading h2 {
-    font-size: 35px;
-  }
-}
-
-body.profile-page {
-  --bg: #f8f6ef;
-  --line: #e8e3d7;
-  --text: #20231d;
-  --muted: #686b62;
-  --blue: #234e78;
-  background: var(--bg);
-  color: var(--text);
-  line-height: normal;
-}
-body.profile-page a { color: inherit; text-decoration: none; }
-
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
+/* ------------------------------------------------------------
+   13. FLOATING SOCIAL LINKS (FABS) - Homepage Specific
+   ------------------------------------------------------------ */
 .social-fabs {
   position: fixed;
   left: max(18px, env(safe-area-inset-left));
@@ -1394,7 +1222,7 @@ body.profile-page a { color: inherit; text-decoration: none; }
   display: flex;
   flex-direction: column;
   gap: 16px;
-  transition: gap .25s ease;
+  transition: gap 0.25s ease;
 }
 
 .social-fabs.is-horizontal {
@@ -1412,7 +1240,7 @@ body.profile-page a { color: inherit; text-decoration: none; }
   background: #fff;
   color: var(--blue);
   box-shadow: 0 5px 18px #18233c1c;
-  transition: transform .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .social-fab:hover {
@@ -1432,42 +1260,52 @@ body.profile-page a { color: inherit; text-decoration: none; }
   height: 22px;
 }
 
-.contact-actions {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.contact-whatsapp {
-  display: grid;
-  width: 48px;
-  height: 48px;
-  place-items: center;
-  border: 1px solid #168a52;
-  border-radius: 50%;
-  background: #168a52;
+/* Shared Brand Colors for Social Buttons (used in both profile.html and index.html) */
+.social-link-email,
+body.profile-page .social .social-link-email {
+  background-color: #315b86;
   color: #fff;
-  box-shadow: 0 5px 16px #12633d30;
-  text-decoration: none;
-  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+  border-color: transparent;
+}
+.social-link-email:hover,
+body.profile-page .social .social-link-email:hover {
+  background-color: #24496f;
+  color: #fff;
 }
 
-.contact-whatsapp:hover {
-  transform: translateY(-2px);
-  background: #117544;
-  box-shadow: 0 8px 20px #12633d40;
+.social-link-whatsapp,
+body.profile-page .social .social-link-whatsapp {
+  background-color: #218c5b;
+  color: #fff;
+  border-color: transparent;
+}
+.social-link-whatsapp:hover,
+body.profile-page .social .social-link-whatsapp:hover {
+  background-color: #176e47;
+  color: #fff;
 }
 
-.contact-whatsapp:focus-visible {
-  outline: 3px solid #69c99b;
-  outline-offset: 3px;
+.social-link-github,
+body.profile-page .social .social-link-github {
+  background-color: #292d35;
+  color: #fff;
+  border-color: transparent;
+}
+.social-link-github:hover,
+body.profile-page .social .social-link-github:hover {
+  background-color: #171a20;
+  color: #fff;
 }
 
-.contact-whatsapp .icon {
-  width: 22px;
-  height: 22px;
+.social-fab.social-link-email,
+.social-fab.social-link-whatsapp,
+.social-fab.social-link-github {
+  padding: 14px;
 }
 
+/* ------------------------------------------------------------
+   14. FLOATING PORTFOLIO ASSISTANT CHAT WIDGET
+   ------------------------------------------------------------ */
 .chat-widget {
   position: fixed;
   right: 24px;
@@ -1489,7 +1327,7 @@ body.profile-page a { color: inherit; text-decoration: none; }
   box-shadow: 0 8px 24px #123b6838;
   font: 700 14px "DM Sans", sans-serif;
   cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .chat-toggle:hover {
@@ -1513,15 +1351,15 @@ body.profile-page a { color: inherit; text-decoration: none; }
   height: min(500px, calc(100dvh - 110px));
   min-height: 340px;
   overflow: hidden;
-  border: 1px solid #e2e6ef;
+  border: 1px solid #e5e0d5;
   border-radius: 20px;
   background: #fff;
   box-shadow: 0 18px 55px #18233c26;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(10px) scale(.98);
+  transform: translateY(10px) scale(0.98);
   transform-origin: bottom right;
-  transition: opacity .2s ease, transform .2s ease, visibility .2s;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
 }
 
 .chat-panel.open {
@@ -1549,8 +1387,8 @@ body.profile-page a { color: inherit; text-decoration: none; }
   align-items: center;
   gap: 11px;
   padding: 15px 16px;
-  background: #f7f9fc;
-  border-bottom: 1px solid #e8ebf2;
+  background: #f5f3eb;
+  border-bottom: 1px solid #e8e3d7;
 }
 
 .chat-avatar {
@@ -1566,13 +1404,13 @@ body.profile-page a { color: inherit; text-decoration: none; }
 
 .chat-header h2 {
   margin: 0;
-  color: var(--ink);
+  color: #20231d;
   font: 700 14px "Space Grotesk", sans-serif;
 }
 
 .chat-header p {
   margin: 1px 0 0;
-  color: var(--muted);
+  color: #686b62;
   font-size: 11px;
 }
 
@@ -1585,7 +1423,7 @@ body.profile-page a { color: inherit; text-decoration: none; }
   border: 0;
   border-radius: 10px;
   background: transparent;
-  color: var(--muted);
+  color: #686b62;
   font-size: 23px;
   cursor: pointer;
 }
@@ -1619,10 +1457,10 @@ body.profile-page a { color: inherit; text-decoration: none; }
 
 .chat-message-assistant {
   align-self: flex-start;
-  border: 1px solid #e8ebf2;
+  border: 1px solid #e8e3d7;
   border-bottom-left-radius: 5px;
-  background: #f7f9fc;
-  color: #30384a;
+  background: #f5f3eb;
+  color: #20231d;
 }
 
 .chat-message-user {
@@ -1673,7 +1511,7 @@ body.profile-page a { color: inherit; text-decoration: none; }
   flex: 0 0 auto;
   gap: 8px;
   padding: 12px;
-  border-top: 1px solid #e8ebf2;
+  border-top: 1px solid #e5e0d5;
 }
 
 .chat-form input {
@@ -1706,26 +1544,27 @@ body.profile-page a { color: inherit; text-decoration: none; }
   background: #0c2f54;
 }
 
-@media (max-width: 480px) {
-  .contact-actions {
-    gap: 10px;
-  }
+/* ------------------------------------------------------------
+   15. PROFILE PAGE OVERRIDES (body.profile-page)
+   ------------------------------------------------------------ */
+body.profile-page {
+  --bg: #f8f6ef;
+  --line: #e8e3d7;
+  --text: #20231d;
+  --muted: #686b62;
+  --blue: #234e78;
+  background: var(--bg);
+  color: var(--text);
+  line-height: normal;
+}
 
-  .contact-whatsapp {
-    width: 46px;
-    height: 46px;
-  }
+body.profile-page:before {
+  display: none;
+}
 
-  .chat-widget {
-    right: 16px;
-    bottom: 16px;
-  }
-
-  .chat-panel {
-    right: -8px;
-    width: calc(100vw - 32px);
-    height: min(480px, calc(100dvh - 95px));
-  }
+body.profile-page a {
+  color: inherit;
+  text-decoration: none;
 }
 
 body.profile-page .topbar {
@@ -1740,6 +1579,12 @@ body.profile-page .topbar {
   backdrop-filter: blur(14px);
   z-index: 5;
 }
+
+/* Keep profile-page drawer links above the mobile backdrop. */
+body.profile-page .topbar.drawer-active {
+  z-index: 1002;
+}
+
 body.profile-page .brand {
   align-items: center;
   gap: 12px;
@@ -1747,6 +1592,7 @@ body.profile-page .brand {
   font-weight: 700;
   font-family: "DM Sans", sans-serif;
 }
+
 body.profile-page .mark {
   display: grid;
   place-items: center;
@@ -1757,14 +1603,24 @@ body.profile-page .mark {
   color: #fff;
   font-weight: 700;
 }
+
 body.profile-page .nav {
   gap: 28px;
   color: #62665c;
   font-size: 14px;
 }
+
+body.profile-page .nav a {
+  color: inherit;
+  font-size: inherit;
+  font-weight: 400;
+}
+
 body.profile-page .nav a:hover,
-body.profile-page .nav .active { color: var(--blue); }
-body.profile-page .nav a { color: inherit; font-size: inherit; font-weight: 400; }
+body.profile-page .nav .active {
+  color: var(--blue);
+}
+
 body.profile-page .nav .connect {
   padding: 10px 18px;
   border: 1px solid #e8e3d7;
@@ -1772,7 +1628,12 @@ body.profile-page .nav .connect {
   background: #fff;
   color: #20231d;
 }
-body.profile-page .wrap { width: min(1160px, 91%); margin: auto; }
+
+body.profile-page .wrap {
+  width: min(1160px, 91%);
+  margin: auto;
+}
+
 body.profile-page .intro {
   display: grid;
   grid-template-columns: minmax(230px, 350px) 1fr;
@@ -1780,6 +1641,7 @@ body.profile-page .intro {
   align-items: center;
   padding: 36px 0 28px;
 }
+
 body.profile-page .portrait {
   width: 100%;
   height: 380px;
@@ -1789,6 +1651,7 @@ body.profile-page .portrait {
   border: 1px solid #e8e3d7;
   box-shadow: 0 20px 55px #25294520, 0 0 50px #426b920c;
 }
+
 body.profile-page .hello {
   display: inline-flex;
   align-items: center;
@@ -1799,27 +1662,39 @@ body.profile-page .hello {
   background: #426b920b;
   color: #426b92;
 }
+
 body.profile-page .intro h1 {
   font: 700 clamp(38px, 5vw, 58px)/1.1 "Space Grotesk", sans-serif;
   margin: 13px 0;
 }
+
 body.profile-page .grad {
   background: linear-gradient(100deg, #183b60 5%, #315b86 55%, #547da6 100%);
   color: transparent;
+  -webkit-background-clip: text;
   background-clip: text;
 }
-body.profile-page .roles { font-size: 18px; color: #686b62; margin: 0 0 20px; }
+
+body.profile-page .roles {
+  font-size: 18px;
+  color: #686b62;
+  margin: 0 0 20px;
+}
+
 body.profile-page .intro p {
   line-height: 1.7;
   color: var(--muted);
   max-width: 720px;
 }
+
 body.profile-page .social {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
   margin-top: 22px;
 }
+
+/* Profile Social Buttons: Clean, uniform white pills without icon color overrides */
 body.profile-page .pill {
   display: inline-flex;
   align-items: center;
@@ -1830,31 +1705,40 @@ body.profile-page .pill {
   border-radius: 24px;
   background: #fff;
   color: #20231d;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
+
+body.profile-page .pill:hover {
+  transform: translateY(-2px);
+  background: #f5f3eb;
+  border-color: #d8d3c5;
+}
+
 body.profile-page .pill.icon-link {
   width: 48px;
   height: 48px;
   padding: 13px;
 }
+
 body.profile-page .pill.icon-link .icon {
   width: 20px;
   height: 20px;
 }
-body.profile-page .social .social-link-email { background-color: #315b86; color: #fff; }
-body.profile-page .social .social-link-whatsapp { background-color: #218c5b; color: #fff; }
-body.profile-page .social .social-link-github { background-color: #292d35; color: #fff; }
+
 body.profile-page .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   padding: 8px 0 40px;
 }
+
 body.profile-page .card {
   background: #fffdf8;
   border: 1px solid var(--line);
   border-radius: 19px;
   padding: 23px;
 }
+
 body.profile-page .card h2 {
   font: 600 21px "Space Grotesk", sans-serif;
   margin: 0 0 18px;
@@ -1862,13 +1746,25 @@ body.profile-page .card h2 {
   align-items: center;
   gap: 11px;
 }
+
 body.profile-page .card h2 .icon {
   width: 20px;
   height: 20px;
   color: var(--blue);
 }
-body.profile-page .card p { color: var(--muted); line-height: 1.65; margin: 8px 0; }
-body.profile-page .edu { display: flex; gap: 16px; align-items: center; }
+
+body.profile-page .card p {
+  color: var(--muted);
+  line-height: 1.65;
+  margin: 8px 0;
+}
+
+body.profile-page .edu {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
 body.profile-page .edu-logo {
   width: 105px;
   height: 92px;
@@ -1883,8 +1779,17 @@ body.profile-page .edu-logo {
   font-size: 14px;
   padding: 8px;
 }
-body.profile-page .institution-subtitle { font-size: 10px; font-weight: 500; }
-body.profile-page .small { font-size: 13px; color: #686b62; }
+
+body.profile-page .institution-subtitle {
+  font-size: 10px;
+  font-weight: 500;
+}
+
+body.profile-page .small {
+  font-size: 13px;
+  color: #686b62;
+}
+
 body.profile-page .kv {
   display: grid;
   grid-template-columns: 110px 1fr;
@@ -1892,8 +1797,17 @@ body.profile-page .kv {
   margin: 12px 0;
   color: #20231d;
 }
-body.profile-page .kv span:first-child { color: #686b62; }
-body.profile-page .tags { display: flex; gap: 9px; flex-wrap: wrap; }
+
+body.profile-page .kv span:first-child {
+  color: #686b62;
+}
+
+body.profile-page .tags {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
 body.profile-page .tag {
   background: #426b9210;
   border: 1px solid #e8e3d7;
@@ -1902,6 +1816,7 @@ body.profile-page .tag {
   font-size: 13px;
   color: #426b92;
 }
+
 body.profile-page .footer {
   text-align: center;
   color: #686b62;
@@ -1911,184 +1826,360 @@ body.profile-page .footer {
   margin-top: 4px;
   font-size: 13px;
 }
+
 body.profile-page .back {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   color: #20231d;
 }
-@media(max-width: 760px) {
-body.profile-page .topbar { padding: 0 16px; }
-body.profile-page .intro { grid-template-columns: 1fr; gap: 22px; padding-top: 24px; }
-body.profile-page .portrait { height: 340px; max-width: 360px; }
-body.profile-page .grid { grid-template-columns: 1fr; }
-body.profile-page .kv { grid-template-columns: 95px 1fr; }
-body.profile-page .card { padding: 18px; }
-body.profile-page .roles { font-size: 16px; }
-}
-@media(max-width: 420px) {
-body.profile-page .brand { font-size: 19px; }
-body.profile-page .mark { width: 38px; height: 38px; }
-body.profile-page .connect { padding: 9px 11px; }
-body.profile-page .intro h1 { font-size: 38px; }
-}
-@media(max-width:768px) {
-  body.profile-page .topbar.drawer-active { z-index: 1002; }
-  body.profile-page .nav { gap: 6px; font-size: 15px; }
-}
-body.profile-page:before { display: none; }
-
-body:not(.profile-page) .hero {
-  min-height: auto;
-  padding-top: 28px;
-  padding-bottom: 40px;
-}
-
-@media (max-width: 620px) {
-  body:not(.profile-page) .ambient-one {
-    width: 250px;
-    height: 250px;
-    right: 0;
-  }
-}
-
-body:not(.profile-page) .hero h1 {
-  max-width: 760px;
-  margin-top: 12px;
-  font-size: clamp(52px, 6vw, 70px);
-  line-height: .99;
-  letter-spacing: -3.8px;
-}
-
-body:not(.profile-page) .hero-art {
-  min-height: 460px;
-}
-
-body:not(.profile-page) .avatar img {
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  object-fit: cover;
-  object-position: center 28%;
-}
-
-body:not(.profile-page) .chat-header,
-body:not(.profile-page) .chat-message-assistant {
-  background: #f5f3eb;
-  border-color: #e8e3d7;
-}
-
-body:not(.profile-page) .chat-header h2,
-body:not(.profile-page) .chat-message-assistant {
-  color: #20231d;
-}
-
-body:not(.profile-page) .chat-header p,
-body:not(.profile-page) .chat-close {
-  color: #686b62;
-}
-
-body:not(.profile-page) .chat-form,
-body:not(.profile-page) .chat-panel {
-  border-color: #e5e0d5;
-}
-
-body:not(.profile-page) .chat-link {
-  color: #234e78;
-}
 
 body.profile-page .nav-backdrop {
   background: #080907c9;
 }
 
-@media (max-width: 768px) {
-  body.profile-page .nav {
-    background: #fffdf8;
-    border-color: #e8e3d7;
+/* ------------------------------------------------------------
+   16. ANIMATIONS & ACCESSIBILITY
+   ------------------------------------------------------------ */
+@keyframes card-float {
+  0%, 100% {
+    transform: rotate(2deg) translateY(0);
+  }
+  50% {
+    transform: rotate(1deg) translateY(-9px);
   }
 }
 
-@media (max-width: 620px) {
-  body:not(.profile-page) .hero {
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *:before,
+  *:after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------
+   17. CONSOLIDATED RESPONSIVE BREAKPOINTS
+   ------------------------------------------------------------ */
+
+/* Breakpoint: <= 850px */
+@media (max-width: 850px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding-top: 65px;
     min-height: auto;
+  }
+  .hero-copy {
+    max-width: 650px;
+  }
+  .hero-art {
+    min-height: 420px;
+  }
+  .project-grid {
+    gap: 13px;
+  }
+  .project-info {
+    padding: 18px;
+  }
+  .project-info h3 {
+    font-size: 17px;
+  }
+  .nav {
+    gap: 17px;
+  }
+  .stack-flow {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .stack-connector {
+    min-height: 24px;
+  }
+  .stack-connector:after {
+    content: "\2193";
+  }
+  .product-flow {
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .product-flow-steps {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .product-flow-step {
+    min-height: 0;
+  }
+  .product-flow-connector:after {
+    content: "\2193";
+  }
+}
+
+/* Breakpoint: <= 768px (Mobile Navigation Drawer) */
+@media (max-width: 768px) {
+  .section-wrap {
+    width: calc(100% - 34px);
+  }
+  .topbar {
+    height: 68px;
+    width: 100%;
+    padding: 0 17px;
+  }
+  .nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(84vw, 340px);
+    height: 100vh;
+    height: 100dvh;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    padding: 78px 22px 30px;
+    overflow-y: auto;
+    background: #fff;
+    border-left: 1px solid #e2e5ef;
+    box-shadow: -18px 0 45px #25294520;
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform 0.28s ease, visibility 0.28s;
+    z-index: 1001;
+  }
+  .nav.open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+  .nav a {
+    display: block;
+    padding: 14px 12px;
+    font-size: 15px;
+  }
+  .nav .nav-contact {
+    margin-top: 8px;
+    text-align: center;
+  }
+  .nav-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: #10182c80;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.28s ease, visibility 0.28s;
+    z-index: 1000;
+  }
+  .nav-backdrop.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  /* Keep the backdrop visible whenever the navigation drawer is open. */
+  body.menu-open .nav-backdrop {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transition: none;
+  }
+  body.menu-open {
+    overflow: hidden;
+  }
+  .topbar.drawer-active {
+    z-index: 1002;
+  }
+  .menu-toggle {
+    position: fixed;
+    top: 13px;
+    right: 17px;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid #dfe2ef;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--ink);
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 1003;
+  }
+  body.profile-page .nav {
+    background: #fffdf8;
+    border-color: #e8e3d7;
+    gap: 6px;
+    font-size: 15px;
+  }
+}
+
+/* Breakpoint: <= 760px (Profile Page Specific) */
+@media (max-width: 760px) {
+  body.profile-page .topbar {
+    padding: 0 16px;
+  }
+  body.profile-page .intro {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding-top: 24px;
+  }
+  body.profile-page .portrait {
+    height: 340px;
+    max-width: 360px;
+  }
+  body.profile-page .grid {
+    grid-template-columns: 1fr;
+  }
+  body.profile-page .kv {
+    grid-template-columns: 95px 1fr;
+  }
+  body.profile-page .card {
+    padding: 18px;
+  }
+  body.profile-page .roles {
+    font-size: 16px;
+  }
+}
+
+/* Breakpoint: <= 620px (Compact Mobile) */
+@media (max-width: 620px) {
+  .hero-lead {
+    font-size: 14px;
+  }
+  .orbit-a {
+    width: 300px;
+    height: 230px;
+  }
+  .orbit-b {
+    width: 275px;
+    height: 300px;
+  }
+  .profile-card {
+    width: 265px;
+    padding: 18px;
+    animation: none;
+  }
+  .hero-meta {
+    gap: 12px;
+  }
+  .about-section {
+    padding-top: 42px;
+    padding-bottom: 16px;
+  }
+  .projects-section {
+    padding-top: 22px;
+    padding-bottom: 42px;
+  }
+  .journey-section,
+  .skills-section {
+    padding-top: 65px;
+    padding-bottom: 42px;
+  }
+  .about-text {
+    font-size: 14px;
+  }
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+  .project-info h3 {
+    font-size: 19px;
+  }
+  .project-visual {
+    height: 180px;
+  }
+  .timeline-item {
+    grid-template-columns: 68px 16px 1fr;
+    gap: 11px;
+    min-height: 150px;
+  }
+  .timeline-date {
+    font-size: 10px;
+  }
+  .timeline-content h3 {
+    font-size: 16px;
+  }
+  .timeline-content p {
+    font-size: 11px;
+  }
+  .stack-node {
+    padding: 18px;
+  }
+  .contact-inner {
+    padding-top: 62px;
+    padding-bottom: 60px;
+  }
+  .footer-inner {
+    flex-wrap: wrap;
+  }
+  .footer .brand {
+    font-size: 16px;
+  }
+  .section-heading h2 {
+    font-size: 35px;
+  }
+  .ambient-one {
+    width: 250px;
+    height: 250px;
+    right: 0;
+  }
+  .hero {
     padding-top: 46px;
     padding-bottom: 18px;
   }
-
-  body:not(.profile-page) .hero h1 {
+  .hero h1 {
     font-size: clamp(43px, 12vw, 60px);
     letter-spacing: -2.8px;
   }
-
-  body:not(.profile-page) .profile-card {
-    animation: none;
-  }
-
-  body:not(.profile-page) .hero-art {
+  .hero-art {
     min-height: 300px;
   }
 }
 
-@keyframes card-float {
-  0%, 100% { transform: rotate(2deg) translateY(0); }
-  50% { transform: rotate(1deg) translateY(-9px); }
+/* Breakpoint: <= 480px (Chat & Contact tweaks) */
+@media (max-width: 480px) {
+  .contact-actions {
+    gap: 10px;
+  }
+  .contact-whatsapp {
+    width: 46px;
+    height: 46px;
+  }
+  .chat-widget {
+    right: 16px;
+    bottom: 16px;
+  }
+  .chat-panel {
+    right: -8px;
+    width: calc(100vw - 32px);
+    height: min(480px, calc(100dvh - 95px));
+  }
 }
 
-body button:not(.nav-backdrop),
-body .pill,
-body .nav .nav-contact,
-body .social-fab {
-  background-color: #fff;
-  color: #20231d;
-}
-
-body .pill:hover,
-body .nav-contact:hover,
-body .nav .nav-contact:hover,
-body .social-fab:hover,
-body .chat-toggle:hover,
-body .chat-form button:hover,
-body .chat-suggestions button:hover {
-  background-color: #fff;
-  color: #20231d;
-}
-
-body .social-link-email,
-body .social-link-email:hover {
-  border-color: transparent;
-  background-color: #315b86;
-  color: #fff;
-}
-
-body .social-link-whatsapp,
-body .social-link-whatsapp:hover {
-  border-color: transparent;
-  background-color: #218c5b;
-  color: #fff;
-}
-
-body .social-link-github,
-body .social-link-github:hover {
-  border-color: transparent;
-  background-color: #292d35;
-  color: #fff;
-}
-
-body .social-fab.social-link-email,
-body .social-fab.social-link-whatsapp,
-body .social-fab.social-link-github {
-  padding: 14px;
-  color: #fff;
-}
-
-body .social-fab.social-link-email:hover {
-  background-color: #24496f;
-}
-
-body .social-fab.social-link-whatsapp:hover {
-  background-color: #176e47;
-}
-
-body .social-fab.social-link-github:hover {
-  background-color: #171a20;
+/* Breakpoint: <= 420px (Small phone headers) */
+@media (max-width: 420px) {
+  body.profile-page .brand {
+    font-size: 19px;
+  }
+  body.profile-page .mark {
+    width: 38px;
+    height: 38px;
+  }
+  body.profile-page .connect {
+    padding: 9px 11px;
+  }
+  body.profile-page .intro h1 {
+    font-size: 38px;
+  }
 }

@@ -1,25 +1,60 @@
+/* ============================================================
+   FILE: admin.js
+   ROLE: Admin behavior, Firebase CRUD, authentication, and editor
+         interactions; drives admin.html.
+   ============================================================ */
+
+// ------------------------------------------------------------
+// 1. MODULE IMPORTS
+// ------------------------------------------------------------
 import { app, db, isConfigured } from "./firebase-init.js";
 import { ADMIN_EMAILS } from "./firebase-config.js";
 import {
-  getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect,
-  signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail,
-  sendEmailVerification, onAuthStateChanged, signOut
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  sendEmailVerification,
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import {
-  collection, doc, getDoc, setDoc, deleteDoc, onSnapshot, writeBatch, serverTimestamp
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  deleteDoc,
+  onSnapshot,
+  writeBatch,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 import { escapeHtml, renderMarkdown } from "./markdown.js";
 import { projectCardHTML, safeUrl } from "./project-card.js";
 import { seedProjects } from "./seed-projects.js";
 import { defaultSiteContent } from "./default-site-content.js";
 
+// ------------------------------------------------------------
+// 2. DOM UTILITIES & HELPERS
+// ------------------------------------------------------------
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 const icons = () => window.lucide && window.lucide.createIcons();
-const show = (el, on) => { if (el) el.hidden = !on; };
+const show = (el, on) => {
+  if (el) el.hidden = !on;
+};
 
-const screens = { config: $("#screen-config"), login: $("#screen-login"), app: $("#screen-app") };
-const showScreen = name => Object.entries(screens).forEach(([k, el]) => show(el, k === name));
+const screens = {
+  config: $("#screen-config"),
+  login: $("#screen-login"),
+  app: $("#screen-app")
+};
+
+const showScreen = name => {
+  Object.entries(screens).forEach(([k, el]) => show(el, k === name));
+};
 
 function toast(message, kind = "") {
   const t = document.createElement("div");
@@ -36,13 +71,17 @@ const friendlyError = err => {
   return err?.message || "Something went wrong.";
 };
 
-/* ───────────── Site Content State ───────────── */
+// ------------------------------------------------------------
+// 3. SITE CONTENT STATE
+// ------------------------------------------------------------
 let siteContent = JSON.parse(JSON.stringify(defaultSiteContent));
 let activeSection = "hero";
 let jsonMode = "kv"; // "kv" or "raw"
 let modalItemContext = null; // { type: 'journey'|'skill_node'|'flow_step', mode: 'add'|'edit', item, index }
 
-/* ───────────── Auth ───────────── */
+// ------------------------------------------------------------
+// 4. FIREBASE AUTHENTICATION & ACCESS CONTROL
+// ------------------------------------------------------------
 if (!isConfigured) {
   showScreen("config");
 } else {
@@ -52,17 +91,24 @@ if (!isConfigured) {
   const isAllowedEmail = email => allowed.includes(email.trim().toLowerCase());
   let unsubscribe = null;
 
-  const loginError = msg => { const e = $("#login-error"); e.textContent = msg; show(e, true); };
+  const loginError = msg => {
+    const e = $("#login-error");
+    e.textContent = msg;
+    show(e, true);
+  };
+
   const clearLoginError = () => show($("#login-error"), false);
-  const authError = err => ({
-    "auth/invalid-credential": "The email or password is incorrect.",
-    "auth/invalid-email": "Enter a valid email address.",
-    "auth/email-already-in-use": "An account already exists for this email. Try signing in instead.",
-    "auth/weak-password": "Choose a stronger password with at least 6 characters.",
-    "auth/user-not-found": "No account was found for this email.",
-    "auth/too-many-requests": "Too many attempts. Please wait a moment and try again.",
-    "auth/network-request-failed": "Network error. Check your connection and try again."
-  }[err?.code] || friendlyError(err));
+
+  const authError = err =>
+    ({
+      "auth/invalid-credential": "The email or password is incorrect.",
+      "auth/invalid-email": "Enter a valid email address.",
+      "auth/email-already-in-use": "An account already exists for this email. Try signing in instead.",
+      "auth/weak-password": "Choose a stronger password with at least 6 characters.",
+      "auth/user-not-found": "No account was found for this email.",
+      "auth/too-many-requests": "Too many attempts. Please wait a moment and try again.",
+      "auth/network-request-failed": "Network error. Check your connection and try again."
+    }[err?.code] || friendlyError(err));
 
   const setAuthTab = tab => {
     const signup = tab === "signup";
@@ -134,14 +180,19 @@ if (!isConfigured) {
     } catch (err) {
       if (err.code === "auth/popup-blocked") return signInWithRedirect(auth, provider);
       if (err.code === "auth/popup-closed-by-user" || err.code === "auth/cancelled-popup-request") return;
-      loginError(err.code === "auth/unauthorized-domain"
-        ? "This domain isn't authorised in Firebase. Add it under Authentication → Settings → Authorized domains."
-        : friendlyError(err));
+      loginError(
+        err.code === "auth/unauthorized-domain"
+          ? "This domain isn't authorised in Firebase. Add it under Authentication → Settings → Authorized domains."
+          : friendlyError(err)
+      );
     }
   });
 
   onAuthStateChanged(auth, async user => {
-    if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+    if (unsubscribe) {
+      unsubscribe();
+      unsubscribe = null;
+    }
     if (!user) return showScreen("login");
     if (!isAllowed(user)) {
       const email = user.email;
@@ -149,21 +200,35 @@ if (!isConfigured) {
       showScreen("login");
       return loginError(`${email} isn't authorised to use this admin panel.`);
     }
+
     $("#user-email").textContent = user.email;
     const avatar = $("#user-avatar");
-    if (user.photoURL) { avatar.src = user.photoURL; avatar.hidden = false; } else { avatar.hidden = true; }
+    if (user.photoURL) {
+      avatar.src = user.photoURL;
+      avatar.hidden = false;
+    } else {
+      avatar.hidden = true;
+    }
+
     showScreen("app");
     switchNavPane("dashboard");
     openList();
 
-    // 1. Listen to projects
-    unsubscribe = onSnapshot(collection(db, "projects"),
+    // 1. Listen to projects collection
+    unsubscribe = onSnapshot(
+      collection(db, "projects"),
       snap => {
-        projects = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+        projects = snap.docs
+          .map(d => ({ id: d.id, ...d.data() }))
+          .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
         renderList();
         renderDashboard();
       },
-      err => { $("#list-summary").textContent = "Couldn't load projects."; toast(friendlyError(err), "error"); });
+      err => {
+        $("#list-summary").textContent = "Couldn't load projects.";
+        toast(friendlyError(err), "error");
+      }
+    );
 
     // 2. Fetch site content from settings/site
     try {
@@ -186,13 +251,16 @@ if (!isConfigured) {
   $("#btn-signout").addEventListener("click", () => signOut(auth));
 }
 
-/* ───────────── Navigation Tabs ───────────── */
+// ------------------------------------------------------------
+// 5. NAVIGATION TABS & PANE SWITCHER
+// ------------------------------------------------------------
 const navPanes = {
   dashboard: $("#pane-dashboard"),
   projects: $("#pane-projects"),
   content: $("#pane-content"),
   json: $("#pane-json")
 };
+
 const navButtons = {
   dashboard: $("#nav-btn-dashboard"),
   projects: $("#nav-btn-projects"),
@@ -200,16 +268,63 @@ const navButtons = {
   json: $("#nav-btn-json")
 };
 
+// ------------------------------------------------------------
+// 6. RESPONSIVE ADMIN NAVIGATION DRAWER
+// ------------------------------------------------------------
+const adminMenuToggle = $("#admin-menu-toggle");
+const adminNavDrawer = $("#admin-navigation");
+const adminNavBackdrop = $("#admin-nav-backdrop");
+
+function setAdminNavOpen(open) {
+  if (!adminMenuToggle || !adminNavDrawer || !adminNavBackdrop) return;
+
+  adminNavDrawer.classList.toggle("is-open", open);
+  adminNavBackdrop.classList.toggle("is-open", open);
+  document.body.classList.toggle("admin-nav-open", open);
+  adminMenuToggle.setAttribute("aria-expanded", String(open));
+  adminMenuToggle.setAttribute("aria-label", open ? "Close admin navigation" : "Open admin navigation");
+
+  const icon = document.createElement("i");
+  icon.dataset.lucide = open ? "x" : "menu";
+  icon.className = "icon";
+  icon.setAttribute("aria-hidden", "true");
+  adminMenuToggle.replaceChildren(icon);
+  icons();
+}
+
+adminMenuToggle?.addEventListener("click", () => {
+  setAdminNavOpen(!adminNavDrawer.classList.contains("is-open"));
+});
+
+adminNavBackdrop?.addEventListener("click", () => setAdminNavOpen(false));
+
+Object.values(navButtons).forEach(button => {
+  button?.addEventListener("click", () => setAdminNavOpen(false));
+});
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 980) setAdminNavOpen(false);
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && adminNavDrawer?.classList.contains("is-open")) {
+    setAdminNavOpen(false);
+    adminMenuToggle?.focus();
+  }
+});
+
 function switchNavPane(name) {
   Object.entries(navPanes).forEach(([k, el]) => show(el, k === name));
   Object.entries(navButtons).forEach(([k, btn]) => {
     btn?.classList.toggle("is-active", k === name);
     btn?.setAttribute("aria-selected", String(k === name));
   });
+
   if (name === "dashboard") renderDashboard();
   if (name === "content") renderActiveSection();
   if (name === "json") renderJsonView();
   if (name === "projects") openList();
+
   icons();
 }
 
@@ -225,7 +340,9 @@ function selectSection(secName) {
   renderActiveSection();
 }
 
-/* ───────────── Dashboard Home (KPIs, Activity, Previews) ───────────── */
+// ------------------------------------------------------------
+// 6. DASHBOARD HOME (KPIS, ACTIVITY & REAL-TIME PREVIEWS)
+// ------------------------------------------------------------
 function renderDashboard() {
   const n = projects.length;
   const live = projects.filter(p => p.published).length;
@@ -233,16 +350,21 @@ function renderDashboard() {
 
   const countEl = $("#dash-kpi-projects-count");
   if (countEl) countEl.textContent = n;
+
   const subEl = $("#dash-kpi-projects-sub");
   if (subEl) subEl.textContent = `${live} Published · ${drafts} Draft${drafts === 1 ? '' : 's'}`;
 
   const stackEl = $("#dash-kpi-stack-count");
-  if (stackEl) stackEl.textContent = `${siteContent.skills?.nodes?.length || 4} / ${siteContent.skills?.flow_steps?.length || 5}`;
+  if (stackEl) {
+    stackEl.textContent = `${siteContent.skills?.nodes?.length || 4} / ${siteContent.skills?.flow_steps?.length || 5}`;
+  }
 
   const journeyEl = $("#dash-kpi-journey-count");
-  if (journeyEl) journeyEl.textContent = siteContent.journey?.items?.length || 4;
+  if (journeyEl) {
+    journeyEl.textContent = siteContent.journey?.items?.length || 4;
+  }
 
-  // 1. Projects Snapshot
+  // 1. Projects Snapshot Mini List
   const dashList = $("#dash-projects-list");
   if (dashList) {
     if (!projects.length) {
@@ -280,7 +402,7 @@ function renderDashboard() {
     }
   }
 
-  // 2. Bio & Direction Snippet (Tapable)
+  // 2. Bio & Direction Snippet (Interactive)
   const bioSnippet = $("#dash-bio-snippet");
   if (bioSnippet) {
     const currentDirection = siteContent.journey?.items?.find(it => it.isCurrent || it.date === 'NEXT');
@@ -297,7 +419,7 @@ function renderDashboard() {
     `;
   }
 
-  // 3. Live Public Focus Card (Tapable)
+  // 3. Live Public Focus Card (Interactive)
   const focusWrap = $("#dash-focus-preview-wrap");
   if (focusWrap) {
     const h = siteContent.hero || {};
@@ -324,7 +446,7 @@ function renderDashboard() {
     `;
   }
 
-  // 4. Quick Contact Channels (Tapable)
+  // 4. Quick Contact Channels (Interactive)
   const contactQuick = $("#dash-contact-quick");
   if (contactQuick) {
     const c = siteContent.contact || {};
@@ -349,27 +471,73 @@ function renderDashboard() {
   icons();
 }
 
-// Dashboard Click Handlers — EVERYTHING is tapable!
+// Dashboard Click Handlers — All items are directly interactive!
 $("#dash-sync-badge")?.addEventListener("click", () => {
   toast("Firestore cloud sync is active · Public site matches database.");
 });
-$("#dash-btn-new-project")?.addEventListener("click", () => { switchNavPane("projects"); openEditor(null); });
-$("#act-new-proj")?.addEventListener("click", () => { switchNavPane("projects"); openEditor(null); });
+
+$("#dash-btn-new-project")?.addEventListener("click", () => {
+  switchNavPane("projects");
+  openEditor(null);
+});
+
+$("#act-new-proj")?.addEventListener("click", () => {
+  switchNavPane("projects");
+  openEditor(null);
+});
+
 $("#dash-btn-view-all-projects")?.addEventListener("click", () => switchNavPane("projects"));
 $("#kpi-projects-card")?.addEventListener("click", () => switchNavPane("projects"));
 $("#kpi-sections-card")?.addEventListener("click", () => switchNavPane("content"));
-$("#kpi-skills-card")?.addEventListener("click", () => { switchNavPane("content"); selectSection("skills"); });
-$("#kpi-journey-card")?.addEventListener("click", () => { switchNavPane("content"); selectSection("journey"); });
-$("#act-edit-hero")?.addEventListener("click", () => { switchNavPane("content"); selectSection("hero"); });
-$("#dash-btn-edit-focus")?.addEventListener("click", () => { switchNavPane("content"); selectSection("hero"); });
-$("#act-edit-about")?.addEventListener("click", () => { switchNavPane("content"); selectSection("about"); });
-$("#dash-btn-edit-bio")?.addEventListener("click", () => { switchNavPane("content"); selectSection("about"); });
-$("#act-edit-journey")?.addEventListener("click", () => { switchNavPane("content"); selectSection("journey"); });
-$("#act-edit-skills")?.addEventListener("click", () => { switchNavPane("content"); selectSection("skills"); });
-$("#act-edit-contact")?.addEventListener("click", () => { switchNavPane("content"); selectSection("contact"); });
+
+$("#kpi-skills-card")?.addEventListener("click", () => {
+  switchNavPane("content");
+  selectSection("skills");
+});
+
+$("#kpi-journey-card")?.addEventListener("click", () => {
+  switchNavPane("content");
+  selectSection("journey");
+});
+
+$("#act-edit-hero")?.addEventListener("click", () => {
+  switchNavPane("content");
+  selectSection("hero");
+});
+
+$("#dash-btn-edit-focus")?.addEventListener("click", () => {
+  switchNavPane("content");
+  selectSection("hero");
+});
+
+$("#act-edit-about")?.addEventListener("click", () => {
+  switchNavPane("content");
+  selectSection("about");
+});
+
+$("#dash-btn-edit-bio")?.addEventListener("click", () => {
+  switchNavPane("content");
+  selectSection("about");
+});
+
+$("#act-edit-journey")?.addEventListener("click", () => {
+  switchNavPane("content");
+  selectSection("journey");
+});
+
+$("#act-edit-skills")?.addEventListener("click", () => {
+  switchNavPane("content");
+  selectSection("skills");
+});
+
+$("#act-edit-contact")?.addEventListener("click", () => {
+  switchNavPane("content");
+  selectSection("contact");
+});
+
 $("#act-open-json")?.addEventListener("click", () => switchNavPane("json"));
 
-// Tapable bio card & focus preview card
+// Interactive Bio Card & Focus Preview Card
 $("#dash-bio-snippet")?.addEventListener("click", e => {
   if (e.target.closest(".dash-bio-next")) {
     switchNavPane("content");
@@ -385,7 +553,7 @@ $("#dash-focus-preview-wrap")?.addEventListener("click", () => {
   selectSection("hero");
 });
 
-// Tapable project rows (click anywhere on a project row to open editor)
+// Interactive Project Rows (Click anywhere on row to open editor)
 $("#dash-projects-list")?.addEventListener("click", e => {
   const row = e.target.closest("[data-id]");
   if (row) {
@@ -397,20 +565,33 @@ $("#dash-projects-list")?.addEventListener("click", e => {
   }
 });
 
-// Tapable health items
+// Interactive Health Items
 $("#dash-health-db")?.addEventListener("click", () => {
   toast("Firestore Cloud Database connection is healthy and responsive.");
 });
+
 $("#dash-health-auth")?.addEventListener("click", () => {
   const email = $("#user-email")?.textContent || "guptasagar2201@gmail.com";
   toast(`Logged in as: ${email} (Authorised admin account)`);
 });
+
 $("#dash-health-host")?.addEventListener("click", () => {
   window.open("index.html", "_blank");
 });
 
-// Keyboard accessibility for dashboard tapable items (Enter or Space key)
-["kpi-projects-card", "kpi-sections-card", "kpi-skills-card", "kpi-journey-card", "dash-sync-badge", "dash-bio-snippet", "dash-focus-preview-wrap", "dash-health-db", "dash-health-auth", "dash-health-host"].forEach(id => {
+// Keyboard accessibility for dashboard interactive items (Enter or Space key)
+[
+  "kpi-projects-card",
+  "kpi-sections-card",
+  "kpi-skills-card",
+  "kpi-journey-card",
+  "dash-sync-badge",
+  "dash-bio-snippet",
+  "dash-focus-preview-wrap",
+  "dash-health-db",
+  "dash-health-auth",
+  "dash-health-host"
+].forEach(id => {
   $(`#${id}`)?.addEventListener("keydown", e => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -421,8 +602,12 @@ $("#dash-health-host")?.addEventListener("click", () => {
 
 /* Seed Content Button */
 $("#btn-seed-site").addEventListener("click", async () => {
-  const ok = await confirmDialog("Seed Site Content?", "This will populate Firestore with complete default content for Hero, About, Journey, Skills, and Contact.");
+  const ok = await confirmDialog(
+    "Seed Site Content?",
+    "This will populate Firestore with complete default content for Hero, About, Journey, Skills, and Contact."
+  );
   if (!ok) return;
+
   try {
     siteContent = JSON.parse(JSON.stringify(defaultSiteContent));
     await setDoc(doc(db, "settings", "site"), { content: siteContent, managed: true }, { merge: true });
@@ -434,62 +619,96 @@ $("#btn-seed-site").addEventListener("click", async () => {
   }
 });
 
-/* ───────────── Projects (CRUD) ───────────── */
+// ------------------------------------------------------------
+// 7. PROJECTS MANAGEMENT & CRUD OPERATIONS
+// ------------------------------------------------------------
 let projects = [];
 const listEl = $("#project-list");
 
-function openList() { show($("#view-editor"), false); show($("#view-list"), true); window.scrollTo(0, 0); }
+function openList() {
+  show($("#view-editor"), false);
+  show($("#view-list"), true);
+  window.scrollTo(0, 0);
+}
 
 function renderList() {
   const n = projects.length;
   const live = projects.filter(p => p.published).length;
-  $("#list-summary").textContent = n ? `${n} project${n === 1 ? "" : "s"} · ${live} published` : "Nothing here yet.";
+  $("#list-summary").textContent = n
+    ? `${n} project${n === 1 ? "" : "s"} · ${live} published`
+    : "Nothing here yet.";
 
   if (!n) {
     listEl.innerHTML = `
       <div class="empty">
         <h2>No projects yet</h2>
         <p>Import the four projects already on your site to start managing them here, or create a new one.</p>
-        <button class="btn btn-primary" data-action="seed" type="button"><i data-lucide="download" class="icon" aria-hidden="true"></i> Import existing projects</button>
+        <button class="btn btn-primary" data-action="seed" type="button">
+          <i data-lucide="download" class="icon" aria-hidden="true"></i> Import existing projects
+        </button>
       </div>`;
     return icons();
   }
 
-  listEl.innerHTML = projects.map((p, i) => {
-    const img = safeUrl(p.image, { allowData: true });
-    return `
-    <article class="p-row${p.published ? " is-published" : ""}" data-id="${escapeHtml(p.id)}"${p.published ? ` tabindex="0" role="link" aria-label="Open ${escapeHtml(p.title)}"` : ""}>
-      <div class="p-thumb">${img ? `<img src="${escapeHtml(img)}" alt="">` : ""}</div>
-      <div class="p-main">
-        <h2 class="p-title">${escapeHtml(p.title)}</h2>
-        <div class="p-sub">
-          <span class="pill ${p.published ? "" : "draft"}">${p.published ? "Published" : "Draft"}</span>
-          ${p.type ? `<span>${escapeHtml(p.type)}</span>` : ""}
-          <span>${escapeHtml(p.meta || "")}</span>
+  listEl.innerHTML = projects
+    .map((p, i) => {
+      const img = safeUrl(p.image, { allowData: true });
+      return `
+      <article class="p-row${p.published ? " is-published" : ""}" data-id="${escapeHtml(p.id)}"${
+        p.published ? ` tabindex="0" role="link" aria-label="Open ${escapeHtml(p.title)}"` : ""
+      }>
+        <div class="p-thumb">${img ? `<img src="${escapeHtml(img)}" alt="">` : ""}</div>
+        <div class="p-main">
+          <h2 class="p-title">${escapeHtml(p.title)}</h2>
+          <div class="p-sub">
+            <span class="pill ${p.published ? "" : "draft"}">${p.published ? "Published" : "Draft"}</span>
+            ${p.type ? `<span>${escapeHtml(p.type)}</span>` : ""}
+            <span>${escapeHtml(p.meta || "")}</span>
+          </div>
         </div>
-      </div>
-      <div class="p-actions">
-        <button class="icon-btn" data-action="up" aria-label="Move ${escapeHtml(p.title)} up" ${i === 0 ? "disabled" : ""}><i data-lucide="arrow-up" class="icon" aria-hidden="true"></i></button>
-        <button class="icon-btn" data-action="down" aria-label="Move ${escapeHtml(p.title)} down" ${i === n - 1 ? "disabled" : ""}><i data-lucide="arrow-down" class="icon" aria-hidden="true"></i></button>
-        ${p.published ? `<a class="icon-btn" href="project.html?project=${encodeURIComponent(p.id)}" target="_blank" rel="noopener" aria-label="View ${escapeHtml(p.title)} on the site"><i data-lucide="external-link" class="icon" aria-hidden="true"></i></a>` : ""}
-        <button class="icon-btn" data-action="edit" aria-label="Edit ${escapeHtml(p.title)}"><i data-lucide="pencil" class="icon" aria-hidden="true"></i></button>
-        <button class="icon-btn danger" data-action="delete" aria-label="Delete ${escapeHtml(p.title)}"><i data-lucide="trash-2" class="icon" aria-hidden="true"></i></button>
-      </div>
-    </article>`;
-  }).join("");
+        <div class="p-actions">
+          <button class="icon-btn" data-action="up" aria-label="Move ${escapeHtml(p.title)} up" ${i === 0 ? "disabled" : ""}>
+            <i data-lucide="arrow-up" class="icon" aria-hidden="true"></i>
+          </button>
+          <button class="icon-btn" data-action="down" aria-label="Move ${escapeHtml(p.title)} down" ${i === n - 1 ? "disabled" : ""}>
+            <i data-lucide="arrow-down" class="icon" aria-hidden="true"></i>
+          </button>
+          ${
+            p.published
+              ? `<a class="icon-btn" href="project.html?project=${encodeURIComponent(p.id)}" target="_blank" rel="noopener" aria-label="View ${escapeHtml(p.title)} on the site">
+                  <i data-lucide="external-link" class="icon" aria-hidden="true"></i>
+                </a>`
+              : ""
+          }
+          <button class="icon-btn" data-action="edit" aria-label="Edit ${escapeHtml(p.title)}">
+            <i data-lucide="pencil" class="icon" aria-hidden="true"></i>
+          </button>
+          <button class="icon-btn danger" data-action="delete" aria-label="Delete ${escapeHtml(p.title)}">
+            <i data-lucide="trash-2" class="icon" aria-hidden="true"></i>
+          </button>
+        </div>
+      </article>`;
+    })
+    .join("");
+
   icons();
 }
 
 listEl.addEventListener("click", async e => {
   const btn = e.target.closest("[data-action]");
   const row = e.target.closest("[data-id]");
+
   if (!btn) {
     const project = projects.find(p => p.id === row?.dataset.id);
-    if (project?.published) window.location.href = `project.html?project=${encodeURIComponent(project.id)}`;
+    if (project?.published) {
+      window.location.href = `project.html?project=${encodeURIComponent(project.id)}`;
+    }
     return;
   }
+
   const id = btn.closest("[data-id]")?.dataset.id;
   const action = btn.dataset.action;
+
   if (action === "seed") return seed(btn);
   if (action === "edit") return openEditor(projects.find(p => p.id === id));
   if (action === "delete") return removeProject(projects.find(p => p.id === id));
@@ -505,30 +724,50 @@ listEl.addEventListener("keydown", e => {
   window.location.href = `project.html?project=${encodeURIComponent(project.id)}`;
 });
 
-async function markManaged() { await setDoc(doc(db, "settings", "site"), { managed: true }, { merge: true }); }
+async function markManaged() {
+  await setDoc(doc(db, "settings", "site"), { managed: true }, { merge: true });
+}
 
 async function seed(btn) {
   btn.disabled = true;
   try {
     const batch = writeBatch(db);
     seedProjects.forEach(({ id, ...data }) =>
-      batch.set(doc(db, "projects", id), { ...data, createdAt: serverTimestamp(), updatedAt: serverTimestamp() }));
+      batch.set(doc(db, "projects", id), {
+        ...data,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      })
+    );
     batch.set(doc(db, "settings", "site"), { managed: true, content: siteContent }, { merge: true });
     await batch.commit();
     toast("Imported your existing projects.");
-  } catch (err) { toast(friendlyError(err), "error"); btn.disabled = false; }
+  } catch (err) {
+    toast(friendlyError(err), "error");
+    btn.disabled = false;
+  }
 }
 
 async function move(id, dir) {
   const list = [...projects];
-  const i = list.findIndex(p => p.id === id), j = i + dir;
+  const i = list.findIndex(p => p.id === id);
+  const j = i + dir;
   if (j < 0 || j >= list.length) return;
+
   [list[i], list[j]] = [list[j], list[i]];
+
   try {
     const batch = writeBatch(db);
-    list.forEach((p, idx) => { const order = (idx + 1) * 10; if (p.order !== order) batch.update(doc(db, "projects", p.id), { order, updatedAt: serverTimestamp() }); });
+    list.forEach((p, idx) => {
+      const order = (idx + 1) * 10;
+      if (p.order !== order) {
+        batch.update(doc(db, "projects", p.id), { order, updatedAt: serverTimestamp() });
+      }
+    });
     await batch.commit();
-  } catch (err) { toast(friendlyError(err), "error"); }
+  } catch (err) {
+    toast(friendlyError(err), "error");
+  }
 }
 
 function confirmDialog(title, text) {
@@ -544,28 +783,55 @@ function confirmDialog(title, text) {
 
 async function removeProject(p) {
   if (!p) return false;
-  const ok = await confirmDialog(`Delete “${p.title}”?`, "It will disappear from your website right away. This can't be undone.");
+  const ok = await confirmDialog(
+    `Delete “${p.title}”?`,
+    "It will disappear from your website right away. This can't be undone."
+  );
   if (!ok) return false;
+
   try {
     await deleteDoc(doc(db, "projects", p.id));
     await markManaged();
     toast("Project deleted.");
     return true;
-  } catch (err) { toast(friendlyError(err), "error"); return false; }
+  } catch (err) {
+    toast(friendlyError(err), "error");
+    return false;
+  }
 }
 
-/* ───────────── Project Editor ───────────── */
+// ------------------------------------------------------------
+// 8. PROJECT EDITOR (FORM, IMAGES & MARKDOWN PREVIEW)
+// ------------------------------------------------------------
 const f = {
-  title: $("#f-title"), id: $("#f-id"), summary: $("#f-summary"), meta: $("#f-meta"), type: $("#f-type"),
-  tagsInput: $("#f-tags-input"), imageUrl: $("#f-image-url"), alt: $("#f-alt"), repo: $("#f-repo"),
-  source: $("#f-source"), readme: $("#f-readme"), order: $("#f-order"), published: $("#f-published"), file: $("#f-file")
+  title: $("#f-title"),
+  id: $("#f-id"),
+  summary: $("#f-summary"),
+  meta: $("#f-meta"),
+  type: $("#f-type"),
+  tagsInput: $("#f-tags-input"),
+  imageUrl: $("#f-image-url"),
+  alt: $("#f-alt"),
+  repo: $("#f-repo"),
+  source: $("#f-source"),
+  readme: $("#f-readme"),
+  order: $("#f-order"),
+  published: $("#f-published"),
+  file: $("#f-file")
 };
+
 let editing = null;
 let tags = [];
 let image = "";
 let slugTouched = false;
 
-const slugify = s => s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
+const slugify = s =>
+  s
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60);
 
 function openEditor(project) {
   editing = project || null;
@@ -575,6 +841,7 @@ function openEditor(project) {
   f.id.readOnly = !!project;
   $("#f-id-help").hidden = !!project;
   slugTouched = !!project;
+
   f.summary.value = project?.summary || "";
   f.meta.value = project?.meta || "";
   f.type.value = project?.type || "";
@@ -585,14 +852,18 @@ function openEditor(project) {
   f.order.value = project?.order ?? ((projects.at(-1)?.order ?? 0) + 10);
   f.published.checked = project ? !!project.published : true;
   tags = [...(project?.tags || [])];
+
   setImage(project?.image || "");
   setReadmeTab("write");
   show($("#form-error"), false);
   show($("#btn-delete"), !!project);
   $("#btn-save").textContent = project ? "Save changes" : "Create project";
+
   show($("#view-list"), false);
   show($("#view-editor"), true);
-  renderChips(); refreshPreview(); updateCounts();
+  renderChips();
+  refreshPreview();
+  updateCounts();
   window.scrollTo(0, 0);
   f.title.focus();
   icons();
@@ -602,86 +873,147 @@ $("#btn-new").addEventListener("click", () => openEditor(null));
 $("#btn-back").addEventListener("click", openList);
 $("#btn-cancel").addEventListener("click", openList);
 
-/* Tags */
+/* Tags Chip Management */
 function renderChips() {
   $("#chips").querySelectorAll(".chip").forEach(c => c.remove());
   tags.forEach((t, i) => {
     const chip = document.createElement("span");
     chip.className = "chip";
     chip.append(t);
+
     const rm = document.createElement("button");
-    rm.type = "button"; rm.textContent = "×"; rm.setAttribute("aria-label", `Remove tag ${t}`);
-    rm.addEventListener("click", () => { tags.splice(i, 1); renderChips(); refreshPreview(); });
+    rm.type = "button";
+    rm.textContent = "×";
+    rm.setAttribute("aria-label", `Remove tag ${t}`);
+    rm.addEventListener("click", () => {
+      tags.splice(i, 1);
+      renderChips();
+      refreshPreview();
+    });
+
     chip.append(rm);
     f.tagsInput.before(chip);
   });
 }
+
 function commitTag() {
   const v = f.tagsInput.value.replace(/,/g, "").trim();
-  if (v && !tags.includes(v) && tags.length < 10) { tags.push(v); renderChips(); refreshPreview(); }
+  if (v && !tags.includes(v) && tags.length < 10) {
+    tags.push(v);
+    renderChips();
+    refreshPreview();
+  }
   f.tagsInput.value = "";
 }
+
 f.tagsInput.addEventListener("keydown", e => {
-  if (e.key === "Enter" || e.key === ",") { e.preventDefault(); commitTag(); }
-  else if (e.key === "Backspace" && !f.tagsInput.value && tags.length) { tags.pop(); renderChips(); refreshPreview(); }
+  if (e.key === "Enter" || e.key === ",") {
+    e.preventDefault();
+    commitTag();
+  } else if (e.key === "Backspace" && !f.tagsInput.value && tags.length) {
+    tags.pop();
+    renderChips();
+    refreshPreview();
+  }
 });
+
 f.tagsInput.addEventListener("blur", commitTag);
 
-/* Image */
+/* Image Upload & Data URL Handling */
 const setImage = value => {
   image = value;
   const isData = value.startsWith("data:");
   f.imageUrl.value = isData ? "" : value;
   f.imageUrl.placeholder = isData ? "Using the uploaded image" : "…or paste an image URL / file path";
+
   const thumb = $("#image-thumb");
   const src = safeUrl(value, { allowData: true });
   thumb.innerHTML = src ? `<img alt="" src="${escapeHtml(src)}">` : "<span>No image</span>";
   show($("#btn-image-clear"), !!value);
+
   $("#image-info").textContent = isData
-    ? `Uploaded image · ${Math.round(value.length * 0.75 / 1024)} KB, stored in your database.`
+    ? `Uploaded image · ${Math.round((value.length * 0.75) / 1024)} KB, stored in your database.`
     : "Uploads are resized and stored for free inside your database, so no paid storage is needed.";
 };
 
-f.imageUrl.addEventListener("input", () => { image = f.imageUrl.value.trim(); setImage(image); f.imageUrl.focus(); refreshPreview(); });
-$("#btn-image-clear").addEventListener("click", () => { setImage(""); refreshPreview(); });
+f.imageUrl.addEventListener("input", () => {
+  image = f.imageUrl.value.trim();
+  setImage(image);
+  f.imageUrl.focus();
+  refreshPreview();
+});
+
+$("#btn-image-clear").addEventListener("click", () => {
+  setImage("");
+  refreshPreview();
+});
+
 $("#btn-upload").addEventListener("click", () => f.file.click());
+
 f.file.addEventListener("change", async () => {
   const file = f.file.files[0];
   f.file.value = "";
   if (!file) return;
-  try { setImage(await fileToDataUrl(file)); refreshPreview(); }
-  catch (err) { toast(err.message || "Couldn't read that image.", "error"); }
+
+  try {
+    setImage(await fileToDataUrl(file));
+    refreshPreview();
+  } catch (err) {
+    toast(err.message || "Couldn't read that image.", "error");
+  }
 });
 
 const MAX_CHARS = 380_000;
+
 async function fileToDataUrl(file) {
   if (file.type === "image/svg+xml") {
     const text = await file.text();
     const url = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(text)));
-    if (url.length > MAX_CHARS) throw new Error("That SVG is too large (max ≈ 280 KB).");
+    if (url.length > MAX_CHARS) {
+      throw new Error("That SVG is too large (max ≈ 280 KB).");
+    }
     return url;
   }
+
   const bmp = await createImageBitmap(file);
   let width = Math.min(1200, bmp.width);
+
   for (let attempt = 0; attempt < 6; attempt++) {
     const height = Math.round(bmp.height * (width / bmp.width));
     const canvas = document.createElement("canvas");
-    canvas.width = width; canvas.height = height;
+    canvas.width = width;
+    canvas.height = height;
     canvas.getContext("2d").drawImage(bmp, 0, 0, width, height);
+
     for (const q of [0.85, 0.72, 0.6, 0.48]) {
       let url = canvas.toDataURL("image/webp", q);
-      if (!url.startsWith("data:image/webp")) url = canvas.toDataURL("image/jpeg", q);
+      if (!url.startsWith("data:image/webp")) {
+        url = canvas.toDataURL("image/jpeg", q);
+      }
       if (url.length <= MAX_CHARS) return url;
     }
     width = Math.round(width * 0.8);
   }
+
   throw new Error("Couldn't shrink that image enough. Try a smaller one.");
 }
 
-f.title.addEventListener("input", () => { if (!slugTouched) f.id.value = slugify(f.title.value); });
-f.id.addEventListener("input", () => { slugTouched = true; f.id.value = slugify(f.id.value); });
-const updateCounts = () => { $("#summary-count").textContent = `${f.summary.value.length}/400`; };
-f.published.addEventListener("change", () => { $("#published-label").textContent = f.published.checked ? "Published" : "Draft"; });
+f.title.addEventListener("input", () => {
+  if (!slugTouched) f.id.value = slugify(f.title.value);
+});
+
+f.id.addEventListener("input", () => {
+  slugTouched = true;
+  f.id.value = slugify(f.id.value);
+});
+
+const updateCounts = () => {
+  $("#summary-count").textContent = `${f.summary.value.length}/400`;
+};
+
+f.published.addEventListener("change", () => {
+  $("#published-label").textContent = f.published.checked ? "Published" : "Draft";
+});
 
 const collect = () => ({
   id: f.id.value.trim(),
@@ -700,12 +1032,21 @@ const collect = () => ({
 });
 
 let previewTimer;
+
 function refreshPreview() {
   const p = collect();
-  $("#card-preview").innerHTML = `<div class="project-grid" style="grid-template-columns:1fr">${projectCardHTML({ ...p, title: p.title || "Untitled project" }, { link: false })}</div>`;
+  $("#card-preview").innerHTML = `
+    <div class="project-grid" style="grid-template-columns:1fr">
+      ${projectCardHTML({ ...p, title: p.title || "Untitled project" }, { link: false })}
+    </div>`;
   icons();
 }
-$("#project-form").addEventListener("input", () => { updateCounts(); clearTimeout(previewTimer); previewTimer = setTimeout(refreshPreview, 120); });
+
+$("#project-form").addEventListener("input", () => {
+  updateCounts();
+  clearTimeout(previewTimer);
+  previewTimer = setTimeout(refreshPreview, 120);
+});
 
 function setReadmeTab(tab) {
   const write = tab === "write";
@@ -713,12 +1054,20 @@ function setReadmeTab(tab) {
   $("#tab-preview").setAttribute("aria-selected", String(!write));
   show(f.readme, write);
   show($("#readme-preview"), !write);
-  if (!write) $("#readme-preview").innerHTML = renderMarkdown(f.readme.value) || "<p>Nothing to preview yet.</p>";
+  if (!write) {
+    $("#readme-preview").innerHTML = renderMarkdown(f.readme.value) || "<p>Nothing to preview yet.</p>";
+  }
 }
+
 $("#tab-write").addEventListener("click", () => setReadmeTab("write"));
 $("#tab-preview").addEventListener("click", () => setReadmeTab("preview"));
 
-const formError = msg => { const e = $("#form-error"); e.textContent = msg; show(e, true); e.scrollIntoView({ block: "nearest" }); };
+const formError = msg => {
+  const e = $("#form-error");
+  e.textContent = msg;
+  show(e, true);
+  e.scrollIntoView({ block: "nearest" });
+};
 
 $("#project-form").addEventListener("submit", async e => {
   e.preventDefault();
@@ -726,35 +1075,78 @@ $("#project-form").addEventListener("submit", async e => {
   show($("#form-error"), false);
   const p = collect();
 
-  if (!p.title) return formError("Please add a title."), f.title.focus();
-  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(p.id)) return formError("The page address needs lowercase letters, numbers and dashes only."), f.id.focus();
-  for (const [key, label] of [["repository", "GitHub repository"], ["source", "View-code"]]) {
-    if (p[key] && !/^https?:\/\//i.test(p[key])) return formError(`${label} URL must start with https://`);
+  if (!p.title) {
+    formError("Please add a title.");
+    f.title.focus();
+    return;
   }
-  if (p.image && !safeUrl(p.image, { allowData: true })) return formError("That image URL or path isn't valid.");
+
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(p.id)) {
+    formError("The page address needs lowercase letters, numbers and dashes only.");
+    f.id.focus();
+    return;
+  }
+
+  for (const [key, label] of [
+    ["repository", "GitHub repository"],
+    ["source", "View-code"]
+  ]) {
+    if (p[key] && !/^https?:\/\//i.test(p[key])) {
+      return formError(`${label} URL must start with https://`);
+    }
+  }
+
+  if (p.image && !safeUrl(p.image, { allowData: true })) {
+    return formError("That image URL or path isn't valid.");
+  }
+
   const { id, ...data } = p;
-  if (JSON.stringify(data).length > 900_000) return formError("This project is too large to save (limit ≈ 1 MB). Use a smaller image or a shorter README.");
+  if (JSON.stringify(data).length > 900_000) {
+    return formError("This project is too large to save (limit ≈ 1 MB). Use a smaller image or a shorter README.");
+  }
 
   const btn = $("#btn-save");
   btn.disabled = true;
+
   try {
     const ref = doc(db, "projects", id);
     if (!editing) {
-      if ((await getDoc(ref)).exists()) { btn.disabled = false; return formError(`A project with the address “${id}” already exists.`); }
-      await setDoc(ref, { ...data, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
+      if ((await getDoc(ref)).exists()) {
+        btn.disabled = false;
+        return formError(`A project with the address “${id}” already exists.`);
+      }
+      await setDoc(ref, {
+        ...data,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
     } else {
-      await setDoc(ref, { ...data, createdAt: editing.createdAt || serverTimestamp(), updatedAt: serverTimestamp() });
+      await setDoc(ref, {
+        ...data,
+        createdAt: editing.createdAt || serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
     }
+
     await markManaged();
     toast(editing ? "Changes saved." : "Project created.");
     openList();
-  } catch (err) { formError(friendlyError(err)); }
+  } catch (err) {
+    formError(friendlyError(err));
+  }
+
   btn.disabled = false;
 });
 
-$("#btn-delete").addEventListener("click", async () => { if (editing && await removeProject(editing)) openList(); });
+$("#btn-delete").addEventListener("click", async () => {
+  if (editing && (await removeProject(editing))) {
+    openList();
+  }
+});
 
-/* ───────────── Site Sections Visual CRUD ───────────── */
+// ------------------------------------------------------------
+// 9. SITE SECTIONS VISUAL EDITOR & FORMS
+// ------------------------------------------------------------
 $$(".sec-pill").forEach(pill => {
   pill.addEventListener("click", () => {
     $$(".sec-pill").forEach(p => p.classList.remove("is-active"));
@@ -911,7 +1303,9 @@ function renderActiveSection() {
       </div>
 
       <div class="crud-item-list" id="journey-items-list">
-        ${items.map((it, idx) => `
+        ${items
+          .map(
+            (it, idx) => `
           <div class="crud-card" data-idx="${idx}" data-editable="true" tabindex="0" title="Click to edit this timeline entry">
             <div class="crud-card-info">
               <div class="crud-card-meta">
@@ -922,29 +1316,46 @@ function renderActiveSection() {
               <p>${escapeHtml(it.description)}</p>
             </div>
             <div class="crud-card-actions">
-              <button class="icon-btn" data-act="up" ${idx === 0 ? 'disabled' : ''} title="Move up"><i data-lucide="arrow-up" class="icon" aria-hidden="true"></i></button>
-              <button class="icon-btn" data-act="down" ${idx === items.length - 1 ? 'disabled' : ''} title="Move down"><i data-lucide="arrow-down" class="icon" aria-hidden="true"></i></button>
-              <button class="icon-btn" data-act="edit" title="Edit"><i data-lucide="pencil" class="icon" aria-hidden="true"></i></button>
-              <button class="icon-btn danger" data-act="delete" title="Delete"><i data-lucide="trash-2" class="icon" aria-hidden="true"></i></button>
+              <button class="icon-btn" data-act="up" ${idx === 0 ? 'disabled' : ''} title="Move up">
+                <i data-lucide="arrow-up" class="icon" aria-hidden="true"></i>
+              </button>
+              <button class="icon-btn" data-act="down" ${idx === items.length - 1 ? 'disabled' : ''} title="Move down">
+                <i data-lucide="arrow-down" class="icon" aria-hidden="true"></i>
+              </button>
+              <button class="icon-btn" data-act="edit" title="Edit">
+                <i data-lucide="pencil" class="icon" aria-hidden="true"></i>
+              </button>
+              <button class="icon-btn danger" data-act="delete" title="Delete">
+                <i data-lucide="trash-2" class="icon" aria-hidden="true"></i>
+              </button>
             </div>
           </div>
-        `).join('')}
+        `
+          )
+          .join('')}
       </div>
     `;
 
     $("#btn-add-journey-item")?.addEventListener("click", () => openItemModal("journey", "add", null, -1));
+
     $("#journey-items-list")?.addEventListener("click", e => {
       const card = e.target.closest("[data-idx]");
       if (!card) return;
       const btn = e.target.closest("[data-act]");
       const idx = Number(card.dataset.idx);
-      if (!btn) { openItemModal("journey", "edit", items[idx], idx); return; }
+
+      if (!btn) {
+        openItemModal("journey", "edit", items[idx], idx);
+        return;
+      }
+
       const act = btn.dataset.act;
       if (act === "edit") openItemModal("journey", "edit", items[idx], idx);
       if (act === "delete") deleteItem("journey", idx);
       if (act === "up") moveItem("journey", idx, -1);
       if (act === "down") moveItem("journey", idx, 1);
     });
+
     $("#journey-items-list")?.addEventListener("keydown", e => {
       if (e.key !== "Enter" && e.key !== " ") return;
       if (e.target.closest("[data-act]")) return;
@@ -985,7 +1396,9 @@ function renderActiveSection() {
       </div>
 
       <div class="crud-item-list" id="skill-nodes-list">
-        ${nodes.map((n, idx) => `
+        ${nodes
+          .map(
+            (n, idx) => `
           <div class="crud-card" data-idx="${idx}" data-editable="true" tabindex="0" title="Click to edit this skill node">
             <div class="crud-card-info">
               <div class="crud-card-meta">
@@ -996,13 +1409,23 @@ function renderActiveSection() {
               <p>${escapeHtml(n.description)}</p>
             </div>
             <div class="crud-card-actions">
-              <button class="icon-btn" data-act="up" ${idx === 0 ? 'disabled' : ''}><i data-lucide="arrow-up" class="icon" aria-hidden="true"></i></button>
-              <button class="icon-btn" data-act="down" ${idx === nodes.length - 1 ? 'disabled' : ''}><i data-lucide="arrow-down" class="icon" aria-hidden="true"></i></button>
-              <button class="icon-btn" data-act="edit"><i data-lucide="pencil" class="icon" aria-hidden="true"></i></button>
-              <button class="icon-btn danger" data-act="delete"><i data-lucide="trash-2" class="icon" aria-hidden="true"></i></button>
+              <button class="icon-btn" data-act="up" ${idx === 0 ? 'disabled' : ''}>
+                <i data-lucide="arrow-up" class="icon" aria-hidden="true"></i>
+              </button>
+              <button class="icon-btn" data-act="down" ${idx === nodes.length - 1 ? 'disabled' : ''}>
+                <i data-lucide="arrow-down" class="icon" aria-hidden="true"></i>
+              </button>
+              <button class="icon-btn" data-act="edit">
+                <i data-lucide="pencil" class="icon" aria-hidden="true"></i>
+              </button>
+              <button class="icon-btn danger" data-act="delete">
+                <i data-lucide="trash-2" class="icon" aria-hidden="true"></i>
+              </button>
             </div>
           </div>
-        `).join('')}
+        `
+          )
+          .join('')}
       </div>
 
       <div class="adm-head" style="margin-top: 28px; margin-bottom: 8px;">
@@ -1016,7 +1439,9 @@ function renderActiveSection() {
       </div>
 
       <div class="crud-item-list" id="flow-steps-list">
-        ${steps.map((st, idx) => `
+        ${steps
+          .map(
+            (st, idx) => `
           <div class="crud-card" data-idx="${idx}" data-editable="true" tabindex="0" title="Click to edit this workflow step">
             <div class="crud-card-info">
               <div class="crud-card-meta">
@@ -1026,29 +1451,46 @@ function renderActiveSection() {
               <p>${escapeHtml(st.description)}</p>
             </div>
             <div class="crud-card-actions">
-              <button class="icon-btn" data-act="up" ${idx === 0 ? 'disabled' : ''}><i data-lucide="arrow-up" class="icon" aria-hidden="true"></i></button>
-              <button class="icon-btn" data-act="down" ${idx === steps.length - 1 ? 'disabled' : ''}><i data-lucide="arrow-down" class="icon" aria-hidden="true"></i></button>
-              <button class="icon-btn" data-act="edit"><i data-lucide="pencil" class="icon" aria-hidden="true"></i></button>
-              <button class="icon-btn danger" data-act="delete"><i data-lucide="trash-2" class="icon" aria-hidden="true"></i></button>
+              <button class="icon-btn" data-act="up" ${idx === 0 ? 'disabled' : ''}>
+                <i data-lucide="arrow-up" class="icon" aria-hidden="true"></i>
+              </button>
+              <button class="icon-btn" data-act="down" ${idx === steps.length - 1 ? 'disabled' : ''}>
+                <i data-lucide="arrow-down" class="icon" aria-hidden="true"></i>
+              </button>
+              <button class="icon-btn" data-act="edit">
+                <i data-lucide="pencil" class="icon" aria-hidden="true"></i>
+              </button>
+              <button class="icon-btn danger" data-act="delete">
+                <i data-lucide="trash-2" class="icon" aria-hidden="true"></i>
+              </button>
             </div>
           </div>
-        `).join('')}
+        `
+          )
+          .join('')}
       </div>
     `;
 
     $("#btn-add-skill-node")?.addEventListener("click", () => openItemModal("skill_node", "add", null, -1));
+
     $("#skill-nodes-list")?.addEventListener("click", e => {
       const card = e.target.closest("[data-idx]");
       if (!card) return;
       const btn = e.target.closest("[data-act]");
       const idx = Number(card.dataset.idx);
-      if (!btn) { openItemModal("skill_node", "edit", nodes[idx], idx); return; }
+
+      if (!btn) {
+        openItemModal("skill_node", "edit", nodes[idx], idx);
+        return;
+      }
+
       const act = btn.dataset.act;
       if (act === "edit") openItemModal("skill_node", "edit", nodes[idx], idx);
       if (act === "delete") deleteItem("skill_node", idx);
       if (act === "up") moveItem("skill_node", idx, -1);
       if (act === "down") moveItem("skill_node", idx, 1);
     });
+
     $("#skill-nodes-list")?.addEventListener("keydown", e => {
       if (e.key !== "Enter" && e.key !== " ") return;
       if (e.target.closest("[data-act]")) return;
@@ -1060,18 +1502,25 @@ function renderActiveSection() {
     });
 
     $("#btn-add-flow-step")?.addEventListener("click", () => openItemModal("flow_step", "add", null, -1));
+
     $("#flow-steps-list")?.addEventListener("click", e => {
       const card = e.target.closest("[data-idx]");
       if (!card) return;
       const btn = e.target.closest("[data-act]");
       const idx = Number(card.dataset.idx);
-      if (!btn) { openItemModal("flow_step", "edit", steps[idx], idx); return; }
+
+      if (!btn) {
+        openItemModal("flow_step", "edit", steps[idx], idx);
+        return;
+      }
+
       const act = btn.dataset.act;
       if (act === "edit") openItemModal("flow_step", "edit", steps[idx], idx);
       if (act === "delete") deleteItem("flow_step", idx);
       if (act === "up") moveItem("flow_step", idx, -1);
       if (act === "down") moveItem("flow_step", idx, 1);
     });
+
     $("#flow-steps-list")?.addEventListener("keydown", e => {
       if (e.key !== "Enter" && e.key !== " ") return;
       if (e.target.closest("[data-act]")) return;
@@ -1150,7 +1599,10 @@ function saveActiveSectionFromForm() {
     s.focus_description = $("#sec-hero-fdesc")?.value.trim() || "";
     s.focus_badge = $("#sec-hero-fbadge")?.value.trim() || "";
     const tagsVal = $("#sec-hero-ftags")?.value || "";
-    s.focus_tags = tagsVal.split(",").map(t => t.trim()).filter(Boolean);
+    s.focus_tags = tagsVal
+      .split(",")
+      .map(t => t.trim())
+      .filter(Boolean);
   } else if (activeSection === "about") {
     s.kicker = $("#sec-about-kicker")?.value.trim() || "";
     s.title_prefix = $("#sec-about-prefix")?.value.trim() || "";
@@ -1186,16 +1638,20 @@ $("#btn-save-section").addEventListener("click", async () => {
   saveActiveSectionFromForm();
   const btn = $("#btn-save-section");
   btn.disabled = true;
+
   try {
     await setDoc(doc(db, "settings", "site"), { content: siteContent, managed: true }, { merge: true });
     toast("Section saved! Live site updated.");
   } catch (err) {
     toast(friendlyError(err), "error");
   }
+
   btn.disabled = false;
 });
 
-/* Move & Delete List Items */
+// ------------------------------------------------------------
+// 10. LIST ITEM REORDERING, DELETION & MODALS
+// ------------------------------------------------------------
 function moveItem(type, index, dir) {
   let list;
   if (type === "journey") list = siteContent.journey.items;
@@ -1205,6 +1661,7 @@ function moveItem(type, index, dir) {
 
   const target = index + dir;
   if (target < 0 || target >= list.length) return;
+
   [list[index], list[target]] = [list[target], list[index]];
   renderActiveSection();
 }
@@ -1320,7 +1777,14 @@ $("#form-modal-item").addEventListener("submit", e => {
     const isCurrent = !!$("#m-j-current")?.checked;
     if (!date || !title) return showModalItemError("Period and Title are required.");
 
-    const entry = { id: modalItemContext.item?.id || `journey-${Date.now()}`, date, label, title, description, isCurrent };
+    const entry = {
+      id: modalItemContext.item?.id || `journey-${Date.now()}`,
+      date,
+      label,
+      title,
+      description,
+      isCurrent
+    };
     if (!siteContent.journey) siteContent.journey = { items: [] };
     if (!siteContent.journey.items) siteContent.journey.items = [];
 
@@ -1330,10 +1794,19 @@ $("#form-modal-item").addEventListener("submit", e => {
     const step = $("#m-sn-step")?.value.trim();
     const title = $("#m-sn-title")?.value.trim();
     const description = $("#m-sn-desc")?.value.trim();
-    const tags = ($("#m-sn-tags")?.value || "").split(",").map(t => t.trim()).filter(Boolean);
+    const tags = ($("#m-sn-tags")?.value || "")
+      .split(",")
+      .map(t => t.trim())
+      .filter(Boolean);
     if (!step || !title) return showModalItemError("Step and Title are required.");
 
-    const entry = { id: modalItemContext.item?.id || `skill-${Date.now()}`, step, title, description, tags };
+    const entry = {
+      id: modalItemContext.item?.id || `skill-${Date.now()}`,
+      step,
+      title,
+      description,
+      tags
+    };
     if (!siteContent.skills) siteContent.skills = { nodes: [], flow_steps: [] };
     if (!siteContent.skills.nodes) siteContent.skills.nodes = [];
 
@@ -1345,7 +1818,12 @@ $("#form-modal-item").addEventListener("submit", e => {
     const description = $("#m-fs-desc")?.value.trim();
     if (!step || !title) return showModalItemError("Step and Title are required.");
 
-    const entry = { id: modalItemContext.item?.id || `flow-${Date.now()}`, step, title, description };
+    const entry = {
+      id: modalItemContext.item?.id || `flow-${Date.now()}`,
+      step,
+      title,
+      description
+    };
     if (!siteContent.skills) siteContent.skills = { nodes: [], flow_steps: [] };
     if (!siteContent.skills.flow_steps) siteContent.skills.flow_steps = [];
 
@@ -1364,7 +1842,9 @@ function showModalItemError(msg) {
   show(err, true);
 }
 
-/* ───────────── JSON & KEY-VALUE CRUD ({ key : value }) ───────────── */
+// ------------------------------------------------------------
+// 11. JSON & KEY-VALUE PROPERTY ENGINE
+// ------------------------------------------------------------
 const jsonSelect = $("#json-section-select");
 const btnModeKv = $("#btn-mode-kv");
 const btnModeRaw = $("#btn-mode-raw");
@@ -1433,15 +1913,21 @@ function renderKvTable(obj, targetName) {
     return;
   }
 
-  listEl.innerHTML = keys.map(k => {
-    const val = obj[k];
-    const type = detectType(val);
-    const displayVal = (type === "object" || type === "array") ? JSON.stringify(val, null, 2) : String(val ?? "");
-    const valueControl = (type === "object" || type === "array")
-      ? `<textarea class="prop-val-input" rows="3" data-type="${type}" data-key="${escapeHtml(k)}">${escapeHtml(displayVal)}</textarea>`
-      : `<input class="prop-val-input" value="${escapeHtml(displayVal)}" data-type="${type}" data-key="${escapeHtml(k)}">`;
+  listEl.innerHTML = keys
+    .map(k => {
+      const val = obj[k];
+      const type = detectType(val);
+      const displayVal = type === "object" || type === "array" ? JSON.stringify(val, null, 2) : String(val ?? "");
+      const valueControl =
+        type === "object" || type === "array"
+          ? `<textarea class="prop-val-input" rows="3" data-type="${type}" data-key="${escapeHtml(k)}">${escapeHtml(
+              displayVal
+            )}</textarea>`
+          : `<input class="prop-val-input" value="${escapeHtml(displayVal)}" data-type="${type}" data-key="${escapeHtml(
+              k
+            )}">`;
 
-    return `
+      return `
       <div class="prop-card" data-key="${escapeHtml(k)}">
         <div class="prop-key-row">
           <div class="prop-key-title">
@@ -1449,13 +1935,16 @@ function renderKvTable(obj, targetName) {
             <span class="prop-type-badge ${type}">${type}</span>
           </div>
           <div class="prop-actions">
-            <button class="icon-btn danger" data-act="delete-key" title="Delete '${escapeHtml(k)}'"><i data-lucide="trash-2" class="icon" aria-hidden="true"></i></button>
+            <button class="icon-btn danger" data-act="delete-key" title="Delete '${escapeHtml(k)}'">
+              <i data-lucide="trash-2" class="icon" aria-hidden="true"></i>
+            </button>
           </div>
         </div>
         <div class="prop-val-row">${valueControl}</div>
       </div>
     `;
-  }).join("");
+    })
+    .join("");
 
   icons();
 }
@@ -1465,8 +1954,12 @@ $("#kv-props-list")?.addEventListener("click", async e => {
   const btn = e.target.closest("[data-act=delete-key]");
   const card = e.target.closest(".prop-card[data-key]");
   if (!btn || !card) return;
+
   const key = card.dataset.key;
-  const ok = await confirmDialog(`Delete key "${key}"?`, "This key and its value will be permanently removed from this JSON section.");
+  const ok = await confirmDialog(
+    `Delete key "${key}"?`,
+    "This key and its value will be permanently removed from this JSON section."
+  );
   if (!ok) return;
 
   const obj = getTargetJsonObject();
@@ -1478,6 +1971,7 @@ $("#kv-props-list")?.addEventListener("click", async e => {
 $("#kv-props-list")?.addEventListener("change", e => {
   const card = e.target.closest(".prop-card[data-key]");
   if (!card) return;
+
   const origKey = card.dataset.key;
   const valInput = card.querySelector(".prop-val-input");
   const obj = getTargetJsonObject();
@@ -1486,10 +1980,16 @@ $("#kv-props-list")?.addEventListener("change", e => {
   const type = valInput?.dataset.type;
 
   let parsedVal = rawVal;
-  if (type === "number") parsedVal = Number(rawVal);
-  else if (type === "boolean") parsedVal = (rawVal === "true");
-  else if (type === "array" || type === "object") {
-    try { parsedVal = JSON.parse(rawVal); } catch (_) { parsedVal = rawVal; }
+  if (type === "number") {
+    parsedVal = Number(rawVal);
+  } else if (type === "boolean") {
+    parsedVal = rawVal === "true";
+  } else if (type === "array" || type === "object") {
+    try {
+      parsedVal = JSON.parse(rawVal);
+    } catch (_) {
+      parsedVal = rawVal;
+    }
   }
 
   obj[origKey] = parsedVal;
@@ -1520,11 +2020,17 @@ $("#form-modal-kv").addEventListener("submit", e => {
 
   let finalVal;
   try {
-    if (type === "number") finalVal = Number(rawVal) || 0;
-    else if (type === "boolean") finalVal = (rawVal.toLowerCase() === "true");
-    else if (type === "array") finalVal = rawVal ? JSON.parse(rawVal) : [];
-    else if (type === "object") finalVal = rawVal ? JSON.parse(rawVal) : {};
-    else finalVal = rawVal;
+    if (type === "number") {
+      finalVal = Number(rawVal) || 0;
+    } else if (type === "boolean") {
+      finalVal = rawVal.toLowerCase() === "true";
+    } else if (type === "array") {
+      finalVal = rawVal ? JSON.parse(rawVal) : [];
+    } else if (type === "object") {
+      finalVal = rawVal ? JSON.parse(rawVal) : {};
+    } else {
+      finalVal = rawVal;
+    }
   } catch (err) {
     errEl.textContent = `Invalid ${type} syntax: ${err.message}`;
     show(errEl, true);
@@ -1538,7 +2044,9 @@ $("#form-modal-kv").addEventListener("submit", e => {
   toast(`Key "${key}" created.`);
 });
 
-/* Raw JSON Code Validation & Formatting */
+// ------------------------------------------------------------
+// 12. RAW JSON CODE VALIDATION & DEPLOYMENT
+// ------------------------------------------------------------
 function validateRawJson() {
   try {
     JSON.parse(rawTextarea.value);
@@ -1548,7 +2056,9 @@ function validateRawJson() {
     return true;
   } catch (err) {
     syntaxTag.className = "json-status-tag error";
-    syntaxTag.innerHTML = `<i data-lucide="alert-circle" class="icon" aria-hidden="true"></i> Syntax Error: ${escapeHtml(err.message)}`;
+    syntaxTag.innerHTML = `<i data-lucide="alert-circle" class="icon" aria-hidden="true"></i> Syntax Error: ${escapeHtml(
+      err.message
+    )}`;
     icons();
     return false;
   }
@@ -1579,8 +2089,11 @@ $("#btn-format-json")?.addEventListener("click", () => {
 });
 
 $("#btn-validate-json")?.addEventListener("click", () => {
-  if (validateRawJson()) toast("JSON format is completely valid.");
-  else toast("Invalid JSON syntax.", "error");
+  if (validateRawJson()) {
+    toast("JSON format is completely valid.");
+  } else {
+    toast("Invalid JSON syntax.", "error");
+  }
 });
 
 $("#btn-copy-json")?.addEventListener("click", async () => {
@@ -1621,7 +2134,12 @@ $("#btn-save-json").addEventListener("click", async () => {
   btn.disabled = false;
 });
 
-// Warn before closing tab if there are unsaved editor changes
+// ------------------------------------------------------------
+// 13. UNLOAD CONFIRMATION GUARD
+// ------------------------------------------------------------
 window.addEventListener("beforeunload", e => {
-  if (!$("#view-editor").hidden) { e.preventDefault(); e.returnValue = ""; }
+  if (!$("#view-editor").hidden) {
+    e.preventDefault();
+    e.returnValue = "";
+  }
 });

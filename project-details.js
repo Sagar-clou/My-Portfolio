@@ -471,3 +471,7 @@ async function loadManagedProject() {
 
 loadManagedProject();
 if (window.lucide) window.lucide.createIcons();
+/* ============================================================
+   FILE: project-details.js
+   ROLE: Loads and renders one project detail; connects project.html to project data and markdown.js.
+   ============================================================ */

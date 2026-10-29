@@ -41,3 +41,7 @@ export const projectCardHTML = (p, { link = true } = {}) => {
   </div>
 </article>`;
 };
+/* ============================================================
+   FILE: project-card.js
+   ROLE: Reusable project-card markup and URL sanitization; used by portfolio-projects.js.
+   ============================================================ */

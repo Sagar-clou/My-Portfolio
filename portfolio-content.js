@@ -300,3 +300,7 @@ async function initLiveContent() {
 }
 
 initLiveContent();
+/* ============================================================
+   FILE: portfolio-content.js
+   ROLE: Loads editable public site sections from Firestore; updates sections in index.html.
+   ============================================================ */

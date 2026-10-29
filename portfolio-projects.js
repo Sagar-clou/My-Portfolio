@@ -39,3 +39,7 @@ async function loadManagedProjects() {
 }
 
 loadManagedProjects();
+/* ============================================================
+   FILE: portfolio-projects.js
+   ROLE: Loads project cards from Firestore; renders project content in index.html.
+   ============================================================ */
