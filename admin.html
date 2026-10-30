@@ -71,12 +71,12 @@
         </div>
         <div class="field">
           <label for="signup-password">Create password</label>
-          <input id="signup-password" type="password" minlength="6" autocomplete="new-password" required>
-          <small>Use at least 6 characters.</small>
+          <input id="signup-password" type="password" minlength="12" autocomplete="new-password" required>
+          <small>Use at least 12 characters.</small>
         </div>
         <div class="field">
           <label for="signup-password-confirm">Confirm password</label>
-          <input id="signup-password-confirm" type="password" minlength="6" autocomplete="new-password" required>
+          <input id="signup-password-confirm" type="password" minlength="12" autocomplete="new-password" required>
         </div>
         <button class="btn btn-primary btn-google" type="submit">Create admin account</button>
       </form>
@@ -120,9 +120,6 @@
       <div class="adm-user">
         <img id="user-avatar" alt="" referrerpolicy="no-referrer">
         <span id="user-email"></span>
-        <button class="btn btn-quiet" id="btn-signout" type="button">
-          <i data-lucide="log-out" class="icon" aria-hidden="true"></i> Sign out
-        </button>
       </div>
     </header>
 
@@ -154,6 +151,9 @@
           <a class="btn btn-quiet btn-sm" href="index.html" target="_blank" rel="noopener" title="Preview deployed site">
             <i data-lucide="external-link" class="icon" aria-hidden="true"></i> View Live Site
           </a>
+          <button class="btn btn-quiet btn-sm" id="btn-signout" type="button">
+            <i data-lucide="log-out" class="icon" aria-hidden="true"></i> Sign out
+          </button>
         </div>
       </div>
     </div>

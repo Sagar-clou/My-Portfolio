@@ -19,7 +19,9 @@ import {
   sendPasswordResetEmail,
   sendEmailVerification,
   onAuthStateChanged,
-  signOut
+  signOut,
+  setPersistence,
+  browserSessionPersistence
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import {
   collection,
@@ -86,6 +88,8 @@ if (!isConfigured) {
   showScreen("config");
 } else {
   const auth = getAuth(app);
+  const SESSION_TIMEOUT_MS = 30 * 60 * 1000;
+  let idleTimer = null;
   const allowed = ADMIN_EMAILS.map(e => e.toLowerCase());
   const isAllowed = u => !!u && u.emailVerified && allowed.includes((u.email || "").toLowerCase());
   const isAllowedEmail = email => allowed.includes(email.trim().toLowerCase());
@@ -104,11 +108,31 @@ if (!isConfigured) {
       "auth/invalid-credential": "The email or password is incorrect.",
       "auth/invalid-email": "Enter a valid email address.",
       "auth/email-already-in-use": "An account already exists for this email. Try signing in instead.",
-      "auth/weak-password": "Choose a stronger password with at least 6 characters.",
+      "auth/weak-password": "Choose a stronger password with at least 12 characters.",
       "auth/user-not-found": "No account was found for this email.",
       "auth/too-many-requests": "Too many attempts. Please wait a moment and try again.",
       "auth/network-request-failed": "Network error. Check your connection and try again."
     }[err?.code] || friendlyError(err));
+
+  // Limit admin credentials to this browser session and sign out after
+  // prolonged inactivity on shared or unattended devices.
+  const authPersistence = setPersistence(auth, browserSessionPersistence);
+  const clearIdleTimer = () => {
+    if (idleTimer) window.clearTimeout(idleTimer);
+    idleTimer = null;
+  };
+  const armIdleTimer = () => {
+    clearIdleTimer();
+    idleTimer = window.setTimeout(async () => {
+      await signOut(auth);
+      loginError("You were signed out after 30 minutes of inactivity.");
+    }, SESSION_TIMEOUT_MS);
+  };
+  ["pointerdown", "keydown", "touchstart", "scroll"].forEach(eventName => {
+    window.addEventListener(eventName, () => {
+      if (auth.currentUser) armIdleTimer();
+    }, { passive: true });
+  });
 
   const setAuthTab = tab => {
     const signup = tab === "signup";
@@ -131,6 +155,7 @@ if (!isConfigured) {
     const password = $("#login-password").value;
     if (!email || !password) return loginError("Enter your email address and password.");
     try {
+      await authPersistence;
       await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       loginError(authError(err));
@@ -144,9 +169,10 @@ if (!isConfigured) {
     const password = $("#signup-password").value;
     const confirmation = $("#signup-password-confirm").value;
     if (!isAllowedEmail(email)) return loginError("This email is not authorised to create an admin account.");
-    if (password.length < 6) return loginError("Choose a password with at least 6 characters.");
+    if (password.length < 12) return loginError("Choose a stronger password with at least 12 characters.");
     if (password !== confirmation) return loginError("The passwords do not match.");
     try {
+      await authPersistence;
       const credential = await createUserWithEmailAndPassword(auth, email, password);
       await sendEmailVerification(credential.user);
       await signOut(auth);
@@ -176,6 +202,7 @@ if (!isConfigured) {
     provider.setCustomParameters({ prompt: "select_account" });
     show($("#login-error"), false);
     try {
+      await authPersistence;
       await signInWithPopup(auth, provider);
     } catch (err) {
       if (err.code === "auth/popup-blocked") return signInWithRedirect(auth, provider);
@@ -189,6 +216,7 @@ if (!isConfigured) {
   });
 
   onAuthStateChanged(auth, async user => {
+    clearIdleTimer();
     if (unsubscribe) {
       unsubscribe();
       unsubscribe = null;
@@ -211,6 +239,7 @@ if (!isConfigured) {
     }
 
     showScreen("app");
+    armIdleTimer();
     switchNavPane("dashboard");
     openList();
 
