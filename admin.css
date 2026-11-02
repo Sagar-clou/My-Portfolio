@@ -9,6 +9,10 @@
    ------------------------------------------------------------ */
 .adm {
   min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
   --adm-ink: #172337;
   --adm-muted: #68758a;
   --adm-line: #dfe5ec;
@@ -17,6 +21,22 @@
   --adm-blue: #245b8f;
   --adm-blue-dark: #153b63;
   --adm-shadow: 0 16px 45px rgba(24, 49, 76, 0.08);
+  --adm-motion-fast: 320ms;
+  --adm-motion-medium: 480ms;
+}
+
+.adm *,
+.adm *::before,
+.adm *::after {
+  min-width: 0;
+}
+
+.adm img,
+.adm svg,
+.adm video,
+.adm canvas,
+.adm iframe {
+  max-width: 100%;
 }
 
 .adm,
@@ -114,7 +134,7 @@
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  transition: 0.18s ease;
+  transition: var(--adm-motion-fast) ease;
 }
 
 .btn:hover {
@@ -426,6 +446,51 @@
 .adm-list {
   display: grid;
   gap: 12px;
+}
+
+.project-pagination {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding: 14px 2px 4px;
+}
+
+.project-pagination-info,
+.project-page-number {
+  color: var(--adm-muted);
+  font-size: 13px;
+}
+
+.project-pagination-controls {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.project-pagination-controls label {
+  color: var(--adm-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.project-pagination .adm-select {
+  min-width: 68px;
+  padding: 8px 26px 8px 10px;
+}
+
+@media (max-width: 600px) {
+  .project-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .project-pagination-controls {
+    width: 100%;
+  }
 }
 
 .p-row {
@@ -1212,8 +1277,11 @@
   }
 
   .adm-main {
-    width: min(1240px, calc(100% - 300px));
-    margin-left: calc(238px + max(22px, (100vw - 1240px) / 2));
+    /* Fill the space beside the fixed sidebar without adding a second
+       viewport-centering offset that creates a large empty left column. */
+    width: calc(100% - 282px);
+    max-width: none;
+    margin-left: 260px;
     margin-right: 22px;
     padding-top: 118px;
   }
@@ -2168,6 +2236,11 @@
    18. RESPONSIVE MEDIA QUERIES (TABLETS & SCREENS <= 980px)
    ------------------------------------------------------------ */
 @media (max-width: 980px) {
+  .adm-main {
+    width: min(100% - 28px, 1240px);
+    margin: 0 auto;
+  }
+
   .editor-grid {
     grid-template-columns: 1fr;
   }
@@ -2407,6 +2480,17 @@
   }
 }
 
+/* Final desktop sizing override: keep the workspace inside the viewport
+   after accounting for the fixed navigation rail. */
+@media (min-width: 981px) {
+  .adm-main {
+    width: calc(100vw - 282px);
+    max-width: none;
+    margin-left: 260px;
+    margin-right: 22px;
+  }
+}
+
 /* ------------------------------------------------------------
    21. ACCESSIBILITY: REDUCED MOTION PREFERENCE
    ------------------------------------------------------------ */
@@ -2416,5 +2500,25 @@
   *::after {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* Keep normal admin interactions calm and fluid. */
+@media (prefers-reduced-motion: no-preference) {
+  .adm * {
+    transition-duration: 0.55s;
+  }
+
+  .adm .adm-subnav-bar,
+  .adm .adm-nav-backdrop {
+    transition-duration: 0.7s;
+  }
+
+  .adm .toast {
+    animation-duration: 0.6s;
+  }
+
+  .adm .pulse-ring {
+    animation-duration: 4s;
   }
 }

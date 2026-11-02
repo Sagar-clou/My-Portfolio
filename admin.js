@@ -653,6 +653,57 @@ $("#btn-seed-site").addEventListener("click", async () => {
 // ------------------------------------------------------------
 let projects = [];
 const listEl = $("#project-list");
+const paginationEl = $("#project-pagination");
+const PROJECT_PAGE_SIZE_OPTIONS = [5, 10, 25];
+let projectPage = 1;
+let projectPageSize = 5;
+
+function renderProjectPagination(total) {
+  if (!paginationEl) return;
+
+  const pageCount = Math.max(1, Math.ceil(total / projectPageSize));
+  projectPage = Math.min(projectPage, pageCount);
+  if (total <= projectPageSize) {
+    paginationEl.hidden = true;
+    paginationEl.innerHTML = "";
+    return;
+  }
+
+  const start = (projectPage - 1) * projectPageSize + 1;
+  const end = Math.min(projectPage * projectPageSize, total);
+  paginationEl.hidden = false;
+  paginationEl.innerHTML = `
+    <div class="project-pagination-info">Showing ${start}–${end} of ${total} projects</div>
+    <div class="project-pagination-controls">
+      <label for="project-page-size">Per page</label>
+      <select id="project-page-size" class="adm-select" aria-label="Projects per page">
+        ${PROJECT_PAGE_SIZE_OPTIONS.map(size => `<option value="${size}" ${size === projectPageSize ? "selected" : ""}>${size}</option>`).join("")}
+      </select>
+      <button class="btn btn-sm" type="button" data-page-action="previous" ${projectPage === 1 ? "disabled" : ""} aria-label="Previous project page">
+        <i data-lucide="chevron-left" class="icon" aria-hidden="true"></i> Previous
+      </button>
+      <span class="project-page-number" aria-live="polite">Page ${projectPage} of ${pageCount}</span>
+      <button class="btn btn-sm" type="button" data-page-action="next" ${projectPage === pageCount ? "disabled" : ""} aria-label="Next project page">
+        Next <i data-lucide="chevron-right" class="icon" aria-hidden="true"></i>
+      </button>
+    </div>`;
+  icons();
+}
+
+paginationEl?.addEventListener("click", e => {
+  const action = e.target.closest("[data-page-action]")?.dataset.pageAction;
+  if (!action) return;
+  projectPage += action === "next" ? 1 : -1;
+  renderList();
+  listEl?.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+paginationEl?.addEventListener("change", e => {
+  if (e.target.id !== "project-page-size") return;
+  projectPageSize = Number(e.target.value) || 5;
+  projectPage = 1;
+  renderList();
+});
 
 function openList() {
   show($("#view-editor"), false);
@@ -668,6 +719,8 @@ function renderList() {
     : "Nothing here yet.";
 
   if (!n) {
+    projectPage = 1;
+    renderProjectPagination(0);
     listEl.innerHTML = `
       <div class="empty">
         <h2>No projects yet</h2>
@@ -679,8 +732,14 @@ function renderList() {
     return icons();
   }
 
-  listEl.innerHTML = projects
+  const pageCount = Math.ceil(n / projectPageSize);
+  projectPage = Math.min(projectPage, pageCount);
+  const pageStart = (projectPage - 1) * projectPageSize;
+  const visibleProjects = projects.slice(pageStart, pageStart + projectPageSize);
+
+  listEl.innerHTML = visibleProjects
     .map((p, i) => {
+      const projectIndex = pageStart + i;
       const img = safeUrl(p.image, { allowData: true });
       return `
       <article class="p-row${p.published ? " is-published" : ""}" data-id="${escapeHtml(p.id)}"${
@@ -696,10 +755,10 @@ function renderList() {
           </div>
         </div>
         <div class="p-actions">
-          <button class="icon-btn" data-action="up" aria-label="Move ${escapeHtml(p.title)} up" ${i === 0 ? "disabled" : ""}>
+          <button class="icon-btn" data-action="up" aria-label="Move ${escapeHtml(p.title)} up" ${projectIndex === 0 ? "disabled" : ""}>
             <i data-lucide="arrow-up" class="icon" aria-hidden="true"></i>
           </button>
-          <button class="icon-btn" data-action="down" aria-label="Move ${escapeHtml(p.title)} down" ${i === n - 1 ? "disabled" : ""}>
+          <button class="icon-btn" data-action="down" aria-label="Move ${escapeHtml(p.title)} down" ${projectIndex === n - 1 ? "disabled" : ""}>
             <i data-lucide="arrow-down" class="icon" aria-hidden="true"></i>
           </button>
           ${
@@ -720,6 +779,7 @@ function renderList() {
     })
     .join("");
 
+  renderProjectPagination(n);
   icons();
 }
 
