@@ -297,6 +297,7 @@ const navButtons = {
   json: $("#nav-btn-json")
 };
 
+
 // ------------------------------------------------------------
 // 6. RESPONSIVE ADMIN NAVIGATION DRAWER
 // ------------------------------------------------------------
@@ -343,7 +344,9 @@ document.addEventListener("keydown", event => {
 });
 
 function switchNavPane(name) {
-  Object.entries(navPanes).forEach(([k, el]) => show(el, k === name));
+  // Keep every workspace visible after login. Navigation acts as an anchor
+  // so the dashboard can be scanned without opening and closing hidden panes.
+  Object.values(navPanes).forEach(el => show(el, true));
   Object.entries(navButtons).forEach(([k, btn]) => {
     btn?.classList.toggle("is-active", k === name);
     btn?.setAttribute("aria-selected", String(k === name));
@@ -353,6 +356,10 @@ function switchNavPane(name) {
   if (name === "content") renderActiveSection();
   if (name === "json") renderJsonView();
   if (name === "projects") openList();
+
+  if (name !== "dashboard") {
+    navPanes[name]?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
   icons();
 }
